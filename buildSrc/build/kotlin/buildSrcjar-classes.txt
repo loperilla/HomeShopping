@@ -1,0 +1,1 @@
+/Users/loperilla/AndroidStudioProjects/HomeShopping/buildSrc/build/classes/kotlin/main/MyConfiguration$MAP_MODULES.class:/Users/loperilla/AndroidStudioProjects/HomeShopping/buildSrc/build/classes/kotlin/main/MyConfiguration$Modules.class:/Users/loperilla/AndroidStudioProjects/HomeShopping/buildSrc/build/classes/kotlin/main/MyConfiguration.class
