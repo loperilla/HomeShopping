@@ -1,4 +1,4 @@
-package io.loperilla.onboarding.login
+package io.loperilla.onboarding.auth.login
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable

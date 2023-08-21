@@ -1,4 +1,4 @@
-package io.loperilla.onboarding.login.model
+package io.loperilla.onboarding.auth.login.model
 
 /*****
  * Project: CompraCasa
