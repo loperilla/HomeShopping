@@ -1,4 +1,4 @@
-package io.loperilla.onboarding_domain.usecase
+package io.loperilla.onboarding_domain.usecase.auth
 
 import io.loperilla.data.firebase.auth.FirebaseAuthRepository
 import javax.inject.Inject

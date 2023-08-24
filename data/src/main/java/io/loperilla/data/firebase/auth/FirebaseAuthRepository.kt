@@ -22,4 +22,6 @@ class FirebaseAuthRepository @Inject constructor(
     suspend fun doRegister(email: String, password: String): AuthResult {
         return firebaseAuth.doFirebaseRegister(email, password)
     }
+
+    suspend fun doLogout() = firebaseAuth.doLogout()
 }

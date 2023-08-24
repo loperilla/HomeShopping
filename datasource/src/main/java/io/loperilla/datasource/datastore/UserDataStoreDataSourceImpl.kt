@@ -4,10 +4,13 @@ import android.content.Context
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import io.loperilla.datasource.datastore.DataStoreUtils.Constants.UID_PREFERENCE
 import io.loperilla.datasource.datastore.DataStoreUtils.userDataStore
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 /*****
@@ -32,9 +35,17 @@ class UserDataStoreDataSourceImpl @Inject constructor(
     }
 
     override suspend fun insertString(key: String, value: String) {
-        runCatching {
+        withContext(Dispatchers.IO) {
             context.userDataStore.edit { preferences ->
                 preferences[stringPreferencesKey(key)] = value
+            }
+        }
+    }
+
+    override suspend fun clearUid() {
+        withContext(Dispatchers.IO) {
+            context.userDataStore.edit { preferences ->
+                preferences[stringPreferencesKey(UID_PREFERENCE)] = ""
             }
         }
     }

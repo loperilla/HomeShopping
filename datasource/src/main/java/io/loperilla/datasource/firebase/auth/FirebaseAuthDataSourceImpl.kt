@@ -58,27 +58,8 @@ class FirebaseAuthDataSourceImpl @Inject constructor(
         }
     }
 
-//    override suspend fun doFirebaseRegister(
-//        dataRegistration: DataRegistration,
-//        callback: ResultCallback
-//    ) {
-//        auth.createUserWithEmailAndPassword(dataRegistration.email, dataRegistration.password)
-//            .addOnCompleteListener { task ->
-//                if (task.isSuccessful) {
-//                    currentAuthUser = auth.currentUser
-//                    currentAuthUser!!.updateProfile(
-//                        UserProfileChangeRequest.Builder()
-//                            .setDisplayName(dataRegistration.displayName)
-//                            .build()
-//                    )
-//                    callback.onSuccessfulResult()
-//                } else {
-//                    task.exception?.printStackTrace()
-//                    callback.onFailureResult(
-//                        task.exception?.stackTraceToString() ?: "Hubo un error"
-//                    )
-//                }
-//            }
-//    }
-
+    override suspend fun doLogout() = withContext(Dispatchers.IO) {
+        auth.signOut()
+        dataStore.clearUid()
+    }
 }

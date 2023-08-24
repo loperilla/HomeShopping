@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.loperilla.model.auth.AuthResult
-import io.loperilla.onboarding_domain.usecase.DoLoginUseCase
+import io.loperilla.onboarding_domain.usecase.auth.DoLoginUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

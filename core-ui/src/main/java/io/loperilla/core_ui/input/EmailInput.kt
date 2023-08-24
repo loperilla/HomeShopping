@@ -16,7 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
-import io.loperilla.core_ui.CompraCasaTheme
+import io.loperilla.core_ui.HomeShoppingTheme
 import io.loperilla.core_ui.LOW
 import io.loperilla.core_ui.input.InputValidators.isEmailValid
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
@@ -67,7 +67,7 @@ fun EmailInput(
 @PIXEL_33_NIGHT
 @Composable
 fun EmailInputPreview() {
-    CompraCasaTheme {
+    HomeShoppingTheme {
         Surface {
             Column {
                 EmailInput(

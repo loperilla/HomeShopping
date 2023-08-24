@@ -5,7 +5,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.loperilla.data.firebase.auth.FirebaseAuthRepository
-import io.loperilla.onboarding_domain.usecase.DoLoginUseCase
+import io.loperilla.onboarding_domain.usecase.auth.DoLoginUseCase
+import io.loperilla.onboarding_domain.usecase.home.LogoutUseCase
 
 /*****
  * Project: CompraCasa
@@ -21,6 +22,11 @@ object DomainDependencyInjector {
     fun providesDoLoginUseCase(
         firebaseAuth: FirebaseAuthRepository
     ): DoLoginUseCase = DoLoginUseCase(firebaseAuth)
+
+    @Provides
+    fun providesLogoutUseCase(
+        firebaseAuth: FirebaseAuthRepository
+    ): LogoutUseCase = LogoutUseCase(firebaseAuth)
 
 //    @Provides
 //    fun providesHomeUseCase(

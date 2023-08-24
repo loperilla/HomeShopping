@@ -8,4 +8,5 @@ interface IFirebaseAuthDataSource {
 
     fun getUserAuth(): FirebaseUser?
     suspend fun doFirebaseRegister(email: String, password: String): AuthResult
+    suspend fun doLogout()
 }

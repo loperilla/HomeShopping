@@ -1,4 +1,4 @@
-package io.loperilla.onboarding_domain.usecase
+package io.loperilla.onboarding_domain.usecase.home
 
 /*****
  * Project: CompraCasa
