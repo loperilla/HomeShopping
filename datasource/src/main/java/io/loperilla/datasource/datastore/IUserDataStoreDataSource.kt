@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface IUserDataStoreDataSource {
     fun getAll(): Flow<Preferences>
-    fun getString(key: String): Flow<String>
+    fun getString(key: String): String
     suspend fun insertString(key: String, value: String)
     suspend fun clearUid()
 }

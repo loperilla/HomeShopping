@@ -1,7 +1,6 @@
 package io.loperilla.data.datastore
 
 import io.loperilla.datasource.datastore.IUserDataStoreDataSource
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 /*****
@@ -13,7 +12,7 @@ import javax.inject.Inject
 class DataStoreRepository @Inject constructor(
     private val userPreferences: IUserDataStoreDataSource
 ) {
-    fun getString(key: String): Flow<String> =
+    fun getString(key: String): String =
         userPreferences.getString(key)
 
     suspend fun insertString(key: String, value: String) =

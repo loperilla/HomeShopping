@@ -1,11 +1,13 @@
-package io.loperilla.onboarding_domain.di.login
+package io.loperilla.onboarding_domain.di
 
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import dagger.hilt.android.components.ViewModelComponent
 import io.loperilla.data.firebase.auth.FirebaseAuthRepository
+import io.loperilla.data.firebase.database.ShoppingRepository
 import io.loperilla.onboarding_domain.usecase.auth.DoLoginUseCase
+import io.loperilla.onboarding_domain.usecase.home.HomeUseCase
 import io.loperilla.onboarding_domain.usecase.home.LogoutUseCase
 
 /*****
@@ -16,7 +18,7 @@ import io.loperilla.onboarding_domain.usecase.home.LogoutUseCase
  */
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ViewModelComponent::class)
 object DomainDependencyInjector {
     @Provides
     fun providesDoLoginUseCase(
@@ -28,8 +30,8 @@ object DomainDependencyInjector {
         firebaseAuth: FirebaseAuthRepository
     ): LogoutUseCase = LogoutUseCase(firebaseAuth)
 
-//    @Provides
-//    fun providesHomeUseCase(
-//        shoppingListRepository: ShoppingListRepository
-//    ): HomeUseCase = HomeUseCase(shoppingListRepository)
+    @Provides
+    fun providesHomeUseCase(
+        shoppingListRepository: ShoppingRepository
+    ): HomeUseCase = HomeUseCase(shoppingListRepository)
 }

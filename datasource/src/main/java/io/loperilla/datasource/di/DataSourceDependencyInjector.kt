@@ -13,6 +13,7 @@ import io.loperilla.datasource.datastore.IUserDataStoreDataSource
 import io.loperilla.datasource.datastore.UserDataStoreDataSourceImpl
 import io.loperilla.datasource.firebase.auth.FirebaseAuthDataSourceImpl
 import io.loperilla.datasource.firebase.auth.IFirebaseAuthDataSource
+import io.loperilla.datasource.firebase.database.FirebaseDatabase
 import io.loperilla.datasource.firebase.reference.CustomReference
 import io.loperilla.model.database.Constants
 import javax.inject.Named
@@ -58,4 +59,11 @@ object DataSourceDependencyInjector {
     @Provides
     fun providesShoppingListDatabase(): DatabaseReference =
         Firebase.database.reference.child(Constants.SHOPPINGLIST)
+
+    @Singleton
+    @Provides
+    fun providesDatabase(
+        dataStore: IUserDataStoreDataSource,
+        shoppingRef: CustomReference.SHOPPING_LIST_REFERENCE,
+    ) = FirebaseDatabase(dataStore, shoppingRef)
 }

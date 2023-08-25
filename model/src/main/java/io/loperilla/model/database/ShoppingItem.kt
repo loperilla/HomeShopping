@@ -7,6 +7,7 @@ package io.loperilla.model.database
  * All rights reserved 2023
  */
 data class ShoppingItem(
+    val key: String? = null,
     val title: String = "",
     val date: String = ""
 )

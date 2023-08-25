@@ -8,8 +8,8 @@ import io.loperilla.datasource.datastore.DataStoreUtils.Constants.UID_PREFERENCE
 import io.loperilla.datasource.datastore.DataStoreUtils.userDataStore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -28,10 +28,8 @@ class UserDataStoreDataSourceImpl @Inject constructor(
         return context.userDataStore.data
     }
 
-    override fun getString(key: String): Flow<String> = flow {
-        context.userDataStore.data.map { preferences ->
-            preferences[stringPreferencesKey(key)]
-        }
+    override fun getString(key: String): String = runBlocking {
+        context.userDataStore.data.first()[stringPreferencesKey(key)] ?: ""
     }
 
     override suspend fun insertString(key: String, value: String) {

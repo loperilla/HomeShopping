@@ -10,3 +10,4 @@ import androidx.compose.ui.unit.dp
  */
 
 val LOW = 8.dp
+val MEDIUM = 16.dp

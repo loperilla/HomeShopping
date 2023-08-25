@@ -6,8 +6,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.loperilla.data.datastore.DataStoreRepository
 import io.loperilla.data.firebase.auth.FirebaseAuthRepository
+import io.loperilla.data.firebase.database.ShoppingRepository
 import io.loperilla.datasource.datastore.UserDataStoreDataSourceImpl
 import io.loperilla.datasource.firebase.auth.FirebaseAuthDataSourceImpl
+import io.loperilla.datasource.firebase.database.FirebaseDatabase
 
 /*****
  * Project: CompraCasa
@@ -27,4 +29,9 @@ object DataDependencyInjector {
     fun provideFirebaseAuth(
         firebaseAuth: FirebaseAuthDataSourceImpl
     ): FirebaseAuthRepository = FirebaseAuthRepository(firebaseAuth)
+
+    @Provides
+    fun provideShoppingDatabase(
+        firebaseDatabase: FirebaseDatabase
+    ): ShoppingRepository = ShoppingRepository(firebaseDatabase)
 }

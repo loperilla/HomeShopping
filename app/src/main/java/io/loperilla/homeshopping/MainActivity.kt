@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                 val navController: NavHostController = rememberNavController()
                 NavHost(
                     navController = navController,
-                    startDestination = Routes.HOME.route,
+                    startDestination = Routes.AUTH.route,
                 ) {
                     navigation(startDestination = Routes.LOGIN.route, route = Routes.AUTH.route) {
                         loginScreen(navController::navigate)
