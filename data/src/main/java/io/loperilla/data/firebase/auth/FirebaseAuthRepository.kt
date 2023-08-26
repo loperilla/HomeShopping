@@ -2,7 +2,10 @@ package io.loperilla.data.firebase.auth
 
 import com.google.firebase.auth.FirebaseUser
 import io.loperilla.datasource.firebase.auth.IFirebaseAuthDataSource
+import io.loperilla.model.SplashUIState
 import io.loperilla.model.auth.AuthResult
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 /*****
@@ -24,4 +27,15 @@ class FirebaseAuthRepository @Inject constructor(
     }
 
     suspend fun doLogout() = firebaseAuth.doLogout()
+
+    suspend fun checkAuth(): SplashUIState {
+        return withContext(Dispatchers.IO) {
+            val refreshSuccess = firebaseAuth.reloadUser()
+            if (refreshSuccess) {
+                SplashUIState.Success
+            } else {
+                SplashUIState.NoAuthenticated
+            }
+        }
+    }
 }

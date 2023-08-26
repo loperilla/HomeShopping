@@ -7,9 +7,9 @@ import io.loperilla.model.database.DatabaseResult
 import io.loperilla.model.database.ShoppingItem
 import io.loperilla.onboarding_domain.usecase.home.HomeUseCase
 import io.loperilla.onboarding_domain.usecase.home.LogoutUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -34,8 +34,8 @@ class HomeViewModel @Inject constructor(
     val shoppingBuyList: StateFlow<List<ShoppingItem>> = _shoppingBuyList
 
     init {
-        viewModelScope.launch {
-            homeUseCase.getAllShopping().collectLatest { result ->
+        viewModelScope.launch(Dispatchers.IO) {
+            homeUseCase.getAllShopping().collect { result ->
                 when (result) {
                     is DatabaseResult.FAIL -> {
                         _logoutFinish.value = true

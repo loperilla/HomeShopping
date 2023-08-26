@@ -62,6 +62,7 @@ dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
     implementation(libs.hilt.navigation)
+    implementation(libs.splashscreen)
 
     // Hilt
     implementation(libs.hilt.android)

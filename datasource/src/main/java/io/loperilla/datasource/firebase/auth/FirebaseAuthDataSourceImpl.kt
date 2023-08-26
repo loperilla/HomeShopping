@@ -58,8 +58,22 @@ class FirebaseAuthDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun doLogout() = withContext(Dispatchers.IO) {
-        auth.signOut()
-        dataStore.clearUid()
+    override suspend fun doLogout() {
+        withContext(Dispatchers.IO) {
+            auth.signOut()
+            dataStore.clearUid()
+        }
+    }
+
+    override suspend fun reloadUser(): Boolean {
+        return withContext(Dispatchers.IO) {
+            try {
+                auth.currentUser?.reload()?.await()
+                true
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+                false
+            }
+        }
     }
 }

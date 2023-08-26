@@ -8,9 +8,11 @@ import io.loperilla.datasource.datastore.IUserDataStoreDataSource
 import io.loperilla.datasource.firebase.reference.CustomReference.SHOPPING_LIST_REFERENCE
 import io.loperilla.model.database.DatabaseResult
 import io.loperilla.model.database.ShoppingItem
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 /*****
@@ -25,9 +27,10 @@ class FirebaseDatabase @Inject constructor(
 ) {
     fun getAllShoppingBuy(): Flow<DatabaseResult<List<ShoppingItem>>> {
         val userId = dataStore.getString(UID_PREFERENCE)
-        val callbackFlow = callbackFlow {
+        return callbackFlow {
             if (userId.isEmpty()) {
                 trySend(DatabaseResult.FAIL("No está loggeado"))
+                close()
                 return@callbackFlow
             }
             val listener = shoppingListReference.shoppingReference.addValueEventListener(
@@ -43,14 +46,11 @@ class FirebaseDatabase @Inject constructor(
                     }
 
                     override fun onCancelled(error: DatabaseError) {
-                        error.toException().printStackTrace()
                         close(error.toException())
                     }
                 }
             )
             awaitClose { shoppingListReference.shoppingReference.removeEventListener(listener) }
-        }
-        return callbackFlow
-
+        }.flowOn(Dispatchers.IO)
     }
 }
