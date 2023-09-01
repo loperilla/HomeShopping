@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
+    alias(libs.plugins.kspPlugin)
     kotlin("android")
-    kotlin("kapt")
     id("dagger.hilt.android.plugin")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
@@ -63,10 +63,11 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.hilt.navigation)
     implementation(libs.splashscreen)
+    implementation(libs.timber)
 
     // Hilt
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
 
     //Firebase
     implementation(platform(libs.firebase.bom))

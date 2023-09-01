@@ -3,8 +3,8 @@ package io.loperilla.onboarding.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.loperilla.model.database.DatabaseResult
 import io.loperilla.model.database.ShoppingItem
+import io.loperilla.model.database.result.ReadDatabaseResult
 import io.loperilla.onboarding_domain.usecase.home.HomeUseCase
 import io.loperilla.onboarding_domain.usecase.home.LogoutUseCase
 import kotlinx.coroutines.Dispatchers
@@ -37,11 +37,11 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             homeUseCase.getAllShopping().collect { result ->
                 when (result) {
-                    is DatabaseResult.FAIL -> {
+                    is ReadDatabaseResult.FAIL -> {
                         _logoutFinish.value = true
                     }
 
-                    is DatabaseResult.SUCCESS -> {
+                    is ReadDatabaseResult.SUCCESS -> {
                         _shoppingBuyList.value = result.result
                     }
                 }

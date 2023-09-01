@@ -6,8 +6,8 @@ import com.google.firebase.database.ValueEventListener
 import io.loperilla.datasource.datastore.DataStoreUtils.Constants.UID_PREFERENCE
 import io.loperilla.datasource.datastore.IUserDataStoreDataSource
 import io.loperilla.datasource.firebase.reference.CustomReference.SHOPPING_LIST_REFERENCE
-import io.loperilla.model.database.DatabaseResult
 import io.loperilla.model.database.ShoppingItem
+import io.loperilla.model.database.result.ReadDatabaseResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -21,15 +21,15 @@ import javax.inject.Inject
  * Created By Manuel Lopera on 25/8/23 at 14:40
  * All rights reserved 2023
  */
-class FirebaseDatabase @Inject constructor(
+class ShoppingCartListFirebaseDatabase @Inject constructor(
     private val dataStore: IUserDataStoreDataSource,
     private val shoppingListReference: SHOPPING_LIST_REFERENCE
 ) {
-    fun getAllShoppingBuy(): Flow<DatabaseResult<List<ShoppingItem>>> {
+    fun getAllShoppingBuy(): Flow<ReadDatabaseResult<List<ShoppingItem>>> {
         val userId = dataStore.getString(UID_PREFERENCE)
         return callbackFlow {
             if (userId.isEmpty()) {
-                trySend(DatabaseResult.FAIL("No está loggeado"))
+                trySend(ReadDatabaseResult.FAIL("No está loggeado"))
                 close()
                 return@callbackFlow
             }
@@ -42,7 +42,7 @@ class FirebaseDatabase @Inject constructor(
                                 shoppingItem?.copy(key = it)
                             }
                         }
-                        trySend(DatabaseResult.SUCCESS(snapShoppingList))
+                        trySend(ReadDatabaseResult.SUCCESS(snapShoppingList))
                     }
 
                     override fun onCancelled(error: DatabaseError) {

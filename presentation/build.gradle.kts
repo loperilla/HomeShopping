@@ -1,7 +1,8 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     kotlin("android")
-    kotlin("kapt")
+    alias(libs.plugins.android.junit)
+    alias(libs.plugins.kspPlugin)
 }
 
 android {
@@ -53,13 +54,18 @@ dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
     implementation(libs.hilt.navigation)
+    implementation(libs.timber)
 
     // Hilt
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
 
     //Test
     testImplementation(libs.junit)
+    testImplementation(libs.assertk)
+    testImplementation(libs.bundles.jupiter)
+    testRuntimeOnly(libs.jupiter.engine)
+
     androidTestImplementation(libs.test.ext.junit)
     androidTestImplementation(libs.test.espresso)
     androidTestImplementation(platform(libs.compose.bom))

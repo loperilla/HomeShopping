@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kspPlugin)
     kotlin("android")
-    kotlin("kapt")
 }
 
 android {
@@ -47,10 +47,11 @@ dependencies {
 
     //Runtime
     implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.timber)
 
     // Hilt
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
 
     //Test
     testImplementation(libs.junit)

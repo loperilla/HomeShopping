@@ -3,13 +3,22 @@ agp = "8.1.1"
 androidx-activity = "1.7.2"
 androidx-lifecycle = "2.6.1"
 androidx-test-espresso = "3.5.1"
-compose-compiler = "1.5.2"
-hilt-version = "2.47"
+androidx-test-ext = "1.1.5"
+compose-compiler = "1.5.3"
+hilt-version = "2.48"
+jupiter-junit = "5.9.3"
+ksp = "1.9.10-1.0.13"
+coil = "2.4.0"
+room-version = "2.5.2"
 
 [libraries]
 #Compose
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 androidx-activity = { module = "androidx.activity:activity", version.ref = "androidx-activity" }
+androidx-core-ktx = "androidx.test:core-ktx:1.5.0"
+androidx-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.ref = "androidx-test-ext" }
+assertk = "com.willowtreeapps.assertk:assertk:0.26.1"
+coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 build-gradle = "com.android.tools.build:gradle:8.1.1"
 compose-bom = "androidx.compose:compose-bom:2023.08.00"
 compose-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "compose-compiler" }
@@ -28,7 +37,7 @@ datastore = "androidx.datastore:datastore-preferences:1.0.0"
 firebase-auth = { module = "com.google.firebase:firebase-auth-ktx" }
 #Firebase
 firebase-bom = "com.google.firebase:firebase-bom:32.2.3"
-splashscreen = "androidx.core:core-splashscreen:1.0.1"
+timber = "com.jakewharton.timber:timber:5.0.1"
 #crashlytics
 #auth
 #firestore
@@ -43,11 +52,18 @@ hilt-gradle = { module = "com.google.dagger:hilt-android-gradle-plugin", version
 hilt-navigation = "androidx.hilt:hilt-navigation-compose:1.0.0"
 junit = "junit:junit:4.13.2"
 kotlin-gradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0"
+jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "jupiter-junit" }
+jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jupiter-junit" }
+jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "jupiter-junit" }
 lifecycle-compose-runtime = { module = "androidx.lifecycle:lifecycle-runtime-compose" }
 lifecycle-compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose" }
 lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room-version" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room-version" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room-version" }
+splashscreen = "androidx.core:core-splashscreen:1.0.1"
 test-espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx-test-espresso" }
-test-ext-junit = "androidx.test.ext:junit:1.1.5"
+test-ext-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-test-ext" }
 
 [bundles]
 compose = [
@@ -62,6 +78,7 @@ compose = [
     "compose-ui-graphics",
     "lifecycle-compose-runtime",
     "lifecycle-compose-viewmodel",
+    "coil"
 ]
 firebase = [
     "firebase-auth",
@@ -69,10 +86,16 @@ firebase = [
     "firebase-database",
     "firebase-firestore",
 ]
+jupiter = [
+    "jupiter-api",
+    "jupiter-params",
+]
 
 [plugins]
+android-junit = "de.mannodermaus.android-junit5:1.9.3.0"
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 ben-manes-versions = "com.github.ben-manes.versions:0.47.0"
-kotlin-android = "org.jetbrains.kotlin.android:1.9.0"
+kotlin-android = "org.jetbrains.kotlin.android:1.9.10"
+kspPlugin = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 version-catalog-update = "nl.littlerobots.version-catalog-update:0.8.1"

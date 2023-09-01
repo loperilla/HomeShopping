@@ -1,6 +1,6 @@
 package io.loperilla.data.firebase.database
 
-import io.loperilla.datasource.firebase.database.FirebaseDatabase
+import io.loperilla.datasource.firebase.database.ShoppingCartListFirebaseDatabase
 import javax.inject.Inject
 
 /*****
@@ -10,7 +10,7 @@ import javax.inject.Inject
  * All rights reserved 2023
  */
 class ShoppingRepository @Inject constructor(
-    private val database: FirebaseDatabase
+    private val database: ShoppingCartListFirebaseDatabase
 ) {
     fun getAllShopping() = database.getAllShoppingBuy()
 }

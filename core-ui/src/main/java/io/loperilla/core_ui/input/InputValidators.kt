@@ -12,4 +12,11 @@ object InputValidators {
     fun isEmailValid(email: String) = Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
     fun isPasswordValid(password: String) = password.length > 5
+
+    fun isURL(url: String): Boolean = try {
+        java.net.URL(url).toURI()
+        true
+    } catch (e: Exception) {
+        false
+    }
 }

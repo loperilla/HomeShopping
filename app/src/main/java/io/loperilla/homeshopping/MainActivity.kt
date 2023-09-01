@@ -16,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.loperilla.core_ui.HomeShoppingTheme
 import io.loperilla.core_ui.routes.Routes
 import io.loperilla.model.SplashUIState
+import io.loperilla.onboarding.addshoppingCart.AddShoppingCart
 import io.loperilla.onboarding.auth.loginScreen
 import io.loperilla.onboarding.auth.registerScreen
 import io.loperilla.onboarding.home.HomeScreen
@@ -64,6 +65,15 @@ class MainActivity : ComponentActivity() {
 
                     composable(Routes.HOME.route) {
                         HomeScreen(navController::navigate)
+                    }
+
+                    composable(Routes.ADD_SHOPPING.route) {
+                        AddShoppingCart(
+                            popBackStack = {
+                                navController.popBackStack()
+                            },
+                            navController::navigate
+                        )
                     }
                 }
             }

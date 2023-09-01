@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kspPlugin)
     kotlin("android")
-    kotlin("kapt")
     id("dagger.hilt.android.plugin")
 }
 
@@ -52,9 +52,10 @@ dependencies {
     implementation(libs.datastore)
     //Hilt
     implementation(libs.hilt.android)
-
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
     //Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.bundles.firebase)
+
+    implementation(libs.timber)
 }
