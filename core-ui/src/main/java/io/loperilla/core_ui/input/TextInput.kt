@@ -25,9 +25,9 @@ import io.loperilla.core_ui.LOW
 @Composable
 fun UrlInput(
     inputValue: String,
+    onValueChange: (String, Boolean) -> Unit,
     modifier: Modifier = Modifier,
-    placeholderValue: String = "Introduzca una URL",
-    onValueChange: (String, Boolean) -> Unit
+    placeholderValue: String = "Introduzca una URL"
 ) {
     OutlinedTextField(
         modifier = modifier
@@ -60,9 +60,9 @@ fun UrlInput(
 @Composable
 fun TextInput(
     inputValue: String,
+    onValueChange: (String, Boolean) -> Unit,
     modifier: Modifier = Modifier,
-    placeholderValue: String = "Introduzca texto",
-    onValueChange: (String, Boolean) -> Unit
+    placeholderValue: String = "Introduzca texto"
 ) {
     OutlinedTextField(
         modifier = modifier

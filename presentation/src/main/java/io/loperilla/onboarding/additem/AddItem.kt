@@ -35,8 +35,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import io.loperilla.core_ui.HomeShoppingTheme
 import io.loperilla.core_ui.MEDIUM
+import io.loperilla.core_ui.button.FormButton
+import io.loperilla.core_ui.input.TextInput
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
 import io.loperilla.core_ui.tab.TabRowItem
+import io.loperilla.onboarding.additem.camera.AddCameraImageScreen
 import io.loperilla.onboarding.additem.storage.AddStorageImageScreen
 import io.loperilla.onboarding_presentation.R
 import kotlinx.coroutines.launch
@@ -51,11 +54,14 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun AddItem(
-    popBackStack: () -> Unit,
-    newDestination: (String) -> Unit
+    popBackStack: () -> Unit
 ) {
     val viewModel: AddItemViewModel = hiltViewModel()
     val pagerUserInputEnabled by viewModel.pagerUserInputEnabled.collectAsStateWithLifecycle()
+    val inputValue by viewModel.inputNameValue.collectAsStateWithLifecycle()
+    val isInputValid by viewModel.isInputValid.collectAsStateWithLifecycle()
+    val isBitmapSelected by viewModel.bitmapSelected.collectAsStateWithLifecycle()
+    val isInsertSuccess by viewModel.insertItemSuccess.collectAsStateWithLifecycle()
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -104,7 +110,11 @@ fun AddItem(
                 .fillMaxSize()
                 .padding(it)
         ) {
-            val (pager, emptyItemList, shoppingList) = createRefs()
+            if (isInsertSuccess) {
+                popBackStack()
+                return@ConstraintLayout
+            }
+            val (tabRow, inputName, button) = createRefs()
 
             Card(
                 shape = RoundedCornerShape(MEDIUM),
@@ -115,7 +125,7 @@ fun AddItem(
                     .fillMaxWidth()
                     .padding(MEDIUM)
                     .fillMaxSize(0.5f)
-                    .constrainAs(pager) {
+                    .constrainAs(tabRow) {
                         top.linkTo(parent.top)
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
@@ -151,7 +161,33 @@ fun AddItem(
                 ) {
                     tabRowItems[pagerState.currentPage].screen()
                 }
+
             }
+            TextInput(
+                inputValue,
+                onValueChange = viewModel::inputChange,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(MEDIUM)
+                    .constrainAs(inputName) {
+                        top.linkTo(tabRow.bottom, MEDIUM)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }
+            )
+
+            FormButton(
+                "Agregar Producto",
+                enableButton = isInputValid && isBitmapSelected != null,
+                onClickButton = viewModel::addProduct,
+                modifier = Modifier
+                    .padding(MEDIUM)
+                    .constrainAs(button) {
+                        bottom.linkTo(parent.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }
+            )
         }
     }
 }
@@ -161,10 +197,7 @@ fun AddItem(
 fun AddItemPrev() {
     HomeShoppingTheme {
         Surface {
-            AddItem(
-                popBackStack = {
-                },
-            ) {
+            AddItem {
 
             }
         }

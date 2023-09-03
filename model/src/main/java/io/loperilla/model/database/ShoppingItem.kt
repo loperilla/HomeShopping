@@ -10,4 +10,6 @@ data class ShoppingItem(
     var key: String? = null,
     val name: String = "",
     val imageUrl: String = ""
-)
+) {
+    fun imageRef() = "${this.name}.jpg"
+}

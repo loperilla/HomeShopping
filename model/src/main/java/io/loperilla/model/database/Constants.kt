@@ -9,4 +9,5 @@ package io.loperilla.model.database
 object Constants {
     const val SHOPPINGLIST = "shoppingList"
     const val ITEMS = "items"
+    const val IMAGES = "images"
 }

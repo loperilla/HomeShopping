@@ -21,6 +21,7 @@ import io.loperilla.onboarding.addshoppingCart.AddShoppingCart
 import io.loperilla.onboarding.auth.loginScreen
 import io.loperilla.onboarding.auth.registerScreen
 import io.loperilla.onboarding.home.HomeScreen
+import timber.log.Timber
 
 /*****
  * Project: HomeShopping
@@ -50,16 +51,21 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 }
-                // A surface container using the 'background' color from the theme
                 val navController: NavHostController = rememberNavController()
+
+                val currentBack = navController.currentBackStack.collectAsStateWithLifecycle().value
+                currentBack.forEach {
+                    Timber.tag("backStack").i("${it.destination.route}")
+                }
+
                 NavHost(
                     navController = navController,
                     startDestination = if (uiState == SplashUIState.NoAuthenticated)
                         Routes.AUTH.route
                     else
-                        Routes.NEW_ITEM.route,
+                        Routes.HOME.route,
                 ) {
-                    navigation(startDestination = Routes.LOGIN.route, route = Routes.AUTH.route) {
+                    navigation(startDestination = Routes.AUTH.LOGIN.route, route = Routes.AUTH.route) {
                         loginScreen(navController::navigate)
                         registerScreen(navController::navigate)
                     }
@@ -68,21 +74,31 @@ class MainActivity : ComponentActivity() {
                         HomeScreen(navController::navigate)
                     }
 
-                    composable(Routes.ADD_SHOPPING.route) {
-                        AddShoppingCart(
-                            popBackStack = {
-                                navController.popBackStack()
-                            },
-                            navController::navigate
-                        )
-                    }
-                    composable(Routes.NEW_ITEM.route) {
-                        AddItem(
-                            popBackStack = {
-                                navController.popBackStack()
-                            },
-                            navController::navigate
-                        )
+                    navigation(
+                        startDestination = Routes.SHOPPING_BASKET.ADD_SHOPPING.route,
+                        route = Routes.SHOPPING_BASKET.route
+                    ) {
+                        composable(Routes.SHOPPING_BASKET.ADD_SHOPPING.route) {
+                            AddShoppingCart(
+                                popBackStack = {
+                                    navController.navigate(Routes.HOME.route) {
+                                        popUpTo(Routes.HOME.route) {
+                                            inclusive = true
+                                        }
+                                    }
+                                },
+                                navigateToNewItem = {
+                                    navController.navigate(Routes.SHOPPING_BASKET.NEW_ITEM.route)
+                                }
+                            )
+                        }
+                        composable(
+                            route = Routes.SHOPPING_BASKET.NEW_ITEM.route
+                        ) {
+                            AddItem {
+                                navController.navigate(Routes.SHOPPING_BASKET.ADD_SHOPPING.route)
+                            }
+                        }
                     }
                 }
             }

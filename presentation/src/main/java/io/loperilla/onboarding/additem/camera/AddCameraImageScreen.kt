@@ -1,4 +1,4 @@
-package io.loperilla.onboarding.additem
+package io.loperilla.onboarding.additem.camera
 
 import android.Manifest
 import android.content.Context
@@ -53,7 +53,6 @@ import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import io.loperilla.core_ui.util.BitmapUtils.rotateBitmap
-import io.loperilla.onboarding.additem.camera.CameraViewModel
 import io.loperilla.onboarding_presentation.R
 import timber.log.Timber
 

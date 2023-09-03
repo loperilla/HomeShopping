@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.loperilla.model.database.ShoppingItem
-import io.loperilla.model.database.result.PostDatabaseResult
 import io.loperilla.model.database.result.ReadDatabaseResult
 import io.loperilla.onboarding_domain.usecase.itemShopping.ItemShoppingUseCase
 import io.loperilla.onboarding_domain.usecase.shoppingcart.QueryUseCase
@@ -54,8 +53,6 @@ class AddShoppingCartViewModel @Inject constructor(
     private var _itemShoppingList: MutableStateFlow<List<ShoppingItem>> = MutableStateFlow(emptyList())
     val itemShoppingList: StateFlow<List<ShoppingItem>> = _itemShoppingList
 
-    private var _isAddItemFABClicked: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val isAddItemFABClicked: StateFlow<Boolean> = _isAddItemFABClicked
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -113,36 +110,10 @@ class AddShoppingCartViewModel @Inject constructor(
         }
     }
 
-    fun onFabClicked() {
-        viewModelScope.launch {
-            _isAddItemFABClicked.value = true
-        }
-    }
-
-    fun closeDialog() {
-        viewModelScope.launch {
-            _isAddItemFABClicked.value = false
-        }
-    }
-
     fun removeQuery(queryToDelete: String) {
         viewModelScope.launch(Dispatchers.IO) {
             queryUseCase.removeQuery(queryToDelete)
         }
     }
 
-    fun createItem(name: String, url: String) {
-        viewModelScope.launch {
-            closeDialog()
-            when (val result = itemShoppingUseCase.addItem(ShoppingItem(name = name, imageUrl = url))) {
-                is PostDatabaseResult.FAIL -> {
-                    Timber.e(result.exception)
-                }
-
-                PostDatabaseResult.SUCCESS -> {
-                    Timber.i("$name fue añadido con éxito")
-                }
-            }
-        }
-    }
 }

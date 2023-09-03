@@ -34,7 +34,7 @@ import io.loperilla.onboarding_presentation.R
 fun NavGraphBuilder.loginScreen(
     newDestination: (String) -> Unit
 ) {
-    composable(Routes.LOGIN.route) {
+    composable(Routes.AUTH.LOGIN.route) {
         val loginViewModel: LoginViewModel = hiltViewModel()
         val emailValue by loginViewModel.emailInputValue.collectAsStateWithLifecycle()
         val passwordValue by loginViewModel.passwordInputValue.collectAsStateWithLifecycle()
@@ -70,7 +70,7 @@ fun NavGraphBuilder.loginScreen(
                         .background(MaterialTheme.colorScheme.background),
                     loginButtonClicked = loginViewModel::loginButtonClicked
                 ) {
-                    newDestination(Routes.REGISTER.route)
+                    newDestination(Routes.AUTH.REGISTER.route)
                 }
             }
         }
@@ -78,7 +78,7 @@ fun NavGraphBuilder.loginScreen(
 }
 
 fun NavGraphBuilder.registerScreen(newDestination: (String) -> Unit) {
-    composable(Routes.REGISTER.route) {
+    composable(Routes.AUTH.REGISTER.route) {
         val registerViewModel: RegisterViewModel = hiltViewModel()
         val emailValue by registerViewModel.emailInputValue.collectAsStateWithLifecycle()
         val passwordValue by registerViewModel.passwordInputValue.collectAsStateWithLifecycle()

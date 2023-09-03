@@ -55,20 +55,27 @@ class ShoppingItemListFirebaseDatabase @Inject constructor(
         }
     }.flowOn(Dispatchers.IO)
 
-    suspend fun addItemShopping(item: ShoppingItem): PostDatabaseResult = withContext(Dispatchers.IO) {
-        Timber.i("addItemShopping $item")
-        val deferred = CompletableDeferred<PostDatabaseResult>(PostDatabaseResult.SUCCESS)
+    suspend fun addItemShopping(item: ShoppingItem, bitmapToUpload: ByteArray): PostDatabaseResult =
+        withContext(Dispatchers.IO) {
+            Timber.i("addItemShopping $item")
+            val deferred = CompletableDeferred<PostDatabaseResult>(PostDatabaseResult.SUCCESS)
 
-        with(shoppingItemListReference.itemListCollection) {
-            try {
-                this.add(item).await()
-                deferred.complete(PostDatabaseResult.SUCCESS)
-            } catch (ex: FirebaseFirestoreException) {
+            with(shoppingItemListReference) {
+                try {
+                    val imageRef = imageStorageReference.child(item.imageRef())
+                    imageRef.putBytes(bitmapToUpload).await()
+                    val url = imageRef.downloadUrl.await()
+                    val itemToUpload = item.copy(
+                        imageUrl = url.toString()
+                    )
+                    itemListCollection.add(itemToUpload).await()
+                    deferred.complete(PostDatabaseResult.SUCCESS)
+                } catch (ex: FirebaseFirestoreException) {
                 ex.printStackTrace()
                 deferred.complete(PostDatabaseResult.FAIL(ex))
             }
-
         }
-        deferred.await()
+
+            deferred.await()
     }
 }

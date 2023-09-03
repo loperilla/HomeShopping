@@ -13,7 +13,7 @@ import javax.inject.Inject
 class ItemShoppingUseCase @Inject constructor(
     private val repository: ItemShoppingRepository
 ) {
-    suspend fun addItem(item: ShoppingItem) = repository.postItem(item)
+    suspend fun addItem(item: ShoppingItem, bitmapToUpload: ByteArray) = repository.postItem(item, bitmapToUpload)
 
     fun getItems() = repository.getAllShopping()
 }

@@ -5,6 +5,8 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -49,8 +51,10 @@ object FirebaseDi {
     @Singleton
     @Provides
     fun providesItemShoppingReference(
-        @Named(Constants.ITEMS) databaseReference: CollectionReference
-    ): CustomReference.SHOPPING_ITEM_LIST_COLLECTION = CustomReference.SHOPPING_ITEM_LIST_COLLECTION(databaseReference)
+        @Named(Constants.ITEMS) databaseReference: CollectionReference,
+        @Named(Constants.IMAGES) storageReference: StorageReference
+    ): CustomReference.SHOPPING_ITEM_LIST_COLLECTION =
+        CustomReference.SHOPPING_ITEM_LIST_COLLECTION(databaseReference, storageReference)
 
     @Singleton
     @Provides
@@ -70,4 +74,9 @@ object FirebaseDi {
     fun providesItemShoppingDatabase(
         itemShoppingReference: CustomReference.SHOPPING_ITEM_LIST_COLLECTION
     ) = ShoppingItemListFirebaseDatabase(itemShoppingReference)
+
+    @Named(Constants.IMAGES)
+    @Singleton
+    @Provides
+    fun provideFirebaseStorage() = Firebase.storage.reference.child(Constants.IMAGES)
 }

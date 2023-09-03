@@ -79,7 +79,7 @@ fun HomeScreen(newDestination: (String) -> Unit) {
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { newDestination(Routes.ADD_SHOPPING.route) }
+                onClick = { newDestination(Routes.SHOPPING_BASKET.route) }
             ) {
                 Icon(
                     imageVector = Icons.Filled.Add,

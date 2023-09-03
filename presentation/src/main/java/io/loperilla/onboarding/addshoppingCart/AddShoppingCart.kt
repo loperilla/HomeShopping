@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
@@ -28,10 +27,8 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
-import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
@@ -42,9 +39,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -57,7 +51,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -67,10 +60,7 @@ import coil.request.ImageRequest
 import io.loperilla.core_ui.HomeShoppingTheme
 import io.loperilla.core_ui.LOW
 import io.loperilla.core_ui.MEDIUM
-import io.loperilla.core_ui.input.TextInput
-import io.loperilla.core_ui.input.UrlInput
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
-import io.loperilla.core_ui.routes.Routes
 import io.loperilla.model.database.ShoppingItem
 import io.loperilla.onboarding_presentation.R
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -86,14 +76,13 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @Composable
 fun AddShoppingCart(
     popBackStack: () -> Unit,
-    newDestination: (String) -> Unit
+    navigateToNewItem: () -> Unit
 ) {
     val viewModel: AddShoppingCartViewModel = hiltViewModel()
     val currentShoppingCartItemCount by viewModel.currentShoppingCartCount.collectAsStateWithLifecycle()
     val searchBarActive by viewModel.searchBarActive.collectAsStateWithLifecycle()
     val previousQueryList by viewModel.queryList.collectAsStateWithLifecycle()
     val itemShoppingList by viewModel.itemShoppingList.collectAsStateWithLifecycle()
-    val isFabClicked by viewModel.isAddItemFABClicked.collectAsStateWithLifecycle()
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -140,7 +129,7 @@ fun AddShoppingCart(
         floatingActionButton = {
             if (!searchBarActive) {
                 AddShoppingCartFAB {
-                    newDestination(Routes.NEW_ITEM.route)
+                    navigateToNewItem()
                 }
             }
         }
@@ -151,12 +140,6 @@ fun AddShoppingCart(
                 .padding(it)
         ) {
             val (searchBar, emptyItemList, shoppingList) = createRefs()
-            if (isFabClicked) {
-                AddShoppingItemDialog(
-                    dismissRequest = viewModel::closeDialog,
-                    onFinishCreate = viewModel::createItem
-                )
-            }
             SearchBar(
                 query = viewModel.searchInputQuery.collectAsStateWithLifecycle().value,
                 onQueryChange = viewModel::searchInputChange,
@@ -360,56 +343,6 @@ fun ItemShoppinListScreen(
                         onItemClicked(itemShoppingList[index])
                     }
             )
-        }
-    }
-}
-
-@Composable
-fun AddShoppingItemDialog(
-    dismissRequest: () -> Unit,
-    onFinishCreate: (String, String) -> Unit
-) {
-    var nameInput by remember { mutableStateOf("") }
-    var nameInputValid by remember { mutableStateOf(false) }
-    var urlInput by remember { mutableStateOf("") }
-    var urlInputValid by remember { mutableStateOf(false) }
-    Dialog(
-        onDismissRequest = dismissRequest,
-    ) {
-        ElevatedCard(
-            modifier = Modifier
-                .padding(MEDIUM),
-            shape = RoundedCornerShape(MEDIUM)
-        ) {
-            UrlInput(
-                urlInput,
-                modifier = Modifier
-                    .padding(LOW)
-            ) { newInputValue, isValid ->
-                urlInput = newInputValue
-                urlInputValid = isValid
-            }
-
-            TextInput(
-                nameInput,
-                modifier = Modifier
-                    .padding(LOW)
-            ) { newInputValue, isValid ->
-                nameInput = newInputValue
-                nameInputValid = isValid
-            }
-
-            Button(
-                onClick = {
-                    onFinishCreate(nameInput, urlInput)
-                },
-                enabled = nameInputValid && urlInputValid,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(LOW)
-            ) {
-                Text("Crear Item")
-            }
         }
     }
 }

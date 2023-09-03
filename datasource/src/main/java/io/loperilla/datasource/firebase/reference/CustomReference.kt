@@ -2,6 +2,7 @@ package io.loperilla.datasource.firebase.reference
 
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.storage.StorageReference
 
 /*****
  * Project: CompraCasa
@@ -15,6 +16,7 @@ sealed class CustomReference {
     ) : CustomReference()
 
     data class SHOPPING_ITEM_LIST_COLLECTION(
-        val itemListCollection: CollectionReference
+        val itemListCollection: CollectionReference,
+        val imageStorageReference: StorageReference
     ) : CustomReference()
 }

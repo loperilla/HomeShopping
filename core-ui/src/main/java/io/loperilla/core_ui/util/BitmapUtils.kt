@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
+import java.io.ByteArrayOutputStream
 import java.io.FileDescriptor
 import java.io.IOException
 
@@ -38,5 +39,11 @@ object BitmapUtils {
             e.printStackTrace()
         }
         return null
+    }
+
+    fun Bitmap.toByteArray(): ByteArray {
+        val baos = ByteArrayOutputStream()
+        this.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        return baos.toByteArray()
     }
 }
