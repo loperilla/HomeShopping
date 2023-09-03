@@ -32,7 +32,10 @@
     <string name="add_item_back_createbasket_content_description">Volver a Add Item</string>
     <string name="fab_take_photo_text">Tomar foto</string>
     <string name="press_to_take_photo">Pulse para tomar una foto</string>
-    <string name="press_to_settings_permission">Pulse para ir a los ajustes y habilitarlo a mano</string>
+    <string name="press_to_settings_permission">Pulse para ir a los ajustes y habilita el permiso de %1$s a mano</string>
     <string name="press_to_request_permission">Es necesario que acepte los permisos de %1$s para continuar</string>
     <string name="camera">cámara</string>
+    <string name="select_storage_image_text">Selecciona la foto de la galería</string>
+    <string name="storage">almacenamiento</string>
+
 </resources>

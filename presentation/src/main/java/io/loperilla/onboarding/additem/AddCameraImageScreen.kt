@@ -52,7 +52,7 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
-import io.loperilla.onboarding.additem.camera.CameraUtils.rotateBitmap
+import io.loperilla.core_ui.util.BitmapUtils.rotateBitmap
 import io.loperilla.onboarding.additem.camera.CameraViewModel
 import io.loperilla.onboarding_presentation.R
 import timber.log.Timber
@@ -208,10 +208,16 @@ fun AddCameraImage(
                 }
 
                 is PermissionStatus.Denied -> {
-                    if (permissionStatus.shouldShowRationale) {
-                        stringResource(R.string.press_to_settings_permission)
+                    if (!permissionStatus.shouldShowRationale) {
+                        stringResource(
+                            R.string.press_to_settings_permission,
+                            stringResource(R.string.camera)
+                        )
                     } else {
-                        stringResource(R.string.press_to_request_permission, stringResource(R.string.camera))
+                        stringResource(
+                            R.string.press_to_request_permission,
+                            stringResource(R.string.camera)
+                        )
                     }
                 }
             },
