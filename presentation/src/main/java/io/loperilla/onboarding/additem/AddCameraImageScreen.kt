@@ -14,6 +14,7 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,9 +34,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,9 +50,11 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
+import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import io.loperilla.onboarding.additem.camera.CameraUtils.rotateBitmap
 import io.loperilla.onboarding.additem.camera.CameraViewModel
+import io.loperilla.onboarding_presentation.R
 import timber.log.Timber
 
 /*****
@@ -62,24 +67,21 @@ import timber.log.Timber
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun AddCameraImageScreen(
-    userWantTakeAPhoto: Boolean,
     userGoToTakeAPhoto: () -> Unit,
-    onPhotoCaptured: () -> Unit
+    onPhotoCaptured: (Bitmap) -> Unit
 ) {
     val context = LocalContext.current.applicationContext
     val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
     val lifecycleOwner = LocalLifecycleOwner.current
     val cameraController = remember { LifecycleCameraController(context) }
-    val cameraViewModel: CameraViewModel = viewModel()
 
+    val cameraViewModel: CameraViewModel = viewModel()
     val cameraState by cameraViewModel.state.collectAsStateWithLifecycle()
-    if (cameraState.capturedImage != null) {
-        onPhotoCaptured()
-        ImageCaptured(context, cameraState.capturedImage!!)
-        return
-    }
+    val userWantTakeAPhoto by cameraViewModel.userWantToTakeAPhoto.collectAsStateWithLifecycle()
+
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(),
         floatingActionButton = {
             if (userWantTakeAPhoto) {
                 ExtendedFloatingActionButton(
@@ -103,13 +105,25 @@ fun AddCameraImageScreen(
                         })
                     }
                 ) {
-                    Text(text = "Take photo")
+                    Text(text = stringResource(R.string.fab_take_photo_text))
                 }
             }
         }
     ) { paddingValues: PaddingValues ->
-        when (val status = cameraPermissionState.status) {
-            PermissionStatus.Granted -> {
+        Column(
+            modifier = Modifier
+                .clickable {
+                    if (cameraPermissionState.status.isGranted) {
+                        cameraViewModel.takeAPhoto()
+                    }
+                }
+        ) {
+            if (cameraState.capturedImage != null) {
+                onPhotoCaptured(cameraState.capturedImage!!)
+                ImageCaptured(context, cameraState.capturedImage!!)
+                return@Scaffold
+            }
+            if (userWantTakeAPhoto) {
                 userGoToTakeAPhoto()
                 AndroidView(
                     modifier = Modifier
@@ -129,48 +143,57 @@ fun AddCameraImageScreen(
                         }
                     }
                 )
+                return@Scaffold
             }
-
-            is PermissionStatus.Denied -> {
-                AddCameraImage(
-                    context,
-                    status.shouldShowRationale,
-                    cameraPermissionState::launchPermissionRequest,
-                )
-            }
+            AddCameraImage(
+                context,
+                cameraPermissionState.status,
+                cameraPermissionState::launchPermissionRequest,
+                cameraViewModel::takeAPhoto,
+            )
         }
     }
 }
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun AddCameraImage(
     context: Context,
-    permissionShouldShowRationale: Boolean,
+    permissionStatus: PermissionStatus,
     requestPermission: () -> Unit,
+    takeAPhoto: () -> Unit,
 ) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
+            .background(Color.LightGray)
             .clickable {
-                if (permissionShouldShowRationale) {
-                    val intent = Intent(
-                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                        Uri.fromParts("package", context.packageName, null)
-                    )
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    ContextCompat.startActivity(
-                        context,
-                        intent,
-                        null
-                    )
-                } else {
-                    requestPermission()
+                when (permissionStatus) {
+                    PermissionStatus.Granted -> {
+                        takeAPhoto()
+                    }
+
+                    is PermissionStatus.Denied -> {
+                        if (permissionStatus.shouldShowRationale) {
+                            val intent = Intent(
+                                Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                Uri.fromParts("package", context.packageName, null)
+                            )
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            ContextCompat.startActivity(
+                                context,
+                                intent,
+                                null
+                            )
+                        } else {
+                            requestPermission()
+                        }
+                    }
                 }
             }
     ) {
-
         Icon(
             imageVector = Icons.Filled.AddAPhoto,
             contentDescription = null,
@@ -179,10 +202,18 @@ fun AddCameraImage(
         )
 
         Text(
-            if (permissionShouldShowRationale) {
-                "Pulse para ir a los ajustes y habilitarlo a mano"
-            } else {
-                "Pulse para aceptar los permisos"
+            when (permissionStatus) {
+                PermissionStatus.Granted -> {
+                    stringResource(R.string.press_to_take_photo)
+                }
+
+                is PermissionStatus.Denied -> {
+                    if (permissionStatus.shouldShowRationale) {
+                        stringResource(R.string.press_to_settings_permission)
+                    } else {
+                        stringResource(R.string.press_to_request_permission, stringResource(R.string.camera))
+                    }
+                }
             },
             modifier = Modifier
                 .wrapContentWidth(),

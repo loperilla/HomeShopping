@@ -50,6 +50,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -69,6 +70,7 @@ import io.loperilla.core_ui.HomeShoppingTheme
 import io.loperilla.core_ui.MEDIUM
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
 import io.loperilla.core_ui.tab.TabRowItem
+import io.loperilla.onboarding_presentation.R
 import kotlinx.coroutines.launch
 
 /*****
@@ -87,23 +89,21 @@ fun AddItem(
     val context = LocalContext.current.applicationContext
 
     val viewModel: AddItemViewModel = hiltViewModel()
-    val userWantTakeAPhoto by viewModel.userWantTakeAPhoto.collectAsStateWithLifecycle()
     val pagerUserInputEnabled by viewModel.pagerUserInputEnabled.collectAsStateWithLifecycle()
 
     val coroutineScope = rememberCoroutineScope()
 
     val tabRowItems = listOf(
         TabRowItem(
-            "Cámara"
+            title = stringResource(R.string.tab_camera_text)
         ) {
             AddCameraImageScreen(
-                userWantTakeAPhoto,
                 viewModel::userGoesToTakeAPhoto,
                 viewModel::userTakeAPhoto
             )
         },
         TabRowItem(
-            title = "Galería"
+            title = stringResource(R.string.tab_storage_text)
         ) {
             AddGaleryImage(context)
         }
@@ -120,13 +120,13 @@ fun AddItem(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text("Add Item")
+                    Text(stringResource(R.string.add_item_scaffold_title))
                 },
                 navigationIcon = {
                     IconButton(onClick = { popBackStack() }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Volver a Add Item"
+                            contentDescription = stringResource(R.string.add_item_back_createbasket_content_description)
                         )
                     }
                 }

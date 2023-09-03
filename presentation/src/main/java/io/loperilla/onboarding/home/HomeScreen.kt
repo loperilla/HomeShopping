@@ -28,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -38,6 +39,7 @@ import io.loperilla.core_ui.HomeShoppingTheme
 import io.loperilla.core_ui.MEDIUM
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
 import io.loperilla.core_ui.routes.Routes
+import io.loperilla.onboarding_presentation.R
 
 /*****
  * Project: CompraCasa
@@ -63,13 +65,13 @@ fun HomeScreen(newDestination: (String) -> Unit) {
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text("Home Shopping")
+                    Text(stringResource(R.string.home_scaffold_title))
                 },
                 actions = {
                     IconButton(onClick = { homeViewModel.showLogoutDialog() }) {
                         Icon(
                             imageVector = Icons.Outlined.Logout,
-                            contentDescription = "Salir de la aplicación"
+                            contentDescription = stringResource(R.string.logout_icon_content_description)
                         )
                     }
                 }
@@ -80,7 +82,8 @@ fun HomeScreen(newDestination: (String) -> Unit) {
                 onClick = { newDestination(Routes.ADD_SHOPPING.route) }
             ) {
                 Icon(
-                    imageVector = Icons.Filled.Add, contentDescription = "Create ShoppingCart"
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = stringResource(R.string.fab_createshoppingcart_content_description)
                 )
             }
         }
@@ -92,15 +95,15 @@ fun HomeScreen(newDestination: (String) -> Unit) {
                         Icon(imageVector = Icons.Outlined.ExitToApp, contentDescription = "ExitApp")
                     },
                     onDismissRequest = { homeViewModel.hideLogoutDialog() },
-                    title = { Text("¿Estás seguro que quieres cerrar sesión") },
+                    title = { Text(stringResource(R.string.logout_dialog_title)) },
                     confirmButton = {
                         TextButton(onClick = { homeViewModel.doLogout() }) {
-                            Text("Delete it".uppercase())
+                            Text(stringResource(R.string.logout_dialog_accept_button))
                         }
                     },
                     dismissButton = {
                         TextButton(onClick = { homeViewModel.hideLogoutDialog() }) {
-                            Text("Cancel".uppercase())
+                            Text(stringResource(R.string.logout_dialog_cancel_button))
                         }
                     }
                 )
@@ -128,14 +131,14 @@ fun EmptyShoppingBuyList() {
     ) {
         Icon(
             imageVector = Icons.Outlined.ShoppingCart,
-            contentDescription = "Carrito de la compra vacío",
+            contentDescription = stringResource(R.string.empty_shopping_cart_icon_content_description),
             modifier = Modifier
                 .size(100.dp)
         )
 
         Spacer(modifier = Modifier.height(MEDIUM))
         Text(
-            text = "No hay carritos registrados",
+            text = stringResource(R.string.empty_shopping_cart_text),
             fontSize = 18.sp,
             fontWeight = FontWeight.Thin,
             textAlign = TextAlign.Center

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- AUTH -->
+    <string name="auth_fail_message">Falló el registro</string>
+    <string name="login_button_message">Iniciar sesión</string>
+    <string name="login_register_button_text">Crear cuenta</string>
+    <!-- HOME   -->
+    <string name="home_scaffold_title">Home Shopping</string>
+    <string name="logout_icon_content_description">Salir de la aplicación</string>
+    <string name="fab_createshoppingcart_content_description">Crear carrito</string>
+    <string name="logout_dialog_title">¿Estás seguro que quieres cerrar sesión</string>
+    <string name="logout_dialog_accept_button">Cerrar sesión</string>
+    <string name="logout_dialog_cancel_button">Cancel</string>
+    <string name="empty_shopping_cart_icon_content_description">Carrito de la compra vacío</string>
+    <string name="empty_shopping_cart_text">No hay carritos registrados</string>
+    <!-- Add Shopping Cart -->
+    <string name="addshoppingcart_scaffold_title">Add ShoppingCart</string>
+    <string name="backhome_icon_content_description">Volver al Home</string>
+    <string name="shoppingbasket_icon_content_description">Contenido del nuevo carrito</string>
+    <string name="seachbar_placeholder_text">Busca tu producto aquí</string>
+    <string name="clear_searchbar_content_description_icon">Limpiar searchBar</string>
+    <string name="remove_query_icon_content_description">Eliminar query</string>
+    <string name="empty_shopping_item_list_icon_content_description">Carrito de la compra vacío</string>
+    <string name="empty_item_list_text">No hay Items registrados</string>
+    <string name="empty_query_list_icon_content_description">Carrito de la compra vacío</string>
+    <string name="empty_query_list_text">Tus búsquedas estarán aquí</string>
+    <string name="add_item_fab_text_value">Agregar producto</string>
+    <!-- Add item-->
+    <string name="tab_camera_text">Cámara</string>
+    <string name="tab_storage_text">Galería</string>
+    <string name="add_item_scaffold_title">Crear producto</string>
+    <string name="add_item_back_createbasket_content_description">Volver a Add Item</string>
+    <string name="fab_take_photo_text">Tomar foto</string>
+    <string name="press_to_take_photo">Pulse para tomar una foto</string>
+    <string name="press_to_settings_permission">Pulse para ir a los ajustes y habilitarlo a mano</string>
+    <string name="press_to_request_permission">Es necesario que acepte los permisos de %1$s para continuar</string>
+    <string name="camera">cámara</string>
+</resources>

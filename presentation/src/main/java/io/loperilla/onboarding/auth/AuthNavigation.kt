@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
@@ -21,6 +22,7 @@ import io.loperilla.onboarding.auth.login.LoginScreen
 import io.loperilla.onboarding.auth.login.LoginViewModel
 import io.loperilla.onboarding.auth.register.RegisterScreen
 import io.loperilla.onboarding.auth.register.RegisterViewModel
+import io.loperilla.onboarding_presentation.R
 
 /*****
  * Project: HomeShopping
@@ -56,7 +58,7 @@ fun NavGraphBuilder.loginScreen(
                             .fillMaxWidth()
                             .background(Color.Red)
                     ) {
-                        Text("Falló el registro")
+                        Text(stringResource(R.string.auth_fail_message))
                     }
                 }
                 LoginScreen(
@@ -100,7 +102,7 @@ fun NavGraphBuilder.registerScreen(newDestination: (String) -> Unit) {
                             .fillMaxWidth()
                             .background(Color.Red)
                     ) {
-                        Text("Falló el registro")
+                        Text(stringResource(R.string.auth_fail_message))
                     }
                 }
                 RegisterScreen(

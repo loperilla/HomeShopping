@@ -7,11 +7,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.constraintlayout.compose.ConstraintLayout
 import io.loperilla.core_ui.LOW
 import io.loperilla.core_ui.button.FormButton
 import io.loperilla.core_ui.input.EmailInput
 import io.loperilla.core_ui.input.PasswordInput
+import io.loperilla.onboarding_presentation.R
 
 /*****
  * Project: CompraCasa
@@ -65,7 +67,7 @@ fun RegisterScreen(
         )
 
         FormButton(
-            textButton = "Registrar usuario",
+            textButton = stringResource(R.string.login_register_button_text),
             modifier = Modifier
                 .constrainAs(loginButton) {
                     start.linkTo(parent.start)

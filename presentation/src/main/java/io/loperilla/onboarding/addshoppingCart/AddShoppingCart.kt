@@ -50,6 +50,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -71,6 +72,7 @@ import io.loperilla.core_ui.input.UrlInput
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
 import io.loperilla.core_ui.routes.Routes
 import io.loperilla.model.database.ShoppingItem
+import io.loperilla.onboarding_presentation.R
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /*****
@@ -96,13 +98,13 @@ fun AddShoppingCart(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text("Add ShoppingCart")
+                    Text(stringResource(R.string.addshoppingcart_scaffold_title))
                 },
                 navigationIcon = {
                     IconButton(onClick = { popBackStack() }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Volver al Home"
+                            contentDescription = stringResource(R.string.backhome_icon_content_description)
                         )
                     }
                 },
@@ -128,7 +130,7 @@ fun AddShoppingCart(
                         ) {
                             Icon(
                                 Icons.Filled.ShoppingBasket,
-                                contentDescription = "Contenido del nuevo carrito"
+                                contentDescription = stringResource(R.string.shoppingbasket_icon_content_description)
                             )
                         }
                     }
@@ -162,13 +164,13 @@ fun AddShoppingCart(
                 active = searchBarActive,
                 onActiveChange = viewModel::changeInputActive,
                 placeholder = {
-                    Text("Busca tu producto aquí")
+                    Text(stringResource(R.string.seachbar_placeholder_text))
                 },
                 trailingIcon = {
                     IconButton(onClick = viewModel::removeInputQueryClicked) {
                         Icon(
                             imageVector = Icons.Outlined.Backspace,
-                            contentDescription = "Limpiar searchBar"
+                            contentDescription = stringResource(R.string.clear_searchbar_content_description_icon)
                         )
                     }
                 },
@@ -255,7 +257,7 @@ fun PreviousQuery(
 
                 Icon(
                     imageVector = Icons.Filled.Delete,
-                    contentDescription = "Eliminar query",
+                    contentDescription = stringResource(R.string.remove_query_icon_content_description),
                     modifier = Modifier
                         .size(24.dp)
                         .clickable {
@@ -279,14 +281,14 @@ fun EmptyShoppingItemList(
     ) {
         Icon(
             imageVector = Icons.Outlined.ShoppingCart,
-            contentDescription = "Carrito de la compra vacío",
+            contentDescription = stringResource(R.string.empty_shopping_item_list_icon_content_description),
             modifier = Modifier
                 .size(100.dp)
         )
 
         Spacer(modifier = Modifier.height(MEDIUM))
         Text(
-            text = "No hay Items registrados",
+            text = stringResource(R.string.empty_item_list_text),
             fontSize = 18.sp,
             fontWeight = FontWeight.Thin,
             textAlign = TextAlign.Center
@@ -305,14 +307,14 @@ fun EmptyQueryList(
     ) {
         Icon(
             imageVector = Icons.Outlined.Search,
-            contentDescription = "Carrito de la compra vacío",
+            contentDescription = stringResource(R.string.empty_query_list_icon_content_description),
             modifier = Modifier
                 .size(100.dp)
         )
 
         Spacer(modifier = Modifier.height(MEDIUM))
         Text(
-            text = "Tus búsquedas estarán aquí",
+            text = stringResource(R.string.empty_query_list_text),
             fontSize = 18.sp,
             fontWeight = FontWeight.Thin,
             textAlign = TextAlign.Center
@@ -328,11 +330,12 @@ fun AddShoppingCartFAB(
         onClick = onClickFab
     ) {
         Icon(
-            imageVector = Icons.Filled.Add, contentDescription = "Add",
+            imageVector = Icons.Filled.Add,
+            contentDescription = stringResource(R.string.add_item_fab_text_value),
             modifier = Modifier
                 .padding(end = LOW)
         )
-        Text("Agregar producto")
+        Text(stringResource(R.string.add_item_fab_text_value))
     }
 }
 

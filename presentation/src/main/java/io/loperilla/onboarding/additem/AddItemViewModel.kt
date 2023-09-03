@@ -1,5 +1,6 @@
 package io.loperilla.onboarding.additem
 
+import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,22 +17,17 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class AddItemViewModel @Inject constructor() : ViewModel() {
-    private var _userWantTakeAPhoto: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val userWantTakeAPhoto: StateFlow<Boolean> = _userWantTakeAPhoto
-
     private var _pagerUserInputEnabled: MutableStateFlow<Boolean> = MutableStateFlow(true)
     val pagerUserInputEnabled: StateFlow<Boolean> = _pagerUserInputEnabled
 
     fun userGoesToTakeAPhoto() {
         viewModelScope.launch {
-            _userWantTakeAPhoto.value = true
             _pagerUserInputEnabled.value = false
         }
     }
 
-    fun userTakeAPhoto() {
+    fun userTakeAPhoto(bitmap: Bitmap) {
         viewModelScope.launch {
-            _userWantTakeAPhoto.value = false
             _pagerUserInputEnabled.value = true
         }
     }
