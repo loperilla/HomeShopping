@@ -1,6 +1,7 @@
 package io.loperilla.datasource.database.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -23,4 +24,7 @@ interface QueryDao {
 
     @Query("SELECT * FROM QueryEntity WHERE `query` LIKE '%' || :inputToFilter || '%'")
     fun getQueriesBy(inputToFilter: String): Flow<List<QueryEntity>>
+
+    @Delete
+    fun removeQuery(queryToDelete: QueryEntity)
 }

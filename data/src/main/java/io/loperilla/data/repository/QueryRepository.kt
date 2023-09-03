@@ -29,4 +29,8 @@ class QueryRepository @Inject constructor(
             }
         }
     }
+
+    suspend fun removeQuery(queryToDelete: String) {
+        queryDao.removeQuery(QueryEntity(queryToDelete))
+    }
 }

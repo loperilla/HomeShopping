@@ -125,6 +125,12 @@ class AddShoppingCartViewModel @Inject constructor(
         }
     }
 
+    fun removeQuery(queryToDelete: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            queryUseCase.removeQuery(queryToDelete)
+        }
+    }
+
     fun createItem(name: String, url: String) {
         viewModelScope.launch {
             closeDialog()

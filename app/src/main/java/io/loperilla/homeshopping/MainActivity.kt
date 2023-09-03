@@ -16,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.loperilla.core_ui.HomeShoppingTheme
 import io.loperilla.core_ui.routes.Routes
 import io.loperilla.model.SplashUIState
+import io.loperilla.onboarding.additem.AddItem
 import io.loperilla.onboarding.addshoppingCart.AddShoppingCart
 import io.loperilla.onboarding.auth.loginScreen
 import io.loperilla.onboarding.auth.registerScreen
@@ -56,7 +57,7 @@ class MainActivity : ComponentActivity() {
                     startDestination = if (uiState == SplashUIState.NoAuthenticated)
                         Routes.AUTH.route
                     else
-                        Routes.HOME.route,
+                        Routes.NEW_ITEM.route,
                 ) {
                     navigation(startDestination = Routes.LOGIN.route, route = Routes.AUTH.route) {
                         loginScreen(navController::navigate)
@@ -69,6 +70,14 @@ class MainActivity : ComponentActivity() {
 
                     composable(Routes.ADD_SHOPPING.route) {
                         AddShoppingCart(
+                            popBackStack = {
+                                navController.popBackStack()
+                            },
+                            navController::navigate
+                        )
+                    }
+                    composable(Routes.NEW_ITEM.route) {
+                        AddItem(
                             popBackStack = {
                                 navController.popBackStack()
                             },

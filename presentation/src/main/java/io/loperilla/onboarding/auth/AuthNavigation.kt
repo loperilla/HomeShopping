@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -63,7 +64,8 @@ fun NavGraphBuilder.loginScreen(
                     passwordValue,
                     onEmailChange = loginViewModel::emailValueChange,
                     onPasswordChange = loginViewModel::passwordValueChange,
-                    modifier = Modifier,
+                    modifier = Modifier
+                        .background(MaterialTheme.colorScheme.background),
                     loginButtonClicked = loginViewModel::loginButtonClicked
                 ) {
                     newDestination(Routes.REGISTER.route)
@@ -106,7 +108,8 @@ fun NavGraphBuilder.registerScreen(newDestination: (String) -> Unit) {
                     passwordValue,
                     onEmailChange = registerViewModel::emailValueChange,
                     onPasswordChange = registerViewModel::passwordValueChange,
-                    modifier = Modifier,
+                    modifier = Modifier
+                        .background(MaterialTheme.colorScheme.background),
                     registerButtonClicked = registerViewModel::doRegister
                 )
             }

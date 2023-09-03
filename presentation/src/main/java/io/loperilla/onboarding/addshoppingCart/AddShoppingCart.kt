@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,18 +16,22 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.ShoppingBasket
 import androidx.compose.material.icons.outlined.AddAPhoto
 import androidx.compose.material.icons.outlined.Backspace
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
@@ -43,6 +48,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -63,6 +69,7 @@ import io.loperilla.core_ui.MEDIUM
 import io.loperilla.core_ui.input.TextInput
 import io.loperilla.core_ui.input.UrlInput
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
+import io.loperilla.core_ui.routes.Routes
 import io.loperilla.model.database.ShoppingItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -81,6 +88,7 @@ fun AddShoppingCart(
 ) {
     val viewModel: AddShoppingCartViewModel = hiltViewModel()
     val currentShoppingCartItemCount by viewModel.currentShoppingCartCount.collectAsStateWithLifecycle()
+    val searchBarActive by viewModel.searchBarActive.collectAsStateWithLifecycle()
     val previousQueryList by viewModel.queryList.collectAsStateWithLifecycle()
     val itemShoppingList by viewModel.itemShoppingList.collectAsStateWithLifecycle()
     val isFabClicked by viewModel.isAddItemFABClicked.collectAsStateWithLifecycle()
@@ -128,7 +136,11 @@ fun AddShoppingCart(
             )
         },
         floatingActionButton = {
-            AddShoppingCartFAB(viewModel::onFabClicked)
+            if (!searchBarActive) {
+                AddShoppingCartFAB {
+                    newDestination(Routes.NEW_ITEM.route)
+                }
+            }
         }
     ) {
         ConstraintLayout(
@@ -147,7 +159,7 @@ fun AddShoppingCart(
                 query = viewModel.searchInputQuery.collectAsStateWithLifecycle().value,
                 onQueryChange = viewModel::searchInputChange,
                 onSearch = viewModel::searchShoppingProductWithCurrentValue,
-                active = viewModel.searchBarActive.collectAsStateWithLifecycle().value,
+                active = searchBarActive,
                 onActiveChange = viewModel::changeInputActive,
                 placeholder = {
                     Text("Busca tu producto aquí")
@@ -168,15 +180,15 @@ fun AddShoppingCart(
                     }
             ) {
                 if (previousQueryList.isEmpty()) {
-                    Text(
-                        text = "Tus búsquedas anteriores estarán aquí",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Medium
+                    EmptyQueryList(
+                        modifier = Modifier
+                            .fillMaxSize()
                     )
                 } else {
                     PreviousQuery(
                         previousQueryList,
-                        viewModel::searchShoppingProductWithCurrentValue
+                        viewModel::searchShoppingProductWithCurrentValue,
+                        viewModel::removeQuery
                     )
                 }
             }
@@ -195,7 +207,7 @@ fun AddShoppingCart(
                     modifier = Modifier
                         .fillMaxSize()
                         .constrainAs(shoppingList) {
-                            top.linkTo(searchBar.bottom, LOW)
+                            top.linkTo(searchBar.bottom, MEDIUM)
                             start.linkTo(parent.start)
                             end.linkTo(parent.end)
                         },
@@ -211,26 +223,47 @@ fun AddShoppingCart(
 @Composable
 fun PreviousQuery(
     queryList: List<String>,
-    onSelectQuery: (String) -> Unit
+    onSelectQuery: (String) -> Unit,
+    onDeleteQueryClicked: (String) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(LOW),
-        horizontalAlignment = Alignment.Start
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         items(
             count = queryList.size,
         ) {
-            Text(
-                text = queryList[it],
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = LOW)
-                    .clickable {
-                        onSelectQuery(queryList[it])
-                    }
-            )
+                    .padding(MEDIUM),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+            ) {
+                Text(
+                    text = queryList[it],
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f, false)
+                        .clickable {
+                            onSelectQuery(queryList[it])
+                        },
+                    fontSize = 18.sp
+                )
+
+                Icon(
+                    imageVector = Icons.Filled.Delete,
+                    contentDescription = "Eliminar query",
+                    modifier = Modifier
+                        .size(24.dp)
+                        .clickable {
+                            onDeleteQueryClicked(queryList[it])
+                        },
+                    tint = Color.Red
+                )
+            }
         }
     }
 }
@@ -254,6 +287,32 @@ fun EmptyShoppingItemList(
         Spacer(modifier = Modifier.height(MEDIUM))
         Text(
             text = "No hay Items registrados",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Thin,
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+@Composable
+fun EmptyQueryList(
+    modifier: Modifier
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.Search,
+            contentDescription = "Carrito de la compra vacío",
+            modifier = Modifier
+                .size(100.dp)
+        )
+
+        Spacer(modifier = Modifier.height(MEDIUM))
+        Text(
+            text = "Tus búsquedas estarán aquí",
             fontSize = 18.sp,
             fontWeight = FontWeight.Thin,
             textAlign = TextAlign.Center
@@ -312,18 +371,26 @@ fun AddShoppingItemDialog(
     var urlInput by remember { mutableStateOf("") }
     var urlInputValid by remember { mutableStateOf(false) }
     Dialog(
-        onDismissRequest = dismissRequest
+        onDismissRequest = dismissRequest,
     ) {
-        Column {
+        ElevatedCard(
+            modifier = Modifier
+                .padding(MEDIUM),
+            shape = RoundedCornerShape(MEDIUM)
+        ) {
             UrlInput(
-                urlInput
+                urlInput,
+                modifier = Modifier
+                    .padding(LOW)
             ) { newInputValue, isValid ->
                 urlInput = newInputValue
                 urlInputValid = isValid
             }
 
             TextInput(
-                nameInput
+                nameInput,
+                modifier = Modifier
+                    .padding(LOW)
             ) { newInputValue, isValid ->
                 nameInput = newInputValue
                 nameInputValid = isValid
@@ -333,7 +400,10 @@ fun AddShoppingItemDialog(
                 onClick = {
                     onFinishCreate(nameInput, urlInput)
                 },
-                enabled = nameInputValid && urlInputValid
+                enabled = nameInputValid && urlInputValid,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(LOW)
             ) {
                 Text("Crear Item")
             }
@@ -361,6 +431,8 @@ fun ItemShopping(
                     .diskCachePolicy(CachePolicy.DISABLED)
                     .memoryCachePolicy(CachePolicy.ENABLED)
                     .build(),
+                modifier = Modifier
+                    .size(100.dp),
                 loading = {
                     CircularProgressIndicator()
                 },
@@ -370,13 +442,16 @@ fun ItemShopping(
                             .background(Color.Cyan)
                     )
                 },
-                contentDescription = "${item.name}_image"
+                contentDescription = "${item.name}_image",
+                filterQuality = FilterQuality.High
             )
 //            https://cdn.icon-icons.com/icons2/16/PNG/256/fruit_apple_food_1815.png
         } else {
             Icon(
                 imageVector = Icons.Outlined.AddAPhoto,
-                contentDescription = null
+                contentDescription = null,
+                modifier = Modifier
+                    .size(24.dp)
             )
         }
         Text(
@@ -397,7 +472,7 @@ fun AddShoppingCartPrev() {
                     AddShoppingCartFAB { }
                 }
             ) {
-                EmptyShoppingItemList(
+                EmptyQueryList(
                     modifier = Modifier.padding(it)
                 )
             }

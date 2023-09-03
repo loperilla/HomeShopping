@@ -1,6 +1,7 @@
 package io.loperilla.onboarding.auth.login
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -8,9 +9,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.constraintlayout.compose.ConstraintLayout
+import io.loperilla.core_ui.HomeShoppingTheme
 import io.loperilla.core_ui.button.FormButton
 import io.loperilla.core_ui.input.EmailInput
 import io.loperilla.core_ui.input.PasswordInput
+import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
 
 /*****
  * Project: CompraCasa
@@ -91,5 +94,23 @@ fun LoginScreen(
                 registerButtonClicked()
             }
         )
+    }
+}
+
+@PIXEL_33_NIGHT
+@Composable
+fun LoginScreenPrev() {
+    HomeShoppingTheme {
+        Surface {
+            LoginScreen(
+                "",
+                "",
+                { },
+                { },
+                Modifier,
+                { },
+                { }
+            )
+        }
     }
 }

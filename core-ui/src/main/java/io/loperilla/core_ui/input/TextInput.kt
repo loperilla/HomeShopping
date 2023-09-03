@@ -26,7 +26,7 @@ import io.loperilla.core_ui.LOW
 fun UrlInput(
     inputValue: String,
     modifier: Modifier = Modifier,
-    placeholderValue: String = "correo@dominio.com",
+    placeholderValue: String = "Introduzca una URL",
     onValueChange: (String, Boolean) -> Unit
 ) {
     OutlinedTextField(
@@ -61,7 +61,7 @@ fun UrlInput(
 fun TextInput(
     inputValue: String,
     modifier: Modifier = Modifier,
-    placeholderValue: String = "correo@dominio.com",
+    placeholderValue: String = "Introduzca texto",
     onValueChange: (String, Boolean) -> Unit
 ) {
     OutlinedTextField(

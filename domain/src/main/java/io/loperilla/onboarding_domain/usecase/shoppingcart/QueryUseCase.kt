@@ -15,4 +15,5 @@ class QueryUseCase @Inject constructor(
     operator fun invoke(query: String) = queryRepository.getQueriesBy(query)
 
     fun insertNewQuery(query: String) = queryRepository.insertNewQuery(query)
+    suspend fun removeQuery(queryToDelete: String) = queryRepository.removeQuery(queryToDelete)
 }
