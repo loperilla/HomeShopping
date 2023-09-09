@@ -13,10 +13,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import dagger.hilt.android.AndroidEntryPoint
-import io.loperilla.core_ui.HomeShoppingTheme
+import io.loperilla.core_ui.Screen
 import io.loperilla.core_ui.routes.Routes
 import io.loperilla.model.SplashUIState
-import io.loperilla.onboarding.additem.AddItem
+import io.loperilla.onboarding.additem.AddItemScreen
 import io.loperilla.onboarding.addshoppingCart.AddShoppingCart
 import io.loperilla.onboarding.auth.loginScreen
 import io.loperilla.onboarding.auth.registerScreen
@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         setContent {
-            HomeShoppingTheme {
+            Screen {
                 val viewModel: MainActivityViewModel = hiltViewModel()
                 val uiState: SplashUIState by viewModel.splashUiState.collectAsStateWithLifecycle()
 
@@ -95,7 +95,7 @@ class MainActivity : ComponentActivity() {
                         composable(
                             route = Routes.SHOPPING_BASKET.NEW_ITEM.route
                         ) {
-                            AddItem {
+                            AddItemScreen {
                                 navController.navigate(Routes.SHOPPING_BASKET.ADD_SHOPPING.route)
                             }
                         }

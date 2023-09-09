@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     kotlin("android")
+    alias(libs.plugins.androidJUnit5)
 }
 
 android {
@@ -43,6 +44,14 @@ android {
 dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
+
+    implementation(libs.timber)
+
+    //Test
+    testImplementation(libs.junit)
+    testImplementation(libs.assertk)
+    testImplementation(libs.bundles.jupiter)
+    testRuntimeOnly(libs.jupiter.engine)
 
     //Test
     testImplementation(libs.junit)

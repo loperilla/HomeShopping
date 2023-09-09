@@ -15,35 +15,70 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
+//Color.Yellow
 private val DarkColorScheme = darkColorScheme(
     background = AzulMarino,
     primary = GrutaAzul,
+    onPrimary = AzulMarino,
+    primaryContainer = AzulMarino,
+    onPrimaryContainer = AzulMarino,
+    inversePrimary = CuarzoRosaContent,
     secondary = AzulVerde,
-    tertiary = AzulBebe
+    onSecondary = AzulBebe,
+    secondaryContainer = AzulBebe,
+    onSecondaryContainer = AzulBebe,
+    tertiary = AzulBebe,
+    onTertiary = GrutaAzul,
+    tertiaryContainer = GrutaAzul,
+    onTertiaryContainer = GrutaAzul,
+    surface = AzulMarino,
+    onSurface = GrutaAzul,
+    error = Error,
+    onError = Error.copy(
+        alpha = 0.7f
+    ),
+    errorContainer = Error.copy(
+        alpha = 0.5f
+    ),
+    onErrorContainer = Error.copy(
+        alpha = 0.7f
+    )
 )
 
 private val LightColorScheme = lightColorScheme(
     background = CremaBackground,
     primary = CuarzoRosaContent,
+    onPrimary = CremaBackground,
+    primaryContainer = CremaBackground,
+    onPrimaryContainer = CremaBackground,
+    inversePrimary = GrutaAzul,
     secondary = Pink,
-    tertiary = CoralSecondary
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    onSecondary = CoralSecondary,
+    secondaryContainer = CoralSecondary,
+    onSecondaryContainer = CoralSecondary,
+    tertiary = CoralSecondary,
+    onTertiary = CremaBackground,
+    tertiaryContainer = CremaBackground,
+    onTertiaryContainer = CremaBackground,
+    surface = CremaBackground,
+    onSurface = CuarzoRosaContent,
+    error = Error,
+    onError = Error.copy(
+        alpha = 0.7f
+    ),
+    errorContainer = Error.copy(
+        alpha = 0.5f
+    ),
+    onErrorContainer = Error.copy(
+        alpha = 0.7f
+    )
 )
 
 @Composable
 fun HomeShoppingTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

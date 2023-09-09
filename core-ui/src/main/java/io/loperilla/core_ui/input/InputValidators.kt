@@ -1,17 +1,19 @@
 package io.loperilla.core_ui.input
 
-import android.util.Patterns
-
 /*****
  * Project: CompraCasa
  * From: io.loperilla.onboarding.utils
  * Created By Manuel Lopera on 22/4/23 at 19:55
  * All rights reserved 2023
  */
-object InputValidators {
-    fun isEmailValid(email: String) = Patterns.EMAIL_ADDRESS.matcher(email).matches()
+sealed class InputValidators {
+    data object EMAIL : InputValidators() {
+        fun isValid(email: String) = email.matches(Regex("^[A-Za-z0-9+_.-]+@(.+)\$"))
+    }
 
-    fun isPasswordValid(password: String) = password.length > 5
+    data object PASSWORD : InputValidators() {
+        fun isValid(password: String) = password.length > 5
+    }
 
     fun isURL(url: String): Boolean = try {
         java.net.URL(url).toURI()

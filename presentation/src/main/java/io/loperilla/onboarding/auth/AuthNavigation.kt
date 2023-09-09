@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,6 +17,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import io.loperilla.core_ui.Screen
+import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
 import io.loperilla.core_ui.routes.Routes
 import io.loperilla.model.auth.AuthResult
 import io.loperilla.onboarding.auth.login.LoginScreen
@@ -35,42 +38,44 @@ fun NavGraphBuilder.loginScreen(
     newDestination: (String) -> Unit
 ) {
     composable(Routes.AUTH.LOGIN.route) {
-        val loginViewModel: LoginViewModel = hiltViewModel()
-        val emailValue by loginViewModel.emailInputValue.collectAsStateWithLifecycle()
-        val passwordValue by loginViewModel.passwordInputValue.collectAsStateWithLifecycle()
-        val requestState: AuthResult by loginViewModel.loginRequestState.collectAsStateWithLifecycle()
+        Screen {
+            val loginViewModel: LoginViewModel = hiltViewModel()
+            val emailValue by loginViewModel.emailInputValue.collectAsStateWithLifecycle()
+            val passwordValue by loginViewModel.passwordInputValue.collectAsStateWithLifecycle()
+            val requestState: AuthResult by loginViewModel.loginRequestState.collectAsStateWithLifecycle()
 
-        when (requestState) {
-            AuthResult.AuthSuccess -> newDestination(Routes.HOME.route)
-            AuthResult.LoadingRequest -> {
-                Column {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                    )
-                }
-            }
-
-            else -> {
-                if (requestState != AuthResult.AuthNone) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(Color.Red)
-                    ) {
-                        Text(stringResource(R.string.auth_fail_message))
+            when (requestState) {
+                AuthResult.AuthSuccess -> newDestination(Routes.HOME.route)
+                AuthResult.LoadingRequest -> {
+                    Column {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .align(Alignment.CenterHorizontally)
+                        )
                     }
                 }
-                LoginScreen(
-                    emailValue,
-                    passwordValue,
-                    onEmailChange = loginViewModel::emailValueChange,
-                    onPasswordChange = loginViewModel::passwordValueChange,
-                    modifier = Modifier
-                        .background(MaterialTheme.colorScheme.background),
-                    loginButtonClicked = loginViewModel::loginButtonClicked
-                ) {
-                    newDestination(Routes.AUTH.REGISTER.route)
+
+                else -> {
+                    if (requestState != AuthResult.AuthNone) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(Color.Red)
+                        ) {
+                            Text(stringResource(R.string.auth_fail_message))
+                        }
+                    }
+                    LoginScreen(
+                        emailValue,
+                        passwordValue,
+                        onEmailChange = loginViewModel::emailValueChange,
+                        onPasswordChange = loginViewModel::passwordValueChange,
+                        modifier = Modifier
+                            .background(MaterialTheme.colorScheme.background),
+                        loginButtonClicked = loginViewModel::loginButtonClicked
+                    ) {
+                        newDestination(Routes.AUTH.REGISTER.route)
+                    }
                 }
             }
         }
@@ -79,42 +84,69 @@ fun NavGraphBuilder.loginScreen(
 
 fun NavGraphBuilder.registerScreen(newDestination: (String) -> Unit) {
     composable(Routes.AUTH.REGISTER.route) {
-        val registerViewModel: RegisterViewModel = hiltViewModel()
-        val emailValue by registerViewModel.emailInputValue.collectAsStateWithLifecycle()
-        val passwordValue by registerViewModel.passwordInputValue.collectAsStateWithLifecycle()
-        val authState by registerViewModel.authState.collectAsStateWithLifecycle()
+        Screen {
+            val registerViewModel: RegisterViewModel = hiltViewModel()
+            val emailValue by registerViewModel.emailInputValue.collectAsStateWithLifecycle()
+            val passwordValue by registerViewModel.passwordInputValue.collectAsStateWithLifecycle()
+            val authState by registerViewModel.authState.collectAsStateWithLifecycle()
 
-        when (authState) {
-            AuthResult.AuthSuccess -> newDestination(Routes.HOME.route)
-            AuthResult.LoadingRequest -> {
-                Column {
-                    CircularProgressIndicator(
+            when (authState) {
+                AuthResult.AuthSuccess -> newDestination(Routes.HOME.route)
+                AuthResult.LoadingRequest -> {
+                    Column {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .align(Alignment.CenterHorizontally)
+                        )
+                    }
+                }
+
+                else -> {
+                    if (authState != AuthResult.AuthNone) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(Color.Red)
+                        ) {
+                            Text(stringResource(R.string.auth_fail_message))
+                        }
+                    }
+                    RegisterScreen(
+                        emailValue,
+                        passwordValue,
+                        onEmailChange = registerViewModel::emailValueChange,
+                        onPasswordChange = registerViewModel::passwordValueChange,
                         modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
+                            .background(MaterialTheme.colorScheme.background),
+                        registerButtonClicked = registerViewModel::doRegister
                     )
                 }
             }
-
-            else -> {
-                if (authState != AuthResult.AuthNone) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(Color.Red)
-                    ) {
-                        Text(stringResource(R.string.auth_fail_message))
-                    }
-                }
-                RegisterScreen(
-                    emailValue,
-                    passwordValue,
-                    onEmailChange = registerViewModel::emailValueChange,
-                    onPasswordChange = registerViewModel::passwordValueChange,
-                    modifier = Modifier
-                        .background(MaterialTheme.colorScheme.background),
-                    registerButtonClicked = registerViewModel::doRegister
-                )
-            }
         }
+    }
+}
+
+@PIXEL_33_NIGHT
+@Composable
+fun LoginScreenPrev() {
+    Screen {
+        LoginScreen(
+            "",
+            "",
+            onEmailChange = {
+
+            },
+            onPasswordChange = {
+
+            },
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.background),
+            loginButtonClicked = {
+
+            },
+            registerButtonClicked = {
+
+            }
+        )
     }
 }

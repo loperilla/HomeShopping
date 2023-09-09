@@ -1,5 +1,6 @@
 package io.loperilla.onboarding.additem
 
+import android.graphics.Bitmap
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,7 +19,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
@@ -51,9 +51,9 @@ import kotlinx.coroutines.launch
  * All rights reserved 2023
  */
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun AddItem(
+fun AddItemScreen(
     popBackStack: () -> Unit
 ) {
     val viewModel: AddItemViewModel = hiltViewModel()
@@ -62,8 +62,6 @@ fun AddItem(
     val isInputValid by viewModel.isInputValid.collectAsStateWithLifecycle()
     val isBitmapSelected by viewModel.bitmapSelected.collectAsStateWithLifecycle()
     val isInsertSuccess by viewModel.insertItemSuccess.collectAsStateWithLifecycle()
-
-    val coroutineScope = rememberCoroutineScope()
 
     val tabRowItems = listOf(
         TabRowItem(
@@ -81,13 +79,39 @@ fun AddItem(
         }
     )
 
+    AddItem(
+        popBackStack,
+        isInsertSuccess,
+        tabRowItems,
+        pagerUserInputEnabled,
+        inputValue,
+        viewModel::inputChange,
+        isInputValid,
+        isBitmapSelected,
+        viewModel::addProduct
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@Composable
+fun AddItem(
+    popBackStack: () -> Unit,
+    isInsertSuccess: Boolean = false,
+    tabRowItems: List<TabRowItem> = listOf(),
+    pagerUserInputEnabled: Boolean = true,
+    inputValue: String = "",
+    onInputValueChange: (String, Boolean) -> Unit,
+    isInputValid: Boolean = false,
+    isBitmapSelected: Bitmap? = null,
+    addProduct: () -> Unit
+) {
+    val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(
         initialPage = 0,
         initialPageOffsetFraction = 0f
     ) {
         tabRowItems.size
     }
-
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -165,7 +189,9 @@ fun AddItem(
             }
             TextInput(
                 inputValue,
-                onValueChange = viewModel::inputChange,
+                onValueChange = { newValue, isValid ->
+                    onInputValueChange(newValue, isValid)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(MEDIUM)
@@ -177,9 +203,11 @@ fun AddItem(
             )
 
             FormButton(
-                "Agregar Producto",
+                stringResource(R.string.add_product),
                 enableButton = isInputValid && isBitmapSelected != null,
-                onClickButton = viewModel::addProduct,
+                onClickButton = {
+                    addProduct()
+                },
                 modifier = Modifier
                     .padding(MEDIUM)
                     .constrainAs(button) {
@@ -190,16 +218,35 @@ fun AddItem(
             )
         }
     }
+
 }
 
 @PIXEL_33_NIGHT
 @Composable
 fun AddItemPrev() {
     HomeShoppingTheme {
-        Surface {
-            AddItem {
-
-            }
-        }
+        AddItem(
+            popBackStack = {},
+            onInputValueChange = { _, _ -> },
+            addProduct = {},
+            tabRowItems = listOf(
+                TabRowItem(
+                    title = stringResource(R.string.tab_camera_text)
+                ) {
+                    Text("Soy Camera")
+                },
+                TabRowItem(
+                    title = stringResource(R.string.tab_storage_text)
+                ) {
+                    Text("Soy Storage")
+                }
+            )
+//                isBitmapSelected = null,
+//                tabRowItems = listOf(),
+//                pagerUserInputEnabled = true,
+//                inputValue = "",
+//                isInputValid = false,
+//                isInsertSuccess = false
+        )
     }
 }

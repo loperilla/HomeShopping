@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="empty_lbl">Este input está vacío</string>
+    <string name="password_text_description">Contraseña no válida(superior a 5 caracteres)</string>
+    <string name="email_text_description">Email no válido</string>
 </resources>

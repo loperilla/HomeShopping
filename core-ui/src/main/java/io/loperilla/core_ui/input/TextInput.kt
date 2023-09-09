@@ -23,41 +23,6 @@ import io.loperilla.core_ui.LOW
  */
 
 @Composable
-fun UrlInput(
-    inputValue: String,
-    onValueChange: (String, Boolean) -> Unit,
-    modifier: Modifier = Modifier,
-    placeholderValue: String = "Introduzca una URL"
-) {
-    OutlinedTextField(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = LOW),
-        value = inputValue,
-        singleLine = true,
-        leadingIcon = {
-            Icon(imageVector = Icons.Outlined.Link, contentDescription = "emailIcon")
-        },
-        placeholder = {
-            Text(text = placeholderValue)
-        },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-        onValueChange = {
-            onValueChange(
-                it,
-                InputValidators.isURL(it)
-            )
-        },
-        colors = TextFieldDefaults.colors(
-            focusedTextColor = Color(0xFF636262),
-            focusedContainerColor = Color(0xFFDEDDDD),
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent
-        )
-    )
-}
-
-@Composable
 fun TextInput(
     inputValue: String,
     onValueChange: (String, Boolean) -> Unit,

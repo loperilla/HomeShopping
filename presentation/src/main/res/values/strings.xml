@@ -37,5 +37,6 @@
     <string name="camera">cámara</string>
     <string name="select_storage_image_text">Selecciona la foto de la galería</string>
     <string name="storage">almacenamiento</string>
+    <string name="add_product">Agregar Producto</string>
 
 </resources>

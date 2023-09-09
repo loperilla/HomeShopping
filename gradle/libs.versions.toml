@@ -1,8 +1,9 @@
 [versions]
 accompanist_version = "0.32.0"
 agp = "8.1.1"
+android-junit5 = "1.9.3.0"
 androidx-activity = "1.7.2"
-androidx-lifecycle = "2.6.1"
+androidx-lifecycle = "2.6.2"
 androidx-test-espresso = "3.5.1"
 androidx-test-ext = "1.1.5"
 camerax_version = "1.3.0-rc01"
@@ -29,12 +30,12 @@ camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = 
 camera-view = { module = "androidx.camera:camera-view", version.ref = "camerax_version" }
 camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camerax_version" }
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
-compose-bom = "androidx.compose:compose-bom:2023.08.00"
+compose-bom = "androidx.compose:compose-bom:2023.09.00"
 compose-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "compose-compiler" }
 compose-constraint = "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 compose-material3 = "androidx.compose.material3:material3:1.1.1"
-compose-material_icons_extends = "androidx.compose.material:material-icons-extended:1.5.0"
-compose-navigation = "androidx.navigation:navigation-compose:2.7.1"
+compose-material_icons_extends = "androidx.compose.material:material-icons-extended:1.5.1"
+compose-navigation = "androidx.navigation:navigation-compose:2.7.2"
 compose-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 compose-ui = { module = "androidx.compose.ui:ui" }
 compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
@@ -116,6 +117,7 @@ jupiter = [
 [plugins]
 android-junit = "de.mannodermaus.android-junit5:1.9.3.0"
 androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidJUnit5 = { id = "de.mannodermaus.android-junit5", version.ref = "android-junit5" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 ben-manes-versions = "com.github.ben-manes.versions:0.47.0"
 kotlin-android = "org.jetbrains.kotlin.android:1.9.10"

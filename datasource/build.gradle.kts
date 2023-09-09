@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.androidJUnit5)
     kotlin("android")
-    kotlin("kapt")
     id("dagger.hilt.android.plugin")
     alias(libs.plugins.kspPlugin)
 }
@@ -56,4 +56,10 @@ dependencies {
     implementation(libs.room.ktx)
     annotationProcessor(libs.room.compiler)
     ksp(libs.room.compiler)
+
+    //Test
+    testImplementation(libs.junit)
+    testImplementation(libs.assertk)
+    testImplementation(libs.bundles.jupiter)
+    testRuntimeOnly(libs.jupiter.engine)
 }
