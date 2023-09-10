@@ -119,7 +119,7 @@ android-junit = "de.mannodermaus.android-junit5:1.9.3.0"
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidJUnit5 = { id = "de.mannodermaus.android-junit5", version.ref = "android-junit5" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
-ben-manes-versions = "com.github.ben-manes.versions:0.47.0"
+ben-manes-versions = "com.github.ben-manes.versions:0.48.0"
 kotlin-android = "org.jetbrains.kotlin.android:1.9.10"
 kspPlugin = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 version-catalog-update = "nl.littlerobots.version-catalog-update:0.8.1"

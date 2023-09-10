@@ -11,8 +11,7 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,8 +28,10 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import io.loperilla.core_ui.R
 import io.loperilla.core_ui.Screen
+import io.loperilla.core_ui.TextSmallSize
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
 import io.loperilla.core_ui.spacers.MediumSpacer
+import io.loperilla.core_ui.text.TextSemiBold
 import io.loperilla.core_ui.text.TextThin
 import kotlin.reflect.KFunction1
 
@@ -52,7 +53,8 @@ fun EmailInput(
         inputValue = inputValue,
         placeholderValue = placeholderValue,
         errorTextDescription = stringResource(R.string.email_text_description),
-        modifier,
+        labelText = stringResource(R.string.email_label),
+        modifier = modifier,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
         validator = InputValidators.EMAIL::isValid,
         onValueChange = onValueChange,
@@ -74,6 +76,7 @@ fun PasswordInput(
         inputValue = inputValue,
         placeholderValue = placeholderValue,
         errorTextDescription = stringResource(R.string.password_text_description),
+        labelText = stringResource(R.string.password_label),
         modifier = modifier,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         validator = InputValidators.PASSWORD::isValid,
@@ -108,6 +111,7 @@ fun PasswordInput(
 fun CommonInput(
     inputValue: String,
     placeholderValue: String,
+    labelText: String,
     errorTextDescription: String,
     modifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions,
@@ -143,9 +147,14 @@ fun CommonInput(
         errorTrailingIconColor = MaterialTheme.colorScheme.error,
         focusedIndicatorColor = Color.Transparent,
         unfocusedIndicatorColor = Color.Transparent,
-        errorSupportingTextColor = MaterialTheme.colorScheme.error
+        focusedLabelColor = MaterialTheme.colorScheme.inversePrimary,
+        unfocusedLabelColor = MaterialTheme.colorScheme.inversePrimary.copy(
+            alpha = 0.7f
+        ),
+        errorLabelColor = MaterialTheme.colorScheme.error,
+        errorSupportingTextColor = MaterialTheme.colorScheme.error,
     )
-    OutlinedTextField(
+    TextField(
         modifier = modifier
             .fillMaxWidth()
             .onFocusChanged {
@@ -156,8 +165,14 @@ fun CommonInput(
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
         isError = hasBadInput && !hasFocus,
+        label = {
+            TextSemiBold(
+                labelText,
+                textSize = TextSmallSize
+            )
+        },
         placeholder = {
-            Text(text = placeholderValue)
+            TextThin(text = placeholderValue)
         },
         keyboardOptions = keyboardOptions,
         onValueChange = { newValue ->

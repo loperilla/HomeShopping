@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,7 +17,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import io.loperilla.core_ui.Screen
-import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
 import io.loperilla.core_ui.routes.Routes
 import io.loperilla.model.auth.AuthResult
 import io.loperilla.onboarding.auth.login.LoginScreen
@@ -123,30 +121,5 @@ fun NavGraphBuilder.registerScreen(newDestination: (String) -> Unit) {
                 }
             }
         }
-    }
-}
-
-@PIXEL_33_NIGHT
-@Composable
-fun LoginScreenPrev() {
-    Screen {
-        LoginScreen(
-            "",
-            "",
-            onEmailChange = {
-
-            },
-            onPasswordChange = {
-
-            },
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.background),
-            loginButtonClicked = {
-
-            },
-            registerButtonClicked = {
-
-            }
-        )
     }
 }

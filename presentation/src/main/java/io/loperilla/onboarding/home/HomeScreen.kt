@@ -20,8 +20,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -35,10 +35,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.loperilla.core_ui.HomeShoppingTheme
 import io.loperilla.core_ui.MEDIUM
+import io.loperilla.core_ui.Screen
+import io.loperilla.core_ui.TextSmallSize
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
 import io.loperilla.core_ui.routes.Routes
+import io.loperilla.core_ui.text.TextSemiBold
 import io.loperilla.onboarding_presentation.R
 
 /*****
@@ -61,59 +63,75 @@ fun HomeScreen(newDestination: (String) -> Unit) {
         newDestination(Routes.AUTH.route)
         return
     }
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(stringResource(R.string.home_scaffold_title))
-                },
-                actions = {
-                    IconButton(onClick = { homeViewModel.showLogoutDialog() }) {
-                        Icon(
-                            imageVector = Icons.Outlined.Logout,
-                            contentDescription = stringResource(R.string.logout_icon_content_description)
+    Screen {
+        Scaffold(
+            topBar = {
+                CenterAlignedTopAppBar(
+                    title = {
+                        TextSemiBold(
+                            stringResource(R.string.home_scaffold_title)
                         )
+                    },
+                    actions = {
+                        IconButton(onClick = { homeViewModel.showLogoutDialog() }) {
+                            Icon(
+                                imageVector = Icons.Outlined.Logout,
+                                contentDescription = stringResource(R.string.logout_icon_content_description)
+                            )
+                        }
                     }
+                )
+            },
+            floatingActionButton = {
+                FloatingActionButton(
+                    onClick = { newDestination(Routes.SHOPPING_BASKET.route) }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Add,
+                        contentDescription = stringResource(R.string.fab_createshoppingcart_content_description)
+                    )
                 }
-            )
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { newDestination(Routes.SHOPPING_BASKET.route) }
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = stringResource(R.string.fab_createshoppingcart_content_description)
-                )
             }
-        }
-    ) {
-        Box(modifier = Modifier.padding(it)) {
-            if (showLogoutDialog) {
-                AlertDialog(
-                    icon = {
-                        Icon(imageVector = Icons.Outlined.ExitToApp, contentDescription = "ExitApp")
-                    },
-                    onDismissRequest = { homeViewModel.hideLogoutDialog() },
-                    title = { Text(stringResource(R.string.logout_dialog_title)) },
-                    confirmButton = {
-                        TextButton(onClick = { homeViewModel.doLogout() }) {
-                            Text(stringResource(R.string.logout_dialog_accept_button))
-                        }
-                    },
-                    dismissButton = {
-                        TextButton(onClick = { homeViewModel.hideLogoutDialog() }) {
-                            Text(stringResource(R.string.logout_dialog_cancel_button))
-                        }
-                    }
-                )
-            }
-            if (shoppingBuyList.isNotEmpty()) {
-                LazyColumn {
+        ) {
+            Box(modifier = Modifier.padding(it)) {
+                if (showLogoutDialog) {
+                    AlertDialog(
+                        icon = {
+                            Icon(imageVector = Icons.Outlined.ExitToApp, contentDescription = "ExitApp")
+                        },
+                        onDismissRequest = { homeViewModel.hideLogoutDialog() },
+                        title = { TextSemiBold(stringResource(R.string.logout_dialog_title)) },
+                        confirmButton = {
+                            TextButton(onClick = { homeViewModel.doLogout() }) {
+                                TextSemiBold(
+                                    stringResource(R.string.logout_dialog_accept_button),
+                                    textSize = TextSmallSize,
+                                    textColor = MaterialTheme.colorScheme.inversePrimary
+                                )
+                            }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = { homeViewModel.hideLogoutDialog() }) {
+                                TextSemiBold(
+                                    stringResource(R.string.logout_dialog_cancel_button),
+                                    textSize = TextSmallSize,
+                                    textColor = MaterialTheme.colorScheme.inversePrimary
+                                )
+                            }
+                        },
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        iconContentColor = MaterialTheme.colorScheme.inversePrimary,
+                        titleContentColor = MaterialTheme.colorScheme.inversePrimary,
+                        textContentColor = MaterialTheme.colorScheme.inversePrimary,
+                    )
+                }
+                if (shoppingBuyList.isNotEmpty()) {
+                    LazyColumn {
 
+                    }
+                } else {
+                    EmptyShoppingBuyList()
                 }
-            } else {
-                EmptyShoppingBuyList()
             }
         }
     }
@@ -149,9 +167,9 @@ fun EmptyShoppingBuyList() {
 @PIXEL_33_NIGHT
 @Composable
 fun EmptyShoppingBuyListPrev() {
-    HomeShoppingTheme {
-        Surface {
-            EmptyShoppingBuyList()
+    Screen {
+        HomeScreen {
+
         }
     }
 }

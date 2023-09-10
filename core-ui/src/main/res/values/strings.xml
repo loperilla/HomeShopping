@@ -3,4 +3,6 @@
     <string name="empty_lbl">Este input está vacío</string>
     <string name="password_text_description">Contraseña no válida(superior a 5 caracteres)</string>
     <string name="email_text_description">Email no válido</string>
+    <string name="password_label">Contraseña</string>
+    <string name="email_label">Correo electrónico</string>
 </resources>

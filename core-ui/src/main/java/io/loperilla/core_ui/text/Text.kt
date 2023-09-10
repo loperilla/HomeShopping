@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import io.loperilla.core_ui.Screen
@@ -26,11 +27,13 @@ import io.loperilla.core_ui.spacers.LowSpacer
 fun TextRegular(
     text: String,
     modifier: Modifier = Modifier,
-    textSize: TextUnit = TextBodySize
+    textSize: TextUnit = TextBodySize,
+    textColor: Color = Color.Unspecified
 ) {
     Text(
         text,
         modifier,
+        color = textColor,
         fontSize = textSize,
         fontWeight = FontWeight.Medium,
         fontFamily = myFontFamily
@@ -41,11 +44,13 @@ fun TextRegular(
 fun TextSemiBold(
     text: String,
     modifier: Modifier = Modifier,
-    textSize: TextUnit = TextBodySize
+    textSize: TextUnit = TextBodySize,
+    textColor: Color = Color.Unspecified
 ) {
     Text(
         text,
         modifier,
+        color = textColor,
         fontSize = textSize,
         fontWeight = FontWeight.SemiBold,
         fontFamily = myFontFamily
@@ -56,11 +61,13 @@ fun TextSemiBold(
 fun TextTitle(
     text: String,
     modifier: Modifier = Modifier,
-    textSize: TextUnit = TextTitleSize
+    textSize: TextUnit = TextTitleSize,
+    textColor: Color = Color.Unspecified
 ) {
     Text(
         text,
         modifier,
+        color = textColor,
         fontSize = textSize,
         fontWeight = FontWeight.Bold,
         fontFamily = myFontFamily
@@ -71,11 +78,13 @@ fun TextTitle(
 fun TextThin(
     text: String,
     modifier: Modifier = Modifier,
-    textSize: TextUnit = TextSmallSize
+    textSize: TextUnit = TextSmallSize,
+    textColor: Color = Color.Unspecified
 ) {
     Text(
         text,
         modifier,
+        color = textColor,
         fontSize = textSize,
         fontWeight = FontWeight.Thin,
         fontFamily = myFontFamily
