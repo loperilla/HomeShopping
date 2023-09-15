@@ -12,7 +12,7 @@ import javax.inject.Inject
 class QueryUseCase @Inject constructor(
     private val queryRepository: QueryRepository
 ) {
-    operator fun invoke(query: String) = queryRepository.getQueriesBy(query)
+    operator fun invoke() = queryRepository.getQueriesBy()
 
     fun insertNewQuery(query: String) = queryRepository.insertNewQuery(query)
     suspend fun removeQuery(queryToDelete: String) = queryRepository.removeQuery(queryToDelete)

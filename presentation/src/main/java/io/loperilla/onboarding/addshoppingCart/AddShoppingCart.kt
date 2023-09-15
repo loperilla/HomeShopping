@@ -35,7 +35,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -57,10 +56,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.SubcomposeAsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
-import io.loperilla.core_ui.HomeShoppingTheme
 import io.loperilla.core_ui.LOW
 import io.loperilla.core_ui.MEDIUM
+import io.loperilla.core_ui.Screen
+import io.loperilla.core_ui.TextSmallSize
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
+import io.loperilla.core_ui.text.TextSemiBold
 import io.loperilla.model.database.ShoppingItem
 import io.loperilla.onboarding_presentation.R
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -83,124 +84,159 @@ fun AddShoppingCart(
     val searchBarActive by viewModel.searchBarActive.collectAsStateWithLifecycle()
     val previousQueryList by viewModel.queryList.collectAsStateWithLifecycle()
     val itemShoppingList by viewModel.itemShoppingList.collectAsStateWithLifecycle()
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(stringResource(R.string.addshoppingcart_scaffold_title))
-                },
-                navigationIcon = {
-                    IconButton(onClick = { popBackStack() }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.backhome_icon_content_description)
-                        )
-                    }
-                },
-                actions = {
-                    BadgedBox(
-                        badge = {
-                            if (currentShoppingCartItemCount > 0) {
-                                Badge {
-                                    Text(
-                                        currentShoppingCartItemCount.toString(),
-                                        modifier = Modifier.semantics {
-                                            contentDescription = "$currentShoppingCartItemCount items"
-                                        }
-                                    )
-                                }
-                            }
-                        },
-                        modifier = Modifier
-                            .padding(end = MEDIUM)
-                    ) {
-                        IconButton(
-                            onClick = {}, enabled = currentShoppingCartItemCount > 0
-                        ) {
+    Screen {
+        Scaffold(
+            topBar = {
+                CenterAlignedTopAppBar(
+                    title = {
+                        Text(stringResource(R.string.addshoppingcart_scaffold_title))
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = { popBackStack() }) {
                             Icon(
-                                Icons.Filled.ShoppingBasket,
-                                contentDescription = stringResource(R.string.shoppingbasket_icon_content_description)
+                                imageVector = Icons.Filled.ArrowBack,
+                                contentDescription = stringResource(R.string.backhome_icon_content_description)
                             )
                         }
+                    },
+                    actions = {
+                        BadgedBox(
+                            badge = {
+                                if (currentShoppingCartItemCount > 0) {
+                                    Badge {
+                                        Text(
+                                            currentShoppingCartItemCount.toString(),
+                                            modifier = Modifier.semantics {
+                                                contentDescription = "$currentShoppingCartItemCount items"
+                                            }
+                                        )
+                                    }
+                                }
+                            },
+                            modifier = Modifier
+                                .padding(end = MEDIUM)
+                        ) {
+                            IconButton(
+                                onClick = {},
+                                enabled = currentShoppingCartItemCount > 0
+                            ) {
+                                Icon(
+                                    Icons.Filled.ShoppingBasket,
+                                    contentDescription = stringResource(R.string.shoppingbasket_icon_content_description)
+                                )
+                            }
+                        }
                     }
-                }
-            )
-        },
-        floatingActionButton = {
-            if (!searchBarActive) {
-                AddShoppingCartFAB {
-                    navigateToNewItem()
+                )
+            },
+            floatingActionButton = {
+                if (!searchBarActive) {
+                    AddShoppingCartFAB {
+                        navigateToNewItem()
+                    }
                 }
             }
-        }
-    ) {
-        ConstraintLayout(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
         ) {
-            val (searchBar, emptyItemList, shoppingList) = createRefs()
-            SearchBar(
-                query = viewModel.searchInputQuery.collectAsStateWithLifecycle().value,
-                onQueryChange = viewModel::searchInputChange,
-                onSearch = viewModel::searchShoppingProductWithCurrentValue,
-                active = searchBarActive,
-                onActiveChange = viewModel::changeInputActive,
-                placeholder = {
-                    Text(stringResource(R.string.seachbar_placeholder_text))
-                },
-                trailingIcon = {
-                    IconButton(onClick = viewModel::removeInputQueryClicked) {
-                        Icon(
-                            imageVector = Icons.Outlined.Backspace,
-                            contentDescription = stringResource(R.string.clear_searchbar_content_description_icon)
-                        )
-                    }
-                },
+            AddShoppingCartScreen(
+                searchBarQueryValue = viewModel.searchInputQuery.collectAsStateWithLifecycle().value,
+                viewModel::searchInputChange,
+                viewModel::searchShoppingProductWithCurrentValue,
+                searchBarActive,
+                viewModel::changeInputActive,
+                viewModel::removeInputQueryClicked,
+                previousQueryList,
+                viewModel::removeQuery,
+                itemShoppingList,
                 modifier = Modifier
-                    .constrainAs(searchBar) {
-                        top.linkTo(parent.top)
+                    .fillMaxSize()
+                    .padding(it)
+            )
+
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AddShoppingCartScreen(
+    searchBarQueryValue: String,
+    searchInputChange: (String) -> Unit,
+    searchShoppingProductWithCurrentValue: (String) -> Unit,
+    isSearchBarActive: Boolean,
+    changeInputActive: (Boolean) -> Unit,
+    removeInputQueryClicked: () -> Unit,
+    previousQueryList: List<String>,
+    removeQuery: (String) -> Unit,
+    itemShoppingList: List<ShoppingItem>,
+    modifier: Modifier = Modifier
+) {
+    ConstraintLayout(
+        modifier = modifier
+    ) {
+        val (searchBar, emptyItemList, shoppingList) = createRefs()
+        SearchBar(
+            query = searchBarQueryValue,
+            onQueryChange = searchInputChange,
+            onSearch = searchShoppingProductWithCurrentValue,
+            active = isSearchBarActive,
+            onActiveChange = changeInputActive,
+            placeholder = {
+                Text(stringResource(R.string.seachbar_placeholder_text))
+            },
+            trailingIcon = {
+                IconButton(onClick = removeInputQueryClicked) {
+                    Icon(
+                        imageVector = Icons.Outlined.Backspace,
+                        contentDescription = stringResource(R.string.clear_searchbar_content_description_icon)
+                    )
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = LOW)
+                .constrainAs(searchBar) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+        ) {
+            if (previousQueryList.isEmpty()) {
+                EmptyQueryList(
+                    modifier = Modifier
+                        .fillMaxSize()
+                )
+            } else {
+                PreviousQuery(
+                    previousQueryList,
+                    searchShoppingProductWithCurrentValue,
+                    removeQuery
+                )
+            }
+        }
+        if (itemShoppingList.isEmpty()) {
+            EmptyShoppingItemList(
+                modifier = Modifier
+                    .padding(MEDIUM)
+                    .constrainAs(emptyItemList) {
+                        top.linkTo(searchBar.bottom, LOW)
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
                     }
-            ) {
-                if (previousQueryList.isEmpty()) {
-                    EmptyQueryList(
-                        modifier = Modifier
-                            .fillMaxSize()
-                    )
-                } else {
-                    PreviousQuery(
-                        previousQueryList,
-                        viewModel::searchShoppingProductWithCurrentValue,
-                        viewModel::removeQuery
-                    )
+            )
+        } else {
+            ItemShoppinListScreen(
+                itemShoppingList = itemShoppingList,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .constrainAs(shoppingList) {
+                        top.linkTo(searchBar.bottom, MEDIUM)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    },
+                onItemClicked = { itemClicked ->
+
                 }
-            }
-            if (itemShoppingList.isEmpty()) {
-                EmptyShoppingItemList(
-                    modifier = Modifier
-                        .padding(MEDIUM)
-                        .constrainAs(emptyItemList) {
-                            top.linkTo(searchBar.bottom, LOW)
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                        }
-                )
-            } else {
-                ItemShoppinListScreen(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .constrainAs(shoppingList) {
-                            top.linkTo(searchBar.bottom, MEDIUM)
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                        },
-                    itemShoppingList
-                ) { itemClicked ->
-//                viewModel.itemWasSelected(itemClicked)
-                }
-            }
+            )
         }
     }
 }
@@ -255,7 +291,7 @@ fun PreviousQuery(
 
 @Composable
 fun EmptyShoppingItemList(
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier,
@@ -318,15 +354,18 @@ fun AddShoppingCartFAB(
             modifier = Modifier
                 .padding(end = LOW)
         )
-        Text(stringResource(R.string.add_item_fab_text_value))
+        TextSemiBold(
+            stringResource(R.string.add_item_fab_text_value),
+            textSize = TextSmallSize
+        )
     }
 }
 
 @Composable
 fun ItemShoppinListScreen(
-    modifier: Modifier,
     itemShoppingList: List<ShoppingItem>,
-    onItemClicked: (ShoppingItem) -> Unit
+    onItemClicked: (ShoppingItem) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
         modifier = modifier,
@@ -350,7 +389,7 @@ fun ItemShoppinListScreen(
 @Composable
 fun ItemShopping(
     item: ShoppingItem,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
@@ -396,22 +435,42 @@ fun ItemShopping(
     }
 }
 
+fun shoppingItemListMocked(): List<ShoppingItem> = listOf(
+    ShoppingItem(
+        name = "Manzana",
+        imageUrl = "https://cdn.icon-icons.com/icons2/16/PNG/256/fruit_apple_food_1815.png"
+    ), ShoppingItem(
+        name = "Pera",
+        imageUrl = "https://cdn.icon-icons.com/icons2/16/PNG/256/fruit_apple_food_1815.png"
+    )
+)
+
 @PIXEL_33_NIGHT
 @Composable
 fun AddShoppingCartPrev() {
-    HomeShoppingTheme {
-        Surface {
-            Scaffold(
-                modifier = Modifier
-                    .fillMaxSize(),
-                floatingActionButton = {
-                    AddShoppingCartFAB { }
-                }
-            ) {
-                EmptyQueryList(
-                    modifier = Modifier.padding(it)
-                )
+    Screen {
+        Scaffold(
+            modifier = Modifier
+                .fillMaxSize(),
+            floatingActionButton = {
+                AddShoppingCartFAB { }
             }
+        ) {
+            AddShoppingCartScreen(
+                searchBarQueryValue = "",
+                searchInputChange = {},
+                searchShoppingProductWithCurrentValue = {},
+                isSearchBarActive = false,
+                changeInputActive = {},
+                removeInputQueryClicked = {},
+                previousQueryList = listOf(
+                    "Manzana", "Pera"
+                ),
+                removeQuery = {},
+                itemShoppingList = emptyList(),
+                modifier = Modifier
+                    .padding(it)
+            )
         }
     }
 }

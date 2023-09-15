@@ -18,12 +18,8 @@ class QueryRepository @Inject constructor(
     fun insertNewQuery(query: String) =
         queryDao.insertNewQuery(QueryEntity(query = query))
 
-    fun getQueriesBy(query: String): Flow<List<String>> {
-        val queryList = if (query.isEmpty())
-            queryDao.getPreviousQuery()
-        else queryDao.getQueriesBy(query)
-
-        return queryList.map { list ->
+    fun getQueriesBy(): Flow<List<String>> {
+        return queryDao.getPreviousQuery().map { list ->
             list.map {
                 it.query
             }

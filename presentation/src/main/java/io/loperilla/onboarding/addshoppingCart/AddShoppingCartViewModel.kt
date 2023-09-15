@@ -58,7 +58,7 @@ class AddShoppingCartViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val deferred = listOf(
                 async {
-                    queryUseCase(searchInputQuery.value).collect {
+                    queryUseCase().collect {
                         _queryList.value = it
                     }
                 },
