@@ -106,6 +106,26 @@ fun PasswordInput(
     )
 }
 
+@Composable
+fun TextInput(
+    inputValue: String,
+    onValueChange: (String, Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+    placeholderValue: String = "",
+    labelText: String = ""
+) {
+    CommonInput(
+        inputValue = inputValue,
+        placeholderValue = placeholderValue,
+        errorTextDescription = stringResource(R.string.empty_lbl),
+        labelText = labelText,
+        modifier = modifier,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+        validator = InputValidators.TEXT::isValid,
+        onValueChange = onValueChange
+    )
+}
+
 
 @Composable
 fun CommonInput(
@@ -125,8 +145,8 @@ fun CommonInput(
     var hasBadInput by remember { mutableStateOf(false) }
     var hasFocus by remember { mutableStateOf(false) }
     val commonColors = TextFieldDefaults.colors(
-        focusedTextColor = MaterialTheme.colorScheme.inversePrimary,
-        unfocusedTextColor = MaterialTheme.colorScheme.inversePrimary.copy(
+        focusedTextColor = Color.White,
+        unfocusedTextColor = Color.White.copy(
             alpha = 0.7f
         ),
         errorTextColor = MaterialTheme.colorScheme.error,
@@ -135,22 +155,16 @@ fun CommonInput(
             alpha = 0.7f
         ),
         errorContainerColor = MaterialTheme.colorScheme.errorContainer,
-        focusedLeadingIconColor = MaterialTheme.colorScheme.inversePrimary,
-        unfocusedLeadingIconColor = MaterialTheme.colorScheme.inversePrimary.copy(
-            alpha = 0.7f
-        ),
+        focusedLeadingIconColor = Color.White,
+        unfocusedLeadingIconColor = Color.White,
         errorLeadingIconColor = MaterialTheme.colorScheme.error,
-        focusedTrailingIconColor = MaterialTheme.colorScheme.inversePrimary,
-        unfocusedTrailingIconColor = MaterialTheme.colorScheme.inversePrimary.copy(
-            alpha = 0.7f
-        ),
+        focusedTrailingIconColor = Color.White,
+        unfocusedTrailingIconColor = Color.White,
         errorTrailingIconColor = MaterialTheme.colorScheme.error,
         focusedIndicatorColor = Color.Transparent,
         unfocusedIndicatorColor = Color.Transparent,
-        focusedLabelColor = MaterialTheme.colorScheme.inversePrimary,
-        unfocusedLabelColor = MaterialTheme.colorScheme.inversePrimary.copy(
-            alpha = 0.7f
-        ),
+        focusedLabelColor = Color.White,
+        unfocusedLabelColor = Color.White,
         errorLabelColor = MaterialTheme.colorScheme.error,
         errorSupportingTextColor = MaterialTheme.colorScheme.error,
     )
@@ -224,6 +238,21 @@ fun EmailInputPreview() {
             ) { newInput, isValid ->
 
             }
+            MediumSpacer()
+            TextInput(
+                "",
+                onValueChange = { newInput, isValid ->
+
+                }
+            )
+            MediumSpacer()
+            TextInput(
+                "",
+                labelText = "Nombre del input",
+                onValueChange = { newInput, isValid ->
+
+                }
+            )
         }
     }
 }

@@ -38,5 +38,6 @@
     <string name="select_storage_image_text">Selecciona la foto de la galería</string>
     <string name="storage">almacenamiento</string>
     <string name="add_product">Agregar Producto</string>
+    <string name="add_product_input_label">Nombre del producto</string>
 
 </resources>

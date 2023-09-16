@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import io.loperilla.core_ui.Screen
 import io.loperilla.core_ui.TextBodySize
@@ -45,7 +46,8 @@ fun TextSemiBold(
     text: String,
     modifier: Modifier = Modifier,
     textSize: TextUnit = TextBodySize,
-    textColor: Color = Color.Unspecified
+    textColor: Color = Color.Unspecified,
+    textAlign: TextAlign = TextAlign.Start
 ) {
     Text(
         text,
@@ -53,7 +55,8 @@ fun TextSemiBold(
         color = textColor,
         fontSize = textSize,
         fontWeight = FontWeight.SemiBold,
-        fontFamily = myFontFamily
+        fontFamily = myFontFamily,
+        textAlign = textAlign
     )
 }
 

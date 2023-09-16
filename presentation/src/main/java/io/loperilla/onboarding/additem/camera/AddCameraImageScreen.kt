@@ -27,6 +27,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddAPhoto
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,9 +40,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -52,6 +51,8 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import io.loperilla.core_ui.TextTitleSize
+import io.loperilla.core_ui.text.TextSemiBold
 import io.loperilla.core_ui.util.BitmapUtils.rotateBitmap
 import io.loperilla.onboarding_presentation.R
 import timber.log.Timber
@@ -167,7 +168,7 @@ fun AddCameraImage(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.LightGray)
+            .background(MaterialTheme.colorScheme.tertiary)
             .clickable {
                 when (permissionStatus) {
                     PermissionStatus.Granted -> {
@@ -196,11 +197,12 @@ fun AddCameraImage(
         Icon(
             imageVector = Icons.Filled.AddAPhoto,
             contentDescription = null,
+            tint = Color.White,
             modifier = Modifier
                 .size(100.dp)
         )
 
-        Text(
+        TextSemiBold(
             when (permissionStatus) {
                 PermissionStatus.Granted -> {
                     stringResource(R.string.press_to_take_photo)
@@ -222,8 +224,8 @@ fun AddCameraImage(
             },
             modifier = Modifier
                 .wrapContentWidth(),
-            textAlign = TextAlign.Center,
-            fontSize = 22.sp
+            textColor = Color.White,
+            textSize = TextTitleSize
         )
     }
 

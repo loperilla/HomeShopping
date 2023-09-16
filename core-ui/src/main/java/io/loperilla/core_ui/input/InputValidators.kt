@@ -15,6 +15,10 @@ sealed class InputValidators {
         fun isValid(password: String) = password.length > 5
     }
 
+    data object TEXT : InputValidators() {
+        fun isValid(inputContent: String) = inputContent.isNotEmpty()
+    }
+
     fun isURL(url: String): Boolean = try {
         java.net.URL(url).toURI()
         true

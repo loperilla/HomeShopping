@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.Color
 val CremaBackground = Color(0xFFF9F1F0)
 val CuarzoRosaContent = Color(0xffce968e)
 val Pink = Color(0xFFF8AFA6)
-val CoralSecondary = Color(0xFFF79489)
+val CoralSecondary = Color(0xfff2cfca)
 
 // Night
 val AzulMarino = Color(0xFF05445E)

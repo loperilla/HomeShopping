@@ -10,6 +10,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,7 +20,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ImageSearch
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,12 +28,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -41,6 +42,8 @@ import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
+import io.loperilla.core_ui.TextTitleSize
+import io.loperilla.core_ui.text.TextSemiBold
 import io.loperilla.core_ui.util.BitmapUtils.uriToBitmap
 import io.loperilla.onboarding_presentation.R
 import timber.log.Timber
@@ -104,6 +107,7 @@ fun AddStorageImageScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.tertiary)
             .clickable {
                 if (storagePermissionState.status.isGranted) {
                     launcher.launch(
@@ -133,6 +137,7 @@ fun AddStorageImageScreen(
         Icon(
             imageVector = Icons.Filled.ImageSearch,
             contentDescription = null,
+            tint = Color.White,
             modifier = Modifier
                 .size(100.dp)
         )
@@ -153,12 +158,13 @@ fun AddStorageImageScreen(
             }
         }
 
-        Text(
+        TextSemiBold(
             textMessage,
             modifier = Modifier
                 .wrapContentWidth(),
-            textAlign = TextAlign.Center,
-            fontSize = 22.sp
+            textSize = TextTitleSize,
+            textColor = Color.White,
+            textAlign = TextAlign.Center
         )
     }
 }

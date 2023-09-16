@@ -41,6 +41,7 @@ import io.loperilla.core_ui.TextSmallSize
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
 import io.loperilla.core_ui.routes.Routes
 import io.loperilla.core_ui.text.TextSemiBold
+import io.loperilla.core_ui.text.TextTitle
 import io.loperilla.onboarding_presentation.R
 
 /*****
@@ -68,7 +69,7 @@ fun HomeScreen(newDestination: (String) -> Unit) {
             topBar = {
                 CenterAlignedTopAppBar(
                     title = {
-                        TextSemiBold(
+                        TextTitle(
                             stringResource(R.string.home_scaffold_title)
                         )
                     },

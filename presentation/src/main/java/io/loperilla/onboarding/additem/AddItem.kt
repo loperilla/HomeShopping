@@ -28,17 +28,19 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.pager.pagerTabIndicatorOffset
-import io.loperilla.core_ui.HomeShoppingTheme
 import io.loperilla.core_ui.MEDIUM
+import io.loperilla.core_ui.Screen
+import io.loperilla.core_ui.TextSmallSize
 import io.loperilla.core_ui.button.FormButton
 import io.loperilla.core_ui.input.TextInput
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
 import io.loperilla.core_ui.tab.TabRowItem
+import io.loperilla.core_ui.text.TextSemiBold
+import io.loperilla.core_ui.text.TextTitle
 import io.loperilla.onboarding.additem.camera.AddCameraImageScreen
 import io.loperilla.onboarding.additem.storage.AddStorageImageScreen
 import io.loperilla.onboarding_presentation.R
@@ -51,7 +53,6 @@ import kotlinx.coroutines.launch
  * All rights reserved 2023
  */
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AddItemScreen(
     popBackStack: () -> Unit
@@ -78,32 +79,33 @@ fun AddItemScreen(
             AddStorageImageScreen(viewModel::userTakeAPhoto)
         }
     )
-
-    AddItem(
-        popBackStack,
-        isInsertSuccess,
-        tabRowItems,
-        pagerUserInputEnabled,
-        inputValue,
-        viewModel::inputChange,
-        isInputValid,
-        isBitmapSelected,
-        viewModel::addProduct
-    )
+    Screen {
+        AddItem(
+            popBackStack,
+            viewModel::addProduct,
+            viewModel::inputChange,
+            isInsertSuccess,
+            tabRowItems,
+            pagerUserInputEnabled,
+            inputValue,
+            isInputValid,
+            isBitmapSelected
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun AddItem(
     popBackStack: () -> Unit,
+    addProduct: () -> Unit,
+    onInputValueChange: (String, Boolean) -> Unit,
     isInsertSuccess: Boolean = false,
     tabRowItems: List<TabRowItem> = listOf(),
     pagerUserInputEnabled: Boolean = true,
     inputValue: String = "",
-    onInputValueChange: (String, Boolean) -> Unit,
     isInputValid: Boolean = false,
-    isBitmapSelected: Bitmap? = null,
-    addProduct: () -> Unit
+    isBitmapSelected: Bitmap? = null
 ) {
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(
@@ -116,7 +118,7 @@ fun AddItem(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(stringResource(R.string.add_item_scaffold_title))
+                    TextTitle(stringResource(R.string.add_item_scaffold_title))
                 },
                 navigationIcon = {
                     IconButton(onClick = { popBackStack() }) {
@@ -143,7 +145,7 @@ fun AddItem(
             Card(
                 shape = RoundedCornerShape(MEDIUM),
                 colors = CardDefaults.cardColors(
-                    containerColor = Color.LightGray
+                    containerColor = MaterialTheme.colorScheme.tertiary
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -163,6 +165,7 @@ fun AddItem(
                             color = MaterialTheme.colorScheme.secondary
                         )
                     },
+                    backgroundColor = MaterialTheme.colorScheme.onSurface
                 ) {
                     tabRowItems.forEachIndexed { index, item ->
                         Tab(
@@ -170,10 +173,10 @@ fun AddItem(
                             selected = pagerState.currentPage == index,
                             onClick = { coroutineScope.launch { pagerState.animateScrollToPage(index) } },
                             text = {
-                                Text(
+                                TextSemiBold(
                                     text = item.title,
-                                    maxLines = 2,
-                                    overflow = TextOverflow.Ellipsis,
+                                    textColor = Color.White,
+                                    textSize = TextSmallSize
                                 )
                             }
                         )
@@ -192,6 +195,7 @@ fun AddItem(
                 onValueChange = { newValue, isValid ->
                     onInputValueChange(newValue, isValid)
                 },
+                labelText = stringResource(R.string.add_product_input_label),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(MEDIUM)
@@ -224,7 +228,7 @@ fun AddItem(
 @PIXEL_33_NIGHT
 @Composable
 fun AddItemPrev() {
-    HomeShoppingTheme {
+    Screen {
         AddItem(
             popBackStack = {},
             onInputValueChange = { _, _ -> },
@@ -241,12 +245,6 @@ fun AddItemPrev() {
                     Text("Soy Storage")
                 }
             )
-//                isBitmapSelected = null,
-//                tabRowItems = listOf(),
-//                pagerUserInputEnabled = true,
-//                inputValue = "",
-//                isInputValid = false,
-//                isInsertSuccess = false
         )
     }
 }

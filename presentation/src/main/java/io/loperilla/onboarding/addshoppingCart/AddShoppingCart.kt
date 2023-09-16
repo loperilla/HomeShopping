@@ -62,6 +62,7 @@ import io.loperilla.core_ui.Screen
 import io.loperilla.core_ui.TextSmallSize
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
 import io.loperilla.core_ui.text.TextSemiBold
+import io.loperilla.core_ui.text.TextTitle
 import io.loperilla.model.database.ShoppingItem
 import io.loperilla.onboarding_presentation.R
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -89,7 +90,7 @@ fun AddShoppingCart(
             topBar = {
                 CenterAlignedTopAppBar(
                     title = {
-                        Text(stringResource(R.string.addshoppingcart_scaffold_title))
+                        TextTitle(stringResource(R.string.addshoppingcart_scaffold_title))
                     },
                     navigationIcon = {
                         IconButton(onClick = { popBackStack() }) {
