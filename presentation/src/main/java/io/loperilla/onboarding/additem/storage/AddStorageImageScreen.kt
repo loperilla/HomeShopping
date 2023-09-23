@@ -2,7 +2,6 @@ package io.loperilla.onboarding.additem.storage
 
 import android.Manifest
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
@@ -45,6 +44,7 @@ import com.google.accompanist.permissions.shouldShowRationale
 import io.loperilla.core_ui.TextTitleSize
 import io.loperilla.core_ui.text.TextSemiBold
 import io.loperilla.core_ui.util.BitmapUtils.uriToBitmap
+import io.loperilla.onboarding.additem.AddItemEvent
 import io.loperilla.onboarding_presentation.R
 import timber.log.Timber
 
@@ -58,7 +58,7 @@ import timber.log.Timber
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun AddStorageImageScreen(
-    onImageSelected: (Bitmap) -> Unit
+    onEvent: (AddItemEvent) -> Unit
 ) {
     val context = LocalContext.current
     val storagePermissionState = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -97,7 +97,7 @@ fun AddStorageImageScreen(
         )
         uriToBitmap(context, photoUri!!)?.let {
             Timber.tag("StorageImage").i("uri to bitmap success")
-            onImageSelected(it)
+            onEvent(AddItemEvent.BitmapWasSelected(it))
         }
         return
     }

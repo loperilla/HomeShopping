@@ -126,17 +126,16 @@ fun TextInput(
     )
 }
 
-
 @Composable
 fun CommonInput(
     inputValue: String,
     placeholderValue: String,
     labelText: String,
     errorTextDescription: String,
-    modifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions,
     validator: KFunction1<String, Boolean>,
     onValueChange: (String, Boolean) -> Unit,
+    modifier: Modifier = Modifier,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     textMaxLength: Int = Int.MAX_VALUE,
     leadingIcon: @Composable (() -> Unit)? = null,
@@ -147,12 +146,12 @@ fun CommonInput(
     val commonColors = TextFieldDefaults.colors(
         focusedTextColor = Color.White,
         unfocusedTextColor = Color.White.copy(
-            alpha = 0.7f
+            alpha = 0.85f
         ),
         errorTextColor = MaterialTheme.colorScheme.error,
         focusedContainerColor = MaterialTheme.colorScheme.primary,
         unfocusedContainerColor = MaterialTheme.colorScheme.primary.copy(
-            alpha = 0.7f
+            alpha = 0.85f
         ),
         errorContainerColor = MaterialTheme.colorScheme.errorContainer,
         focusedLeadingIconColor = Color.White,

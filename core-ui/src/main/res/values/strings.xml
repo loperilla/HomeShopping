@@ -6,4 +6,5 @@
     <string name="password_label">Contraseña</string>
     <string name="email_label">Correo electrónico</string>
     <string name="text_label">Texto</string>
+    <string name="select_one_of_our_stores">Selecciona el comercio</string>
 </resources>

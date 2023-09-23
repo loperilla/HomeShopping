@@ -54,6 +54,7 @@ import com.google.accompanist.permissions.rememberPermissionState
 import io.loperilla.core_ui.TextTitleSize
 import io.loperilla.core_ui.text.TextSemiBold
 import io.loperilla.core_ui.util.BitmapUtils.rotateBitmap
+import io.loperilla.onboarding.additem.AddItemEvent
 import io.loperilla.onboarding_presentation.R
 import timber.log.Timber
 
@@ -67,8 +68,7 @@ import timber.log.Timber
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun AddCameraImageScreen(
-    userGoToTakeAPhoto: () -> Unit,
-    onPhotoCaptured: (Bitmap) -> Unit
+    onEvent: (AddItemEvent) -> Unit
 ) {
     val context = LocalContext.current.applicationContext
     val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
@@ -119,12 +119,12 @@ fun AddCameraImageScreen(
                 }
         ) {
             if (cameraState.capturedImage != null) {
-                onPhotoCaptured(cameraState.capturedImage!!)
+                onEvent(AddItemEvent.BitmapWasSelected(cameraState.capturedImage!!))
                 ImageCaptured(context, cameraState.capturedImage!!)
                 return@Scaffold
             }
             if (userWantTakeAPhoto) {
-                userGoToTakeAPhoto()
+                onEvent(AddItemEvent.DisablePager)
                 AndroidView(
                     modifier = Modifier
                         .fillMaxSize()

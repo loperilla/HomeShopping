@@ -1,6 +1,5 @@
 package io.loperilla.onboarding.additem
 
-import android.graphics.Bitmap
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,7 +20,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRowDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -58,38 +56,33 @@ fun AddItemScreen(
     popBackStack: () -> Unit
 ) {
     val viewModel: AddItemViewModel = hiltViewModel()
-    val pagerUserInputEnabled by viewModel.pagerUserInputEnabled.collectAsStateWithLifecycle()
-    val inputValue by viewModel.inputNameValue.collectAsStateWithLifecycle()
-    val isInputValid by viewModel.isInputValid.collectAsStateWithLifecycle()
-    val isBitmapSelected by viewModel.bitmapSelected.collectAsStateWithLifecycle()
-    val isInsertSuccess by viewModel.insertItemSuccess.collectAsStateWithLifecycle()
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
     val tabRowItems = listOf(
         TabRowItem(
             title = stringResource(R.string.tab_camera_text)
         ) {
             AddCameraImageScreen(
-                viewModel::userGoesToTakeAPhoto,
-                viewModel::userTakeAPhoto
+                viewModel::onEvent
             )
         },
         TabRowItem(
             title = stringResource(R.string.tab_storage_text)
         ) {
-            AddStorageImageScreen(viewModel::userTakeAPhoto)
+            AddStorageImageScreen(viewModel::onEvent)
         }
     )
+    if (state.addItemRequestState == AddItemRequestState.SUCCESS) {
+        popBackStack()
+        return
+    }
+
     Screen {
         AddItem(
             popBackStack,
-            viewModel::addProduct,
-            viewModel::inputChange,
-            isInsertSuccess,
             tabRowItems,
-            pagerUserInputEnabled,
-            inputValue,
-            isInputValid,
-            isBitmapSelected
+            state,
+            viewModel::onEvent
         )
     }
 }
@@ -98,14 +91,9 @@ fun AddItemScreen(
 @Composable
 fun AddItem(
     popBackStack: () -> Unit,
-    addProduct: () -> Unit,
-    onInputValueChange: (String, Boolean) -> Unit,
-    isInsertSuccess: Boolean = false,
-    tabRowItems: List<TabRowItem> = listOf(),
-    pagerUserInputEnabled: Boolean = true,
-    inputValue: String = "",
-    isInputValid: Boolean = false,
-    isBitmapSelected: Bitmap? = null
+    tabRowItems: List<TabRowItem>,
+    state: AddItemState,
+    onEvent: (AddItemEvent) -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(
@@ -136,11 +124,11 @@ fun AddItem(
                 .fillMaxSize()
                 .padding(it)
         ) {
-            if (isInsertSuccess) {
-                popBackStack()
-                return@ConstraintLayout
-            }
-            val (tabRow, inputName, button) = createRefs()
+            val (
+                tabRow,
+                inputName,
+                button
+            ) = createRefs()
 
             Card(
                 shape = RoundedCornerShape(MEDIUM),
@@ -169,7 +157,7 @@ fun AddItem(
                 ) {
                     tabRowItems.forEachIndexed { index, item ->
                         Tab(
-                            enabled = pagerUserInputEnabled,
+                            enabled = state.isPagerEnabled,
                             selected = pagerState.currentPage == index,
                             onClick = { coroutineScope.launch { pagerState.animateScrollToPage(index) } },
                             text = {
@@ -183,17 +171,16 @@ fun AddItem(
                     }
                 }
                 HorizontalPager(
-                    userScrollEnabled = pagerUserInputEnabled,
+                    userScrollEnabled = state.isPagerEnabled,
                     state = pagerState,
                 ) {
                     tabRowItems[pagerState.currentPage].screen()
                 }
-
             }
             TextInput(
-                inputValue,
+                state.productName,
                 onValueChange = { newValue, isValid ->
-                    onInputValueChange(newValue, isValid)
+                    onEvent(AddItemEvent.ProductNameChanged(newValue))
                 },
                 labelText = stringResource(R.string.add_product_input_label),
                 modifier = Modifier
@@ -208,9 +195,9 @@ fun AddItem(
 
             FormButton(
                 stringResource(R.string.add_product),
-                enableButton = isInputValid && isBitmapSelected != null,
+                enableButton = state.productName.isNotEmpty(),
                 onClickButton = {
-                    addProduct()
+                    onEvent(AddItemEvent.AddProductButtonClicked)
                 },
                 modifier = Modifier
                     .padding(MEDIUM)
@@ -231,18 +218,18 @@ fun AddItemPrev() {
     Screen {
         AddItem(
             popBackStack = {},
-            onInputValueChange = { _, _ -> },
-            addProduct = {},
+            state = AddItemState(),
+            onEvent = {},
             tabRowItems = listOf(
                 TabRowItem(
                     title = stringResource(R.string.tab_camera_text)
                 ) {
-                    Text("Soy Camera")
+                    TextSemiBold("Soy Camera")
                 },
                 TabRowItem(
                     title = stringResource(R.string.tab_storage_text)
                 ) {
-                    Text("Soy Storage")
+                    TextSemiBold("Soy Storage")
                 }
             )
         )
