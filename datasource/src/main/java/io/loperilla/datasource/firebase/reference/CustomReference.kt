@@ -15,6 +15,10 @@ sealed class CustomReference {
         val shoppingReference: DatabaseReference
     ) : CustomReference()
 
+    data class COMMERCE_REFERENCE(
+        val commerceReference: CollectionReference
+    ) : CustomReference()
+
     data class SHOPPING_ITEM_LIST_COLLECTION(
         val itemListCollection: CollectionReference,
         val imageStorageReference: StorageReference

@@ -167,6 +167,7 @@ fun CommonInput(
         errorLabelColor = MaterialTheme.colorScheme.error,
         errorSupportingTextColor = MaterialTheme.colorScheme.error,
     )
+    TextFieldDefaults
     TextField(
         modifier = modifier
             .fillMaxWidth()

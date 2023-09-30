@@ -1,6 +1,7 @@
 package io.loperilla.onboarding.additem
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -9,6 +10,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.TabRow
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddBusiness
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -33,16 +35,21 @@ import com.google.accompanist.pager.pagerTabIndicatorOffset
 import io.loperilla.core_ui.MEDIUM
 import io.loperilla.core_ui.Screen
 import io.loperilla.core_ui.TextSmallSize
+import io.loperilla.core_ui.alert_dialog.CommonAlertDialog
 import io.loperilla.core_ui.button.FormButton
 import io.loperilla.core_ui.input.TextInput
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
+import io.loperilla.core_ui.spacers.LowSpacer
+import io.loperilla.core_ui.spinner.Spinner
 import io.loperilla.core_ui.tab.TabRowItem
 import io.loperilla.core_ui.text.TextSemiBold
 import io.loperilla.core_ui.text.TextTitle
+import io.loperilla.model.database.Commerce
 import io.loperilla.onboarding.additem.camera.AddCameraImageScreen
 import io.loperilla.onboarding.additem.storage.AddStorageImageScreen
 import io.loperilla.onboarding_presentation.R
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /*****
  * Project: HomeShopping
@@ -57,6 +64,7 @@ fun AddItemScreen(
 ) {
     val viewModel: AddItemViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val commerceList by viewModel.commerceList.collectAsStateWithLifecycle()
 
     val tabRowItems = listOf(
         TabRowItem(
@@ -82,6 +90,7 @@ fun AddItemScreen(
             popBackStack,
             tabRowItems,
             state,
+            commerceList,
             viewModel::onEvent
         )
     }
@@ -93,9 +102,15 @@ fun AddItem(
     popBackStack: () -> Unit,
     tabRowItems: List<TabRowItem>,
     state: AddItemState,
+    commerceList: List<Commerce>,
     onEvent: (AddItemEvent) -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
+    if (state.addCommerceClicked) {
+        AddCommerceDialog(
+            onEvent
+        )
+    }
     val pagerState = rememberPagerState(
         initialPage = 0,
         initialPageOffsetFraction = 0f
@@ -127,6 +142,7 @@ fun AddItem(
             val (
                 tabRow,
                 inputName,
+                commerceSpinner,
                 button
             ) = createRefs()
 
@@ -193,6 +209,21 @@ fun AddItem(
                     }
             )
 
+            CommerceSpinner(
+                state.isDropdownExpanded,
+                commerceList.map { commerce ->
+                    commerce.name
+                },
+                onEvent,
+                modifier = Modifier
+                    .padding(horizontal = MEDIUM)
+                    .constrainAs(commerceSpinner) {
+                        top.linkTo(inputName.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }
+            )
+
             FormButton(
                 stringResource(R.string.add_product),
                 enableButton = state.productName.isNotEmpty(),
@@ -209,7 +240,55 @@ fun AddItem(
             )
         }
     }
+}
 
+@Composable
+fun CommerceSpinner(
+    isDropdownExpanded: Boolean,
+    dropdownItems: List<String>,
+    onEvent: (AddItemEvent) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+    ) {
+        TextSemiBold(
+            "¿Dónde quieres comprar tu producto?",
+            textSize = TextSmallSize
+        )
+        LowSpacer()
+        Spinner(
+            isExpanded = isDropdownExpanded,
+            dropdownItems = dropdownItems,
+            newItemSelected = { indexSelected ->
+                Timber.tag("spinnerSelection").i("$indexSelected")
+            },
+            changeExpandedEvent = { newExpandedValue ->
+                onEvent(AddItemEvent.NewDropdownExpandedState(newExpandedValue))
+            },
+            trailingIconOnClick = {
+                onEvent(AddItemEvent.ShowAddCommerce)
+            }
+        )
+    }
+}
+
+@Composable
+fun AddCommerceDialog(
+    onEvent: (AddItemEvent) -> Unit
+) {
+    CommonAlertDialog(
+        alertIcon = Icons.Filled.AddBusiness,
+        alertTitle = stringResource(R.string.add_commerce),
+        acceptButtonText = stringResource(R.string.create),
+        cancelButtonText = stringResource(R.string.logout_dialog_cancel_button),
+        acceptButtonAction = { input ->
+            onEvent(AddItemEvent.CreateNewCommerce(input))
+        },
+        dismissRequest = {
+            onEvent(AddItemEvent.DismissNewCommerceDialog)
+        }
+    )
 }
 
 @PIXEL_33_NIGHT
@@ -218,8 +297,6 @@ fun AddItemPrev() {
     Screen {
         AddItem(
             popBackStack = {},
-            state = AddItemState(),
-            onEvent = {},
             tabRowItems = listOf(
                 TabRowItem(
                     title = stringResource(R.string.tab_camera_text)
@@ -231,7 +308,9 @@ fun AddItemPrev() {
                 ) {
                     TextSemiBold("Soy Storage")
                 }
-            )
-        )
+            ),
+            state = AddItemState(),
+            commerceList = listOf()
+        ) {}
     }
 }

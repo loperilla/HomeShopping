@@ -3,10 +3,14 @@ package io.loperilla.onboarding.additem
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.loperilla.model.database.Commerce
+import io.loperilla.model.database.result.ReadDatabaseResult
+import io.loperilla.onboarding_domain.usecase.commerce.CommerceUseCase
 import io.loperilla.onboarding_domain.usecase.itemShopping.ItemShoppingUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,10 +22,30 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class AddItemViewModel @Inject constructor(
-    private val itemShoppingUseCase: ItemShoppingUseCase
+    private val itemShoppingUseCase: ItemShoppingUseCase,
+    private val commerceUseCase: CommerceUseCase
 ) : ViewModel() {
     private var _state: MutableStateFlow<AddItemState> = MutableStateFlow(AddItemState())
     val state: StateFlow<AddItemState> = _state
+
+    private var _commerceList: MutableStateFlow<List<Commerce>> = MutableStateFlow(emptyList())
+    val commerceList: StateFlow<List<Commerce>> = _commerceList
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            commerceUseCase().collectLatest { list ->
+                when (list) {
+                    is ReadDatabaseResult.FAIL -> {
+
+                    }
+
+                    is ReadDatabaseResult.SUCCESS -> {
+                        _commerceList.value = list.result
+                    }
+                }
+            }
+        }
+    }
 
     fun onEvent(newEvent: AddItemEvent) {
         viewModelScope.launch {
@@ -62,6 +86,30 @@ class AddItemViewModel @Inject constructor(
                     _state.value = _state.value.copy(
                         commerceSelected = newEvent.commerceName,
                         addItemRequestState = AddItemRequestState.NONE
+                    )
+                }
+
+                is AddItemEvent.NewDropdownExpandedState -> _state.value = _state.value.copy(
+                    isDropdownExpanded = newEvent.newState,
+                    addItemRequestState = AddItemRequestState.NONE
+                )
+
+                AddItemEvent.ShowAddCommerce -> {
+                    _state.value = _state.value.copy(
+                        addCommerceClicked = true
+                    )
+                }
+
+                is AddItemEvent.CreateNewCommerce -> {
+                    commerceUseCase.addCommerce(Commerce(name = newEvent.newCommerceName))
+                    _state.value = _state.value.copy(
+                        addCommerceClicked = false
+                    )
+                }
+
+                AddItemEvent.DismissNewCommerceDialog -> {
+                    _state.value = _state.value.copy(
+                        addCommerceClicked = false
                     )
                 }
             }

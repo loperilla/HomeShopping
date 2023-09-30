@@ -13,6 +13,8 @@ data class AddItemState(
     var productName: String = "",
     var bitmap: Bitmap? = null,
     var commerceSelected: String = "",
+    var isDropdownExpanded: Boolean = false,
+    var addCommerceClicked: Boolean = false,
     var addItemRequestState: AddItemRequestState = AddItemRequestState.NONE
 )
 

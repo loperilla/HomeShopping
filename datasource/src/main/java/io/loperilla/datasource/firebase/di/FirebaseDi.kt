@@ -14,6 +14,7 @@ import dagger.hilt.components.SingletonComponent
 import io.loperilla.datasource.datastore.IUserDataStoreDataSource
 import io.loperilla.datasource.firebase.auth.FirebaseAuthDataSourceImpl
 import io.loperilla.datasource.firebase.auth.IFirebaseAuthDataSource
+import io.loperilla.datasource.firebase.database.CommerceDatabase
 import io.loperilla.datasource.firebase.database.ShoppingCartListFirebaseDatabase
 import io.loperilla.datasource.firebase.database.ShoppingItemListFirebaseDatabase
 import io.loperilla.datasource.firebase.reference.CustomReference
@@ -68,6 +69,25 @@ object FirebaseDi {
     @Provides
     fun providesItemsShoppingListCollection(): CollectionReference =
         Firebase.firestore.collection(Constants.ITEMS)
+
+    @Named(Constants.COMMERCE)
+    @Singleton
+    @Provides
+    fun providesCommerceCollection(): CollectionReference =
+        Firebase.firestore.collection(Constants.COMMERCE)
+
+    @Singleton
+    @Provides
+    fun providesCommerceReference(
+        @Named(Constants.COMMERCE) databaseReference: CollectionReference,
+    ): CustomReference.COMMERCE_REFERENCE =
+        CustomReference.COMMERCE_REFERENCE(databaseReference)
+
+    @Singleton
+    @Provides
+    fun provideCommerceDatabase(
+        commerceReference: CustomReference.COMMERCE_REFERENCE
+    ) = CommerceDatabase(commerceReference)
 
     @Singleton
     @Provides

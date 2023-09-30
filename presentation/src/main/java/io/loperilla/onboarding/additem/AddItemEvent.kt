@@ -14,5 +14,9 @@ sealed class AddItemEvent {
     data object DisablePager : AddItemEvent()
     data class BitmapWasSelected(val newBitmap: Bitmap) : AddItemEvent()
     data class CommerceClicked(val commerceName: String) : AddItemEvent()
+    data class NewDropdownExpandedState(val newState: Boolean) : AddItemEvent()
     data object AddProductButtonClicked : AddItemEvent()
+    data object ShowAddCommerce : AddItemEvent()
+    data class CreateNewCommerce(val newCommerceName: String) : AddItemEvent()
+    data object DismissNewCommerceDialog : AddItemEvent()
 }

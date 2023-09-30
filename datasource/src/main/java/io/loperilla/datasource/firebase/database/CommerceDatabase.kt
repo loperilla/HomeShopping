@@ -2,7 +2,7 @@ package io.loperilla.datasource.firebase.database
 
 import com.google.firebase.firestore.FirebaseFirestoreException
 import io.loperilla.datasource.firebase.reference.CustomReference
-import io.loperilla.model.database.ShoppingItem
+import io.loperilla.model.database.Commerce
 import io.loperilla.model.database.result.PostDatabaseResult
 import io.loperilla.model.database.result.ReadDatabaseResult
 import kotlinx.coroutines.CompletableDeferred
@@ -19,16 +19,14 @@ import javax.inject.Inject
 /*****
  * Project: HomeShopping
  * From: io.loperilla.datasource.firebase.database
- * Created By Manuel Lopera on 30/8/23 at 20:39
+ * Created By Manuel Lopera on 24/9/23 at 20:39
  * All rights reserved 2023
  */
-class ShoppingItemListFirebaseDatabase @Inject constructor(
-    private val shoppingItemListReference: CustomReference.SHOPPING_ITEM_LIST_COLLECTION
+class CommerceDatabase @Inject constructor(
+    private val commerceReference: CustomReference.COMMERCE_REFERENCE
 ) {
-    fun getAllItems(): Flow<ReadDatabaseResult<List<ShoppingItem>>> = callbackFlow {
-        Timber.i("getAllItems")
-        with(shoppingItemListReference.itemListCollection) {
-            Timber.tag("getAllItems collection").i("$this")
+    fun getAllCommerces(): Flow<ReadDatabaseResult<List<Commerce>>> = callbackFlow {
+        with(commerceReference.commerceReference) {
             val subscription = this.addSnapshotListener { snapshot, error ->
                 if (error != null) {
                     error.printStackTrace()
@@ -37,9 +35,10 @@ class ShoppingItemListFirebaseDatabase @Inject constructor(
                     return@addSnapshotListener
                 }
                 snapshot?.let { querySnapshot ->
-                    val shoppingItemList = mutableListOf<ShoppingItem>()
+                    val shoppingItemList = mutableListOf<Commerce>()
                     querySnapshot.documents.forEach { documentSnapshot ->
-                        val item = documentSnapshot.toObject(ShoppingItem::class.java)
+                        Timber.tag("Commerce").i("$documentSnapshot")
+                        val item = documentSnapshot.toObject(Commerce::class.java)
                         item?.let {
                             it.key = documentSnapshot.id
                             shoppingItemList.add(it)
@@ -52,27 +51,20 @@ class ShoppingItemListFirebaseDatabase @Inject constructor(
         }
     }.flowOn(Dispatchers.IO)
 
-    suspend fun addItemShopping(item: ShoppingItem, bitmapToUpload: ByteArray): PostDatabaseResult =
+    suspend fun addCommerce(item: Commerce): PostDatabaseResult =
         withContext(Dispatchers.IO) {
-            Timber.i("addItemShopping $item")
+            Timber.i("addCommerce $item")
             val deferred = CompletableDeferred<PostDatabaseResult>(PostDatabaseResult.SUCCESS)
-
-            with(shoppingItemListReference) {
+            with(commerceReference) {
                 try {
-                    val imageRef = imageStorageReference.child(item.imageRef())
-                    imageRef.putBytes(bitmapToUpload).await()
-                    val url = imageRef.downloadUrl.await()
-                    val itemToUpload = item.copy(
-                        imageUrl = url.toString()
-                    )
-                    itemListCollection.add(itemToUpload).await()
+                    commerceReference.add(item).await()
                     deferred.complete(PostDatabaseResult.SUCCESS)
                 } catch (ex: FirebaseFirestoreException) {
-                ex.printStackTrace()
-                deferred.complete(PostDatabaseResult.FAIL(ex))
+                    ex.printStackTrace()
+                    deferred.complete(PostDatabaseResult.FAIL(ex))
+                }
             }
+            deferred.await()
         }
 
-            deferred.await()
-    }
 }
