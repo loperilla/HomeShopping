@@ -15,5 +15,6 @@ class ItemShoppingRepository @Inject constructor(
 ) {
     fun getAllShopping() = database.getAllItems()
 
-    suspend fun postItem(item: ShoppingItem, bitmapToUpload: ByteArray) = database.addItemShopping(item, bitmapToUpload)
+    suspend fun postItem(item: ShoppingItem, bitmapToUpload: ByteArray?) =
+        database.addItemShopping(item, bitmapToUpload)
 }

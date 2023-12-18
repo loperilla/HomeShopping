@@ -3,8 +3,14 @@ package io.loperilla.onboarding.additem
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.loperilla.core_ui.util.BitmapUtils.toByteArray
 import io.loperilla.model.database.Commerce
+import io.loperilla.model.database.ShoppingItem
+import io.loperilla.model.database.result.PostDatabaseResult
 import io.loperilla.model.database.result.ReadDatabaseResult
+import io.loperilla.onboarding.additem.state.AddItemEvent
+import io.loperilla.onboarding.additem.state.AddItemRequestState
+import io.loperilla.onboarding.additem.state.AddItemState
 import io.loperilla.onboarding_domain.usecase.commerce.CommerceUseCase
 import io.loperilla.onboarding_domain.usecase.itemShopping.ItemShoppingUseCase
 import kotlinx.coroutines.Dispatchers
@@ -12,6 +18,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 /*****
@@ -118,20 +125,22 @@ class AddItemViewModel @Inject constructor(
 
     private fun addProduct() {
         viewModelScope.launch(Dispatchers.IO) {
-//            when (val result = itemShoppingUseCase.addItem(
-//                ShoppingItem(
-//                    name = inputNameValue.value
-//                ), bitmapSelected.value!!.toByteArray()
-//            )) {
-//                is PostDatabaseResult.FAIL -> {
-//                    Timber.e(result.exception)
-//                }
-//
-//                PostDatabaseResult.SUCCESS -> {
-//                    Timber.i("${inputNameValue.value} fue añadido con éxito")
-//                    _insertItemSuccess.value = true
-//                }
-//            }
+            with(state.value) {
+                when (val result = itemShoppingUseCase.addItem(
+                    ShoppingItem(
+                        name = productName
+                    ), bitmap?.toByteArray()
+                )) {
+                    is PostDatabaseResult.FAIL -> {
+                        Timber.e(result.exception)
+                    }
+
+                    PostDatabaseResult.SUCCESS -> {
+                        Timber.i("$productName fue añadido con éxito")
+                        _state.value.addItemRequestState = AddItemRequestState.SUCCESS
+                    }
+                }
+            }
         }
     }
 }

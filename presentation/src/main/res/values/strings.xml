@@ -41,5 +41,7 @@
     <string name="add_product_input_label">Nombre del producto</string>
     <string name="add_commerce">Añadir comercio</string>
     <string name="create">Crear</string>
+    <string name="select_commerce_title">¿Dónde quieres comprar tu producto?</string>
+    <string name="new_commerce_label">Nuevo comercio</string>
 
 </resources>

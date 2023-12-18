@@ -9,6 +9,7 @@ package io.loperilla.model.database
 data class ShoppingItem(
     var key: String? = null,
     val name: String = "",
+    val commerceName: String = "",
     val imageUrl: String = ""
 ) {
     fun imageRef() = "${this.name}.jpg"

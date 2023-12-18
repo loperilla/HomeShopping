@@ -44,7 +44,7 @@ import com.google.accompanist.permissions.shouldShowRationale
 import io.loperilla.core_ui.TextTitleSize
 import io.loperilla.core_ui.text.TextSemiBold
 import io.loperilla.core_ui.util.BitmapUtils.uriToBitmap
-import io.loperilla.onboarding.additem.AddItemEvent
+import io.loperilla.onboarding.additem.state.AddItemEvent
 import io.loperilla.onboarding_presentation.R
 import timber.log.Timber
 

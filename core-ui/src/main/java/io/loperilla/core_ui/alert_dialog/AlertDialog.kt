@@ -33,11 +33,11 @@ import io.loperilla.core_ui.text.TextSemiBold
 fun CommonAlertDialog(
     alertIcon: ImageVector,
     alertTitle: String,
+    labelText: String,
     dismissRequest: () -> Unit,
     acceptButtonAction: (String) -> Unit,
     acceptButtonText: String,
-    cancelButtonText: String,
-    modifier: Modifier = Modifier
+    cancelButtonText: String
 ) {
     var currentInput by remember { mutableStateOf("") }
     AlertDialog(
@@ -56,7 +56,7 @@ fun CommonAlertDialog(
                 onValueChange = { newInput, isValid ->
                     currentInput = newInput
                 },
-                labelText = "nfknkdjnsd",
+                labelText = labelText,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
@@ -94,6 +94,7 @@ fun CommonAlertDialogPrev() {
         CommonAlertDialog(
             alertIcon = Icons.Filled.AddBusiness,
             alertTitle = "Título",
+            labelText = "Nuevo comercio",
             acceptButtonText = "crear",
             cancelButtonText = "eliminar",
             acceptButtonAction = {

@@ -46,10 +46,12 @@ import io.loperilla.core_ui.text.TextSemiBold
 import io.loperilla.core_ui.text.TextTitle
 import io.loperilla.model.database.Commerce
 import io.loperilla.onboarding.additem.camera.AddCameraImageScreen
+import io.loperilla.onboarding.additem.state.AddItemEvent
+import io.loperilla.onboarding.additem.state.AddItemRequestState
+import io.loperilla.onboarding.additem.state.AddItemState
 import io.loperilla.onboarding.additem.storage.AddStorageImageScreen
 import io.loperilla.onboarding_presentation.R
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 /*****
  * Project: HomeShopping
@@ -58,6 +60,7 @@ import timber.log.Timber
  * All rights reserved 2023
  */
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddItemScreen(
     popBackStack: () -> Unit
@@ -66,178 +69,194 @@ fun AddItemScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val commerceList by viewModel.commerceList.collectAsStateWithLifecycle()
 
-    val tabRowItems = listOf(
-        TabRowItem(
-            title = stringResource(R.string.tab_camera_text)
-        ) {
-            AddCameraImageScreen(
-                viewModel::onEvent
-            )
-        },
-        TabRowItem(
-            title = stringResource(R.string.tab_storage_text)
-        ) {
-            AddStorageImageScreen(viewModel::onEvent)
-        }
-    )
     if (state.addItemRequestState == AddItemRequestState.SUCCESS) {
         popBackStack()
         return
     }
 
     Screen {
-        AddItem(
-            popBackStack,
-            tabRowItems,
-            state,
-            commerceList,
-            viewModel::onEvent
-        )
+        Scaffold(
+            topBar = {
+                CenterAlignedTopAppBar(
+                    title = {
+                        TextTitle(stringResource(R.string.add_item_scaffold_title))
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = { popBackStack() }) {
+                            Icon(
+                                imageVector = Icons.Filled.ArrowBack,
+                                contentDescription = stringResource(R.string.add_item_back_createbasket_content_description)
+                            )
+                        }
+                    }
+                )
+            }
+        ) { paddingValues ->
+            AddItem(
+                state,
+                commerceList,
+                viewModel::onEvent,
+                Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+            )
+        }
+
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun AddItem(
-    popBackStack: () -> Unit,
-    tabRowItems: List<TabRowItem>,
     state: AddItemState,
     commerceList: List<Commerce>,
-    onEvent: (AddItemEvent) -> Unit
+    onEvent: (AddItemEvent) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    val coroutineScope = rememberCoroutineScope()
     if (state.addCommerceClicked) {
         AddCommerceDialog(
             onEvent
         )
     }
+    ConstraintLayout(
+        modifier = modifier
+    ) {
+        val (
+            tabRow,
+            inputName,
+            commerceSpinner,
+            button
+        ) = createRefs()
+
+        TabRowItemImage(
+            state,
+            onEvent,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(MEDIUM)
+                .fillMaxSize(0.5f)
+                .constrainAs(tabRow) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+        )
+
+        TextInput(
+            state.productName,
+            onValueChange = { newValue, isValid ->
+                onEvent(AddItemEvent.ProductNameChanged(newValue))
+            },
+            labelText = stringResource(R.string.add_product_input_label),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(MEDIUM)
+                .constrainAs(inputName) {
+                    top.linkTo(tabRow.bottom, MEDIUM)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+        )
+
+        CommerceSpinner(
+            state.isDropdownExpanded,
+            commerceList.map { commerce ->
+                commerce.name
+            },
+            onEvent,
+            modifier = Modifier
+                .padding(horizontal = MEDIUM)
+                .constrainAs(commerceSpinner) {
+                    top.linkTo(inputName.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+        )
+
+        FormButton(
+            stringResource(R.string.add_product),
+            enableButton = state.productName.isNotEmpty(),
+            onClickButton = {
+                onEvent(AddItemEvent.AddProductButtonClicked)
+            },
+            modifier = Modifier
+                .padding(MEDIUM)
+                .constrainAs(button) {
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+        )
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun TabRowItemImage(
+    state: AddItemState,
+    onEvent: (AddItemEvent) -> Unit,
+    modifier: Modifier
+) {
+    val tabRowItems = listOf(
+        TabRowItem(
+            title = stringResource(R.string.tab_camera_text)
+        ) {
+            AddCameraImageScreen(
+                onEvent
+            )
+        },
+        TabRowItem(
+            title = stringResource(R.string.tab_storage_text)
+        ) {
+            AddStorageImageScreen(onEvent)
+        }
+    )
+    val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(
         initialPage = 0,
         initialPageOffsetFraction = 0f
     ) {
         tabRowItems.size
     }
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    TextTitle(stringResource(R.string.add_item_scaffold_title))
-                },
-                navigationIcon = {
-                    IconButton(onClick = { popBackStack() }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.add_item_back_createbasket_content_description)
-                        )
-                    }
-                }
-            )
-        }
+
+//    quiero segmentar esto de tal forma que salvo el topbar y el botón
+//    el resto haga scroll
+    Card(
+        shape = RoundedCornerShape(MEDIUM),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.tertiary
+        ),
+        modifier = modifier
     ) {
-        ConstraintLayout(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
+        TabRow(
+            selectedTabIndex = pagerState.currentPage,
+            indicator = { tabPositions ->
+                TabRowDefaults.Indicator(
+                    modifier = Modifier.pagerTabIndicatorOffset(pagerState, tabPositions),
+                    color = MaterialTheme.colorScheme.secondary
+                )
+            },
+            backgroundColor = MaterialTheme.colorScheme.onSurface
         ) {
-            val (
-                tabRow,
-                inputName,
-                commerceSpinner,
-                button
-            ) = createRefs()
-
-            Card(
-                shape = RoundedCornerShape(MEDIUM),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.tertiary
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(MEDIUM)
-                    .fillMaxSize(0.5f)
-                    .constrainAs(tabRow) {
-                        top.linkTo(parent.top)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                    }
-            ) {
-                TabRow(
-                    selectedTabIndex = pagerState.currentPage,
-                    indicator = { tabPositions ->
-                        TabRowDefaults.Indicator(
-                            modifier = Modifier.pagerTabIndicatorOffset(pagerState, tabPositions),
-                            color = MaterialTheme.colorScheme.secondary
-                        )
-                    },
-                    backgroundColor = MaterialTheme.colorScheme.onSurface
-                ) {
-                    tabRowItems.forEachIndexed { index, item ->
-                        Tab(
-                            enabled = state.isPagerEnabled,
-                            selected = pagerState.currentPage == index,
-                            onClick = { coroutineScope.launch { pagerState.animateScrollToPage(index) } },
-                            text = {
-                                TextSemiBold(
-                                    text = item.title,
-                                    textColor = Color.White,
-                                    textSize = TextSmallSize
-                                )
-                            }
+            tabRowItems.forEachIndexed { index, item ->
+                Tab(
+                    enabled = state.isPagerEnabled,
+                    selected = pagerState.currentPage == index,
+                    onClick = { coroutineScope.launch { pagerState.animateScrollToPage(index) } },
+                    text = {
+                        TextSemiBold(
+                            text = item.title,
+                            textColor = Color.White,
+                            textSize = TextSmallSize
                         )
                     }
-                }
-                HorizontalPager(
-                    userScrollEnabled = state.isPagerEnabled,
-                    state = pagerState,
-                ) {
-                    tabRowItems[pagerState.currentPage].screen()
-                }
+                )
             }
-            TextInput(
-                state.productName,
-                onValueChange = { newValue, isValid ->
-                    onEvent(AddItemEvent.ProductNameChanged(newValue))
-                },
-                labelText = stringResource(R.string.add_product_input_label),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(MEDIUM)
-                    .constrainAs(inputName) {
-                        top.linkTo(tabRow.bottom, MEDIUM)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                    }
-            )
-
-            CommerceSpinner(
-                state.isDropdownExpanded,
-                commerceList.map { commerce ->
-                    commerce.name
-                },
-                onEvent,
-                modifier = Modifier
-                    .padding(horizontal = MEDIUM)
-                    .constrainAs(commerceSpinner) {
-                        top.linkTo(inputName.bottom)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                    }
-            )
-
-            FormButton(
-                stringResource(R.string.add_product),
-                enableButton = state.productName.isNotEmpty(),
-                onClickButton = {
-                    onEvent(AddItemEvent.AddProductButtonClicked)
-                },
-                modifier = Modifier
-                    .padding(MEDIUM)
-                    .constrainAs(button) {
-                        bottom.linkTo(parent.bottom)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                    }
-            )
+        }
+        HorizontalPager(
+            userScrollEnabled = state.isPagerEnabled,
+            state = pagerState,
+        ) {
+            tabRowItems[pagerState.currentPage].screen()
         }
     }
 }
@@ -253,7 +272,7 @@ fun CommerceSpinner(
         modifier = modifier
     ) {
         TextSemiBold(
-            "¿Dónde quieres comprar tu producto?",
+            stringResource(R.string.select_commerce_title),
             textSize = TextSmallSize
         )
         LowSpacer()
@@ -261,7 +280,7 @@ fun CommerceSpinner(
             isExpanded = isDropdownExpanded,
             dropdownItems = dropdownItems,
             newItemSelected = { indexSelected ->
-                Timber.tag("spinnerSelection").i("$indexSelected")
+                onEvent(AddItemEvent.CommerceClicked(dropdownItems[indexSelected]))
             },
             changeExpandedEvent = { newExpandedValue ->
                 onEvent(AddItemEvent.NewDropdownExpandedState(newExpandedValue))
@@ -280,6 +299,7 @@ fun AddCommerceDialog(
     CommonAlertDialog(
         alertIcon = Icons.Filled.AddBusiness,
         alertTitle = stringResource(R.string.add_commerce),
+        labelText = stringResource(R.string.new_commerce_label),
         acceptButtonText = stringResource(R.string.create),
         cancelButtonText = stringResource(R.string.logout_dialog_cancel_button),
         acceptButtonAction = { input ->
@@ -296,21 +316,9 @@ fun AddCommerceDialog(
 fun AddItemPrev() {
     Screen {
         AddItem(
-            popBackStack = {},
-            tabRowItems = listOf(
-                TabRowItem(
-                    title = stringResource(R.string.tab_camera_text)
-                ) {
-                    TextSemiBold("Soy Camera")
-                },
-                TabRowItem(
-                    title = stringResource(R.string.tab_storage_text)
-                ) {
-                    TextSemiBold("Soy Storage")
-                }
-            ),
             state = AddItemState(),
-            commerceList = listOf()
-        ) {}
+            commerceList = listOf(),
+            onEvent = {}
+        )
     }
 }

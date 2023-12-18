@@ -1,4 +1,4 @@
-package io.loperilla.onboarding.additem
+package io.loperilla.onboarding.additem.state
 
 import android.graphics.Bitmap
 
