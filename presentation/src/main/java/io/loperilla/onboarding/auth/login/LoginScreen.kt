@@ -1,28 +1,39 @@
 package io.loperilla.onboarding.auth.login
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.loperilla.core_ui.LOW
 import io.loperilla.core_ui.MEDIUM
 import io.loperilla.core_ui.Screen
 import io.loperilla.core_ui.button.FormButton
-import io.loperilla.core_ui.input.EmailInput
-import io.loperilla.core_ui.input.PasswordInput
+import io.loperilla.core_ui.input.NewEmailInput
+import io.loperilla.core_ui.input.NewPasswordInput
+import io.loperilla.core_ui.isValidEmail
+import io.loperilla.core_ui.isValidPassword
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
+import io.loperilla.core_ui.routes.NavAction
+import io.loperilla.core_ui.routes.Routes
 import io.loperilla.core_ui.spacers.LowSpacer
 import io.loperilla.core_ui.spacers.MediumSpacer
+import io.loperilla.core_ui.text.TextTitle
+import io.loperilla.model.auth.AuthResult
 import io.loperilla.onboarding_presentation.R
 
 /*****
@@ -33,27 +44,53 @@ import io.loperilla.onboarding_presentation.R
  */
 
 @Composable
-fun LoginScreen(
-    emailValue: String,
-    passwordValue: String,
-    onEmailChange: (String) -> Unit,
-    onPasswordChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
-    loginButtonClicked: () -> Unit,
-    registerButtonClicked: () -> Unit
+fun loginScreen(
+    navigateTo: (NavAction) -> Unit
 ) {
-    var isEmailValid by remember { mutableStateOf(false) }
-    var isPasswordValid by remember { mutableStateOf(false) }
+    val viewModel: LoginViewModel = hiltViewModel()
+    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+
+    state.newRoute?.let {
+        navigateTo(NavAction.Navigate(it))
+        return
+    }
+
+    if (state.loginRequestState is AuthResult.AuthSuccess) {
+        navigateTo(NavAction.Navigate(Routes.HOME))
+        return
+    }
+
+    if (state.loginRequestState is AuthResult.LoadingRequest) {
+        Column {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+            )
+        }
+    }
+    LoginScreen(
+        state,
+        viewModel::onEvent
+    )
+}
+
+@Composable
+private fun LoginScreen(
+    state: LoginState,
+    onEvent: (LoginEvent) -> Unit,
+    modifier: Modifier = Modifier
+) {
     ConstraintLayout(
         modifier = modifier
             .fillMaxSize()
             .padding(MEDIUM)
     ) {
-        val (image, loginEmail, loginPassword, loginButton, registerButton) = createRefs()
+        val (image, titleLabel, loginEmail, loginPassword, loginButton, registerButton) = createRefs()
         Image(
             painter = painterResource(R.mipmap.home_shopping_logo_foreground),
             contentDescription = "Application logo",
             modifier = modifier
+                .size(200.dp)
                 .clip(CircleShape)
                 .constrainAs(image) {
                     top.linkTo(parent.top)
@@ -61,33 +98,44 @@ fun LoginScreen(
                     end.linkTo(parent.end)
                 }
         )
-        MediumSpacer()
-        EmailInput(
+
+        TextTitle(
+            text = "Inicia sesión",
             modifier = Modifier
-                .constrainAs(loginEmail) {
-                    top.linkTo(image.bottom, margin = LOW)
+                .constrainAs(titleLabel) {
+                    top.linkTo(image.bottom, margin = MEDIUM)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                },
-            inputValue = emailValue,
-            onValueChange = { newValue, isInputValid ->
-                onEmailChange(newValue)
-                isEmailValid = isInputValid
-            }
+                }
+        )
+
+        MediumSpacer()
+        NewEmailInput(
+            text = state.emailInputValue,
+            imeAction = ImeAction.Next,
+            onTextChange = { newValue ->
+                onEvent(LoginEvent.EmailValueChange(newValue))
+            },
+            modifier = Modifier
+                .constrainAs(loginEmail) {
+                    top.linkTo(titleLabel.bottom, margin = LOW)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
         )
         LowSpacer()
-        PasswordInput(
+        NewPasswordInput(
+            text = state.passwordInputValue,
+            imeAction = ImeAction.Done,
+            onTextChange = { newValue ->
+                onEvent(LoginEvent.PasswordValueChange(newValue))
+            },
             modifier = Modifier
                 .constrainAs(loginPassword) {
                     top.linkTo(loginEmail.bottom, margin = LOW)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                },
-            inputValue = passwordValue,
-            onValueChange = { newValue, isInputValid ->
-                onPasswordChange(newValue)
-                isPasswordValid = isInputValid
-            }
+                }
         )
 
         FormButton(
@@ -99,9 +147,9 @@ fun LoginScreen(
                     bottom.linkTo(registerButton.top)
                 },
             onClickButton = {
-                loginButtonClicked()
+                onEvent(LoginEvent.LoginButtonClicked)
             },
-            enableButton = isEmailValid && isPasswordValid
+            enableButton = state.emailInputValue.isValidEmail && state.passwordInputValue.isValidPassword
         )
         LowSpacer()
         FormButton(
@@ -114,7 +162,7 @@ fun LoginScreen(
                     bottom.linkTo(parent.bottom)
                 },
             onClickButton = {
-                registerButtonClicked()
+                onEvent(LoginEvent.RegisterButtonClicked)
             }
         )
     }
@@ -125,20 +173,8 @@ fun LoginScreen(
 fun LoginScreenPrev() {
     Screen {
         LoginScreen(
-            "",
-            "",
-            onEmailChange = {
-
-            },
-            onPasswordChange = {
-
-            },
-            loginButtonClicked = {
-
-            },
-            registerButtonClicked = {
-
-            }
+            state = LoginState(),
+            onEvent = {}
         )
     }
 }

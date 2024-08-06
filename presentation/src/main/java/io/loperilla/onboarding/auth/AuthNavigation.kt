@@ -19,8 +19,6 @@ import androidx.navigation.compose.composable
 import io.loperilla.core_ui.Screen
 import io.loperilla.core_ui.routes.Routes
 import io.loperilla.model.auth.AuthResult
-import io.loperilla.onboarding.auth.login.LoginScreen
-import io.loperilla.onboarding.auth.login.LoginViewModel
 import io.loperilla.onboarding.auth.register.RegisterScreen
 import io.loperilla.onboarding.auth.register.RegisterViewModel
 import io.loperilla.onboarding_presentation.R
@@ -32,53 +30,53 @@ import io.loperilla.onboarding_presentation.R
  * All rights reserved 2023
  */
 
-fun NavGraphBuilder.loginScreen(
-    newDestination: (String) -> Unit
-) {
-    composable(Routes.AUTH.LOGIN.route) {
-        Screen {
-            val loginViewModel: LoginViewModel = hiltViewModel()
-            val emailValue by loginViewModel.emailInputValue.collectAsStateWithLifecycle()
-            val passwordValue by loginViewModel.passwordInputValue.collectAsStateWithLifecycle()
-            val requestState: AuthResult by loginViewModel.loginRequestState.collectAsStateWithLifecycle()
-
-            when (requestState) {
-                AuthResult.AuthSuccess -> newDestination(Routes.HOME.route)
-                AuthResult.LoadingRequest -> {
-                    Column {
-                        CircularProgressIndicator(
-                            modifier = Modifier
-                                .align(Alignment.CenterHorizontally)
-                        )
-                    }
-                }
-
-                else -> {
-                    if (requestState != AuthResult.AuthNone) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(Color.Red)
-                        ) {
-                            Text(stringResource(R.string.auth_fail_message))
-                        }
-                    }
-                    LoginScreen(
-                        emailValue,
-                        passwordValue,
-                        onEmailChange = loginViewModel::emailValueChange,
-                        onPasswordChange = loginViewModel::passwordValueChange,
-                        modifier = Modifier
-                            .background(MaterialTheme.colorScheme.background),
-                        loginButtonClicked = loginViewModel::loginButtonClicked
-                    ) {
-                        newDestination(Routes.AUTH.REGISTER.route)
-                    }
-                }
-            }
-        }
-    }
-}
+//fun NavGraphBuilder.loginScreen(
+//    newDestination: (String) -> Unit
+//) {
+//    composable(Routes.AUTH.LOGIN.route) {
+//        Screen {
+//            val loginViewModel: LoginViewModel = hiltViewModel()
+//            val emailValue by loginViewModel.emailInputValue.collectAsStateWithLifecycle()
+//            val passwordValue by loginViewModel.passwordInputValue.collectAsStateWithLifecycle()
+//            val requestState: AuthResult by loginViewModel.loginRequestState.collectAsStateWithLifecycle()
+//
+//            when (requestState) {
+//                AuthResult.AuthSuccess -> newDestination(Routes.HOME.route)
+//                AuthResult.LoadingRequest -> {
+//                    Column {
+//                        CircularProgressIndicator(
+//                            modifier = Modifier
+//                                .align(Alignment.CenterHorizontally)
+//                        )
+//                    }
+//                }
+//
+//                else -> {
+//                    if (requestState != AuthResult.AuthNone) {
+//                        Box(
+//                            modifier = Modifier
+//                                .fillMaxWidth()
+//                                .background(Color.Red)
+//                        ) {
+//                            Text(stringResource(R.string.auth_fail_message))
+//                        }
+//                    }
+//                    LoginScreen(
+//                        emailValue,
+//                        passwordValue,
+//                        onEmailChange = loginViewModel::emailValueChange,
+//                        onPasswordChange = loginViewModel::passwordValueChange,
+//                        modifier = Modifier
+//                            .background(MaterialTheme.colorScheme.background),
+//                        loginButtonClicked = loginViewModel::loginButtonClicked
+//                    ) {
+//                        newDestination(Routes.AUTH.REGISTER.route)
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
 
 fun NavGraphBuilder.registerScreen(newDestination: (String) -> Unit) {
     composable(Routes.AUTH.REGISTER.route) {

@@ -1,10 +1,11 @@
 package io.loperilla.core_ui.input
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -19,45 +20,51 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import io.loperilla.core_ui.R
+import androidx.compose.ui.unit.dp
+import io.loperilla.core_ui.Email
+import io.loperilla.core_ui.Password
 import io.loperilla.core_ui.Screen
 import io.loperilla.core_ui.TextSmallSize
+import io.loperilla.core_ui.isValidEmail
+import io.loperilla.core_ui.isValidPassword
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
-import io.loperilla.core_ui.spacers.MediumSpacer
 import io.loperilla.core_ui.text.TextSemiBold
 import io.loperilla.core_ui.text.TextThin
-import kotlin.reflect.KFunction1
 
 /*****
  * Project: HomeShopping
  * From: io.loperilla.core_ui.input
- * Created By Manuel Lopera on 6/9/23 at 20:27
- * All rights reserved 2023
+ * Created By Manuel Lopera on 6/8/24 at 19:29
+ * All rights reserved 2024
  */
 
 @Composable
-fun EmailInput(
-    inputValue: String,
+fun NewEmailInput(
+    text: Email,
+    onTextChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    placeholderValue: String = "correo@dominio.com",
-    onValueChange: (String, Boolean) -> Unit
+    placeholderText: String = "",
+    isValidEmail: Boolean = text.isValidEmail,
+    labelText: String = "EMAIL",
+    imeAction: ImeAction = ImeAction.Default
 ) {
     CommonInput(
-        inputValue = inputValue,
-        placeholderValue = placeholderValue,
-        errorTextDescription = stringResource(R.string.email_text_description),
-        labelText = stringResource(R.string.email_label),
+        text = text,
+        labelText = labelText,
+        onTextChange = onTextChange,
+        placeholderText = placeholderText,
+        keyboardType = KeyboardType.Email,
+        uiError = UiError("Ingresa un formato de email válido", isValidEmail),
+        imeAction = imeAction,
         modifier = modifier,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-        validator = InputValidators.EMAIL::isValid,
-        onValueChange = onValueChange,
         leadingIcon = {
             Icon(imageVector = Icons.Filled.Person, contentDescription = "emailIcon")
         }
@@ -65,33 +72,35 @@ fun EmailInput(
 }
 
 @Composable
-fun PasswordInput(
-    inputValue: String,
+fun NewPasswordInput(
+    text: Password,
+    onTextChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    placeholderValue: String = "*********",
-    onValueChange: (String, Boolean) -> Unit
+    placeholderText: String = "",
+    isValidPassword: Boolean = text.isValidPassword,
+    labelText: String = "CONTRASEÑA",
+    imeAction: ImeAction = ImeAction.Default
 ) {
     var isPasswordVisible by rememberSaveable { mutableStateOf(false) }
+
     CommonInput(
-        inputValue = inputValue,
-        placeholderValue = placeholderValue,
-        errorTextDescription = stringResource(R.string.password_text_description),
-        labelText = stringResource(R.string.password_label),
+        text = text,
+        labelText = labelText,
+        onTextChange = onTextChange,
+        placeholderText = placeholderText,
+        keyboardType = KeyboardType.Password,
+        uiError = UiError("Ingresa una contraseña segura", isValidPassword),
+        imeAction = imeAction,
         modifier = modifier,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-        validator = InputValidators.PASSWORD::isValid,
-        onValueChange = onValueChange,
         leadingIcon = {
-            Icon(imageVector = Icons.Filled.Lock, contentDescription = null)
+            Icon(imageVector = Icons.Filled.Person, contentDescription = "passwordIcon")
         },
-        textMaxLength = 16,
         trailingIcon = {
             val endIcon = if (isPasswordVisible) {
                 Icons.Filled.VisibilityOff
             } else {
                 Icons.Filled.Visibility
             }
-
             IconButton(
                 onClick = { isPasswordVisible = !isPasswordVisible }
             ) {
@@ -102,47 +111,25 @@ fun PasswordInput(
             VisualTransformation.None
         } else {
             PasswordVisualTransformation()
-        }
+        },
     )
 }
-
-@Composable
-fun TextInput(
-    inputValue: String,
-    onValueChange: (String, Boolean) -> Unit,
-    modifier: Modifier = Modifier,
-    placeholderValue: String = "",
-    labelText: String = ""
-) {
-    CommonInput(
-        inputValue = inputValue,
-        placeholderValue = placeholderValue,
-        errorTextDescription = stringResource(R.string.empty_lbl),
-        labelText = labelText,
-        modifier = modifier,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-        validator = InputValidators.TEXT::isValid,
-        onValueChange = onValueChange
-    )
-}
-
 
 @Composable
 private fun CommonInput(
-    inputValue: String,
-    placeholderValue: String,
+    text: String,
     labelText: String,
-    errorTextDescription: String,
+    onTextChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    keyboardOptions: KeyboardOptions,
-    validator: KFunction1<String, Boolean>,
-    onValueChange: (String, Boolean) -> Unit,
-    visualTransformation: VisualTransformation = VisualTransformation.None,
-    textMaxLength: Int = Int.MAX_VALUE,
+    uiError: UiError = UiError(),
+    placeholderText: String = "",
+    keyboardType: KeyboardType = KeyboardType.Text,
+    imeAction: ImeAction = ImeAction.Default,
+    suffixValue: String = "",
+    trailingIcon: @Composable (() -> Unit)? = null,
     leadingIcon: @Composable (() -> Unit)? = null,
-    trailingIcon: @Composable (() -> Unit)? = null
+    visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
-    var hasBadInput by remember { mutableStateOf(false) }
     var hasFocus by remember { mutableStateOf(false) }
     val commonColors = TextFieldDefaults.colors(
         focusedTextColor = Color.White,
@@ -168,17 +155,20 @@ private fun CommonInput(
         errorLabelColor = MaterialTheme.colorScheme.error,
         errorSupportingTextColor = MaterialTheme.colorScheme.error,
     )
+
+
     TextField(
         modifier = modifier
             .fillMaxWidth()
             .onFocusChanged {
                 hasFocus = it.hasFocus
             },
-        value = inputValue,
+        value = text,
+        onValueChange = onTextChange,
         singleLine = true,
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
-        isError = hasBadInput && !hasFocus,
+        isError = uiError.isVisible && !hasFocus,
         label = {
             TextSemiBold(
                 labelText,
@@ -186,24 +176,19 @@ private fun CommonInput(
             )
         },
         placeholder = {
-            TextThin(text = placeholderValue)
+            TextThin(text = placeholderText)
         },
-        keyboardOptions = keyboardOptions,
-        onValueChange = { newValue ->
-            hasBadInput = !validator(newValue)
-            if (newValue.length <= textMaxLength) {
-                onValueChange(
-                    newValue,
-                    validator(newValue)
-                )
-            }
-        },
+        keyboardOptions = KeyboardOptions(
+            keyboardType = keyboardType,
+            imeAction = imeAction
+        ),
         colors = commonColors,
         visualTransformation = visualTransformation,
         supportingText = {
-            if (hasBadInput && !hasFocus) {
+            if (uiError.isVisible && !hasFocus) {
                 TextThin(
-                    errorTextDescription
+                    uiError.message,
+                    textColor = MaterialTheme.colorScheme.error
                 )
             }
         }
@@ -212,46 +197,23 @@ private fun CommonInput(
 
 @PIXEL_33_NIGHT
 @Composable
-fun EmailInputPreview() {
+private fun NewInputPreview() {
     Screen {
-        Column {
-            EmailInput(
-                "Email"
-            ) { newInput, isValid ->
-
-            }
-            MediumSpacer()
-            PasswordInput(
-                "Password"
-            ) { newInput, isValid ->
-
-            }
-            MediumSpacer()
-            EmailInput(
-                ""
-            ) { newInput, isValid ->
-
-            }
-            MediumSpacer()
-            PasswordInput(
-                ""
-            ) { newInput, isValid ->
-
-            }
-            MediumSpacer()
-            TextInput(
-                "",
-                onValueChange = { newInput, isValid ->
-
-                }
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(
+                8.dp,
+                Alignment.CenterVertically
             )
-            MediumSpacer()
-            TextInput(
-                "",
-                labelText = "Nombre del input",
-                onValueChange = { newInput, isValid ->
+        ) {
+            NewEmailInput(
+                text = "correo@dominio.com",
+                onTextChange = {}
+            )
 
-                }
+            NewPasswordInput(
+                text = "123456",
+                onTextChange = {}
             )
         }
     }
