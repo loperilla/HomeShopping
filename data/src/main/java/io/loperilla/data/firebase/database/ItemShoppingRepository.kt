@@ -1,7 +1,6 @@
 package io.loperilla.data.firebase.database
 
 import io.loperilla.datasource.firebase.database.ShoppingItemListFirebaseDatabase
-import io.loperilla.model.database.ShoppingItem
 import javax.inject.Inject
 
 /*****
@@ -13,7 +12,7 @@ import javax.inject.Inject
 class ItemShoppingRepository @Inject constructor(
     private val database: ShoppingItemListFirebaseDatabase
 ) {
-    fun getAllShopping() = database.getAllItems()
+//    fun getAllShopping() = TODO()
 
-    suspend fun postItem(item: ShoppingItem, bitmapToUpload: ByteArray) = database.addItemShopping(item, bitmapToUpload)
+//    suspend fun postItem(item: ShoppingItem, bitmapToUpload: ByteArray) = TODO()
 }

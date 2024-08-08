@@ -42,6 +42,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     kotlinOptions {
@@ -62,7 +63,6 @@ dependencies {
     implementation(project(MyConfiguration.Modules.COREUI))
     implementation(project(MyConfiguration.Modules.ONB_DOMAIN))
     implementation(project(MyConfiguration.Modules.ONB_PRESENTATION))
-    implementation(project(MyConfiguration.MAP_MODULES.MODEL))
 
     // Compose
     implementation(platform(libs.compose.bom))

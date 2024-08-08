@@ -5,6 +5,7 @@ import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.loperilla.datasource.database.HomeShoppingDatabase
 import javax.inject.Singleton
@@ -21,13 +22,14 @@ object RoomModule {
     @Provides
     @Singleton
     fun provideGameDatabase(
-        context: Context
+        @ApplicationContext context: Context
     ): HomeShoppingDatabase = Room
         .databaseBuilder(
             context,
             HomeShoppingDatabase::class.java,
             HomeShoppingDatabase::class.java.simpleName
-        ).build()
+        )
+        .build()
 
 
     @Provides

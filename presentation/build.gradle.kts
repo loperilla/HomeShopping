@@ -51,7 +51,6 @@ composeCompiler {
 dependencies {
     implementation(project(MyConfiguration.Modules.COREUI))
     implementation(project(MyConfiguration.MAP_MODULES.DOMAIN))
-    implementation(project(MyConfiguration.MAP_MODULES.MODEL))
 
     //Runtime
     implementation(libs.lifecycle.runtime.ktx)

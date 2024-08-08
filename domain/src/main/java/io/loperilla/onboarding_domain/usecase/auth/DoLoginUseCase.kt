@@ -1,7 +1,6 @@
 package io.loperilla.onboarding_domain.usecase.auth
 
-import io.loperilla.data.firebase.auth.FirebaseAuthRepository
-import io.loperilla.model.auth.AuthResult
+import io.loperilla.data.repository.auth.AuthRepository
 import javax.inject.Inject
 
 /*****
@@ -11,10 +10,10 @@ import javax.inject.Inject
  * All rights reserved 2023
  */
 class DoLoginUseCase @Inject constructor(
-    private val repository: FirebaseAuthRepository
+    private val repository: AuthRepository
 ) {
     suspend operator fun invoke(
         email: String,
         password: String
-    ): AuthResult = repository.doLogin(email, password)
+    ): Result<Unit> = repository.doLogin(email, password)
 }

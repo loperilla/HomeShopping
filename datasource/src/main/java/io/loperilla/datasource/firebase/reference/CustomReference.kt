@@ -1,9 +1,5 @@
 package io.loperilla.datasource.firebase.reference
 
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.storage.StorageReference
-
 /*****
  * Project: CompraCasa
  * From: io.loperilla.datasource.firebase.reference
@@ -11,12 +7,12 @@ import com.google.firebase.storage.StorageReference
  * All rights reserved 2023
  */
 sealed class CustomReference {
-    data class SHOPPING_LIST_REFERENCE(
-        val shoppingReference: DatabaseReference
-    ) : CustomReference()
-
-    data class SHOPPING_ITEM_LIST_COLLECTION(
-        val itemListCollection: CollectionReference,
-        val imageStorageReference: StorageReference
-    ) : CustomReference()
+//    data class SHOPPING_LIST_REFERENCE(
+//        val shoppingReference: DatabaseReference
+//    ) : CustomReference()
+//
+//    data class SHOPPING_ITEM_LIST_COLLECTION(
+//        val itemListCollection: CollectionReference,
+//        val imageStorageReference: StorageReference
+//    ) : CustomReference()
 }

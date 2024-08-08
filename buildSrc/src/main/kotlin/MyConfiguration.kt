@@ -14,12 +14,11 @@ object MyConfiguration  {
         const val ONBOARDING = ":onboarding"
         const val ONB_DOMAIN = ":domain"
         const val ONB_PRESENTATION = ":presentation"
-        const val MODEL = ":model"
     }
 
     object MAP_MODULES {
-        val MODEL = mapOf("path" to Modules.MODEL)
         val DOMAIN = mapOf("path" to Modules.ONB_DOMAIN)
+        val DATA = mapOf("path" to Modules.DATA)
         val DATASOURCE = mapOf("path" to Modules.DATASOURCE)
     }
 }

@@ -15,10 +15,13 @@ import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
  */
 
 @Composable
-fun Screen(content: @Composable () -> Unit) {
+fun Screen(
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
     HomeShoppingTheme {
         Surface(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
         ) {
             content()

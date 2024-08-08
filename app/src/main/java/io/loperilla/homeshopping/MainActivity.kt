@@ -10,8 +10,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import io.loperilla.core_ui.Screen
 import io.loperilla.core_ui.routes.Routes
-import io.loperilla.model.SplashUIState
 import io.loperilla.onboarding.AppNavigation
+import io.loperilla.onboarding_domain.model.SplashUIState
 
 /*****
  * Project: HomeShopping

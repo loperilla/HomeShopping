@@ -3,10 +3,8 @@ package io.loperilla.onboarding.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.loperilla.model.database.ShoppingItem
-import io.loperilla.model.database.result.ReadDatabaseResult
-import io.loperilla.onboarding_domain.usecase.home.HomeUseCase
-import io.loperilla.onboarding_domain.usecase.home.LogoutUseCase
+import io.loperilla.onboarding_domain.model.database.ShoppingItem
+import io.loperilla.onboarding_domain.usecase.auth.LogoutUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val logoutUseCase: LogoutUseCase,
-    private val homeUseCase: HomeUseCase
+//    private val homeUseCase: HomeUseCase
 ) : ViewModel() {
     private var _showLogoutDialog: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val showLogoutDialog: StateFlow<Boolean> = _showLogoutDialog
@@ -35,17 +33,17 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            homeUseCase.getAllShopping().collect { result ->
-                when (result) {
-                    is ReadDatabaseResult.FAIL -> {
-                        _logoutFinish.value = true
-                    }
-
-                    is ReadDatabaseResult.SUCCESS -> {
-                        _shoppingBuyList.value = result.result
-                    }
-                }
-            }
+//            homeUseCase.getAllShopping().collect { result ->
+//                when (result) {
+//                    is ReadDatabaseResult.FAIL<*> -> {
+//                        _logoutFinish.value = true
+//                    }
+//
+//                    is ReadDatabaseResult.SUCCESS<*> -> {
+//                        _shoppingBuyList.value = result.result
+//                    }
+//                }
+//            }
         }
     }
 

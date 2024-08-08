@@ -30,9 +30,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    }
     kotlinOptions {
         jvmTarget = "17"
     }
@@ -40,7 +37,6 @@ android {
 
 dependencies {
     implementation(project(MyConfiguration.Modules.DATA))
-    implementation(project(MyConfiguration.MAP_MODULES.MODEL))
 
     //Runtime
     implementation(libs.lifecycle.runtime.ktx)

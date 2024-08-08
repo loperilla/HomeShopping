@@ -3,11 +3,13 @@ package io.loperilla.onboarding.auth.register
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.loperilla.model.auth.AuthResult
+import io.loperilla.core_ui.routes.NavAction
 import io.loperilla.onboarding_domain.usecase.auth.RegisterUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,33 +23,33 @@ import javax.inject.Inject
 class RegisterViewModel @Inject constructor(
     private val registerUseCase: RegisterUseCase
 ) : ViewModel() {
-    private var _passwordInputValue: MutableStateFlow<String> = MutableStateFlow("")
-    val passwordInputValue: StateFlow<String> = _passwordInputValue
+    private var _stateFlow: MutableStateFlow<RegisterState> = MutableStateFlow(RegisterState())
+    val stateFlow: StateFlow<RegisterState> = _stateFlow.asStateFlow()
 
-    private var _emailInputValue: MutableStateFlow<String> = MutableStateFlow("")
-    val emailInputValue: StateFlow<String> = _emailInputValue
+    fun onEvent(event: RegisterEvent) {
+        when (event) {
+            is RegisterEvent.EmailValueChange -> _stateFlow.update {
+                it.copy(
+                    emailInputValue = event.emailValue
+                )
+            }
 
-    private var _authState: MutableStateFlow<AuthResult> = MutableStateFlow(AuthResult.AuthNone)
-    val authState: StateFlow<AuthResult> = _authState
+            is RegisterEvent.PasswordValueChange -> _stateFlow.update {
+                it.copy(
+                    passwordInputValue = event.passwordValue
+                )
+            }
 
-    fun emailValueChange(newEmailValue: String) {
-        viewModelScope.launch {
-            _emailInputValue.value = newEmailValue
-        }
-    }
-
-    fun passwordValueChange(newPasswordValue: String) {
-        viewModelScope.launch {
-            _passwordInputValue.value = newPasswordValue
+            RegisterEvent.DoRegister -> doRegister()
+            RegisterEvent.OnBackPressed -> _stateFlow.update {
+                it.copy(newRoute = NavAction.PopBackStack)
+            }
         }
     }
 
     fun doRegister() {
         viewModelScope.launch(Dispatchers.IO) {
-            _authState.value = AuthResult.LoadingRequest
 
-            val result = registerUseCase(emailInputValue.value, passwordInputValue.value)
-            _authState.value = result
         }
     }
 }

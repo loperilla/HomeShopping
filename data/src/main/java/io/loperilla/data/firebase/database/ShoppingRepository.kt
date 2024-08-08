@@ -12,5 +12,5 @@ import javax.inject.Inject
 class ShoppingRepository @Inject constructor(
     private val database: ShoppingCartListFirebaseDatabase
 ) {
-    fun getAllShopping() = database.getAllShoppingBuy()
+//    fun getAllShopping() = TODO()
 }

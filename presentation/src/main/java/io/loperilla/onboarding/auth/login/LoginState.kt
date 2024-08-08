@@ -3,7 +3,7 @@ package io.loperilla.onboarding.auth.login
 import io.loperilla.core_ui.Email
 import io.loperilla.core_ui.Password
 import io.loperilla.core_ui.routes.Routes
-import io.loperilla.model.auth.AuthResult
+import io.loperilla.onboarding_domain.model.auth.AuthResult
 
 /*****
  * Project: HomeShopping
