@@ -66,10 +66,11 @@ fun AppNavigation(
             }
         }
 
-//
-//        composable(Routes.HOME.route) {
+        composable(Routes.HOME.route) {
+//            val homeViewModel = hiltViewModel<HomeViewModel>()
+//            val state by homeViewModel.stateFlow.collectAsStateWithLifecycle()
 //            HomeScreen(navController::navigate)
-//        }
+        }
 //
 //        navigation(
 //            startDestination = Routes.SHOPPING_BASKET.ADD_SHOPPING.route,

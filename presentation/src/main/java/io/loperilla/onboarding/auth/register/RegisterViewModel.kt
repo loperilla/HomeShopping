@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.loperilla.core_ui.routes.NavAction
+import io.loperilla.core_ui.routes.Routes
 import io.loperilla.onboarding_domain.usecase.auth.RegisterUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -44,12 +45,28 @@ class RegisterViewModel @Inject constructor(
             RegisterEvent.OnBackPressed -> _stateFlow.update {
                 it.copy(newRoute = NavAction.PopBackStack)
             }
+
+            RegisterEvent.HideSnackbar -> _stateFlow.update {
+                it.copy(showErrorSnackbar = false)
+            }
         }
     }
 
-    fun doRegister() {
-        viewModelScope.launch(Dispatchers.IO) {
-
-        }
+    private fun doRegister() = viewModelScope.launch(Dispatchers.IO) {
+        registerUseCase(
+            _stateFlow.value.emailInputValue,
+            _stateFlow.value.passwordInputValue
+        ).fold(
+            onSuccess = {
+                _stateFlow.update {
+                    it.copy(newRoute = NavAction.Navigate(Routes.HOME))
+                }
+            },
+            onFailure = {
+                _stateFlow.update {
+                    it.copy(showErrorSnackbar = true)
+                }
+            }
+        )
     }
 }

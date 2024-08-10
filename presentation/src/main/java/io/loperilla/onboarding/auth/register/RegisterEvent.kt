@@ -11,5 +11,6 @@ sealed class RegisterEvent {
     data class PasswordValueChange(val passwordValue: String) : RegisterEvent()
     data object DoRegister : RegisterEvent()
     data object OnBackPressed : RegisterEvent()
+    data object HideSnackbar : RegisterEvent()
 
 }

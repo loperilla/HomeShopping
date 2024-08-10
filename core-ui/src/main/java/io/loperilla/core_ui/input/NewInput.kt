@@ -52,7 +52,6 @@ fun NewEmailInput(
     onTextChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     placeholderText: String = "",
-    isValidEmail: Boolean = text.isValidEmail,
     labelText: String = "EMAIL",
     imeAction: ImeAction = ImeAction.Default
 ) {
@@ -62,7 +61,7 @@ fun NewEmailInput(
         onTextChange = onTextChange,
         placeholderText = placeholderText,
         keyboardType = KeyboardType.Email,
-        uiError = UiError("Ingresa un formato de email válido", isValidEmail),
+        uiError = UiError("Ingresa un formato de email válido", !text.isValidEmail),
         imeAction = imeAction,
         modifier = modifier,
         leadingIcon = {
@@ -77,7 +76,6 @@ fun NewPasswordInput(
     onTextChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     placeholderText: String = "",
-    isValidPassword: Boolean = text.isValidPassword,
     labelText: String = "CONTRASEÑA",
     imeAction: ImeAction = ImeAction.Default
 ) {
@@ -89,7 +87,7 @@ fun NewPasswordInput(
         onTextChange = onTextChange,
         placeholderText = placeholderText,
         keyboardType = KeyboardType.Password,
-        uiError = UiError("Ingresa una contraseña segura", isValidPassword),
+        uiError = UiError("Ingresa una contraseña segura", !text.isValidPassword),
         imeAction = imeAction,
         modifier = modifier,
         leadingIcon = {
@@ -125,12 +123,14 @@ private fun CommonInput(
     placeholderText: String = "",
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Default,
-    suffixValue: String = "",
     trailingIcon: @Composable (() -> Unit)? = null,
     leadingIcon: @Composable (() -> Unit)? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
     var hasFocus by remember { mutableStateOf(false) }
+    var showError by remember {
+        mutableStateOf(if (text.isEmpty()) false else uiError.isVisible && !hasFocus)
+    }
     val commonColors = TextFieldDefaults.colors(
         focusedTextColor = Color.White,
         unfocusedTextColor = Color.White.copy(
@@ -168,7 +168,7 @@ private fun CommonInput(
         singleLine = true,
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
-        isError = uiError.isVisible && !hasFocus,
+        isError = showError,
         label = {
             TextSemiBold(
                 labelText,
@@ -185,7 +185,7 @@ private fun CommonInput(
         colors = commonColors,
         visualTransformation = visualTransformation,
         supportingText = {
-            if (uiError.isVisible && !hasFocus) {
+            if (showError) {
                 TextThin(
                     uiError.message,
                     textColor = MaterialTheme.colorScheme.error
@@ -212,7 +212,7 @@ private fun NewInputPreview() {
             )
 
             NewPasswordInput(
-                text = "123456",
+                text = "1234567",
                 onTextChange = {}
             )
         }

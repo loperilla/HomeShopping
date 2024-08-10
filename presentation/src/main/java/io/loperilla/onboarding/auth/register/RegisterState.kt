@@ -13,6 +13,6 @@ import io.loperilla.core_ui.routes.NavAction
 data class RegisterState(
     val emailInputValue: Email = "",
     val passwordInputValue: Password = "",
-    val showLoadingAnimation: Boolean = false,
+    val showErrorSnackbar: Boolean = false,
     val newRoute: NavAction? = null
 )

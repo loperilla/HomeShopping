@@ -15,4 +15,4 @@ typealias Password = String
 val Password.isValidPassword: Boolean
     get() = this.isNotEmpty() && this.length >= 6
 val Email.isValidEmail: Boolean
-    get() = this.isNotEmpty() && !PatternsCompat.EMAIL_ADDRESS.matcher(this).matches()
+    get() = this.isNotEmpty() && PatternsCompat.EMAIL_ADDRESS.matcher(this).matches()
