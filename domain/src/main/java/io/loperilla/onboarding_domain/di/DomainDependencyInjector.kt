@@ -7,9 +7,11 @@ import dagger.hilt.android.components.ViewModelComponent
 import io.loperilla.data.firebase.database.ShoppingRepository
 import io.loperilla.data.repository.QueryRepository
 import io.loperilla.data.repository.auth.AuthRepository
+import io.loperilla.data.repository.database.CommerceRepository
 import io.loperilla.onboarding_domain.usecase.auth.DoLoginUseCase
 import io.loperilla.onboarding_domain.usecase.auth.LogoutUseCase
 import io.loperilla.onboarding_domain.usecase.auth.RegisterUseCase
+import io.loperilla.onboarding_domain.usecase.commerce.GetCommerceListUseCase
 import io.loperilla.onboarding_domain.usecase.home.HomeUseCase
 import io.loperilla.onboarding_domain.usecase.shoppingcart.QueryUseCase
 
@@ -47,4 +49,9 @@ object DomainDependencyInjector {
     fun providesQueryUseCase(
         queryRepository: QueryRepository
     ): QueryUseCase = QueryUseCase(queryRepository)
+
+    @Provides
+    fun providesGetCommerceListUseCase(
+        commerceRepository: CommerceRepository
+    ): GetCommerceListUseCase= GetCommerceListUseCase(commerceRepository)
 }

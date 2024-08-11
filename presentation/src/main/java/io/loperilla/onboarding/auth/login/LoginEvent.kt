@@ -11,4 +11,5 @@ sealed class LoginEvent {
     data class PasswordValueChange(val newPasswordValue: String) : LoginEvent()
     data object LoginButtonClicked : LoginEvent()
     data object RegisterButtonClicked : LoginEvent()
+    data object HideSnackbar : LoginEvent()
 }

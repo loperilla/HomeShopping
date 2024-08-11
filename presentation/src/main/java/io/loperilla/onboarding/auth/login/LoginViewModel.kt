@@ -49,13 +49,28 @@ class LoginViewModel @Inject constructor(
                     newRoute = Routes.AUTH.REGISTER
                 )
             }
+
+            LoginEvent.HideSnackbar -> _stateFlow.update {
+                it.copy(showSnackbarError = false)
+            }
         }
     }
 
-    fun loginButtonClicked() = viewModelScope.launch(Dispatchers.IO) {
-//        _loginRequestState.value = AuthResult.LoadingRequest
-//        val result = doLoginUseCase(emailInputValue.value, passwordInputValue.value)
-//
-//        _loginRequestState.value = result
+    private fun loginButtonClicked() = viewModelScope.launch(Dispatchers.IO) {
+        doLoginUseCase(
+            email = stateFlow.value.emailInputValue,
+            password = stateFlow.value.passwordInputValue
+        ).fold(
+            onSuccess = {
+                _stateFlow.update {
+                    it.copy(newRoute = Routes.HOME)
+                }
+            },
+            onFailure = {
+                _stateFlow.update {
+                    it.copy(showSnackbarError = true)
+                }
+            }
+        )
     }
 }

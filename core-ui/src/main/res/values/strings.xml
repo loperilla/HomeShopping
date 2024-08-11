@@ -6,4 +6,6 @@
     <string name="password_label">Contraseña</string>
     <string name="email_label">Correo electrónico</string>
     <string name="text_label">Texto</string>
+    <string name="common_accept_button">Aceptar\n</string>
+    <string name="common_cancel_button">Cancelar</string>
 </resources>

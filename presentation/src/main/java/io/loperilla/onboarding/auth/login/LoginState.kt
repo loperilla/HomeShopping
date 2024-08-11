@@ -3,7 +3,6 @@ package io.loperilla.onboarding.auth.login
 import io.loperilla.core_ui.Email
 import io.loperilla.core_ui.Password
 import io.loperilla.core_ui.routes.Routes
-import io.loperilla.onboarding_domain.model.auth.AuthResult
 
 /*****
  * Project: HomeShopping
@@ -14,7 +13,6 @@ import io.loperilla.onboarding_domain.model.auth.AuthResult
 data class LoginState(
     val emailInputValue: Email = "",
     val passwordInputValue: Password = "",
-    val showLoadingAnimation: Boolean = false,
-    val loginRequestState: AuthResult = AuthResult.AuthNone,
+    val showSnackbarError: Boolean = false,
     val newRoute: Routes? = null
 )

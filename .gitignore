@@ -68,3 +68,4 @@ fastlane/readme.md
 /buildSrc/build/
 /.idea/
 /.kotlin/
+buildSrc/build/
