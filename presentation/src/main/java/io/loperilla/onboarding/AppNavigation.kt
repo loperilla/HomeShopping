@@ -15,6 +15,8 @@ import io.loperilla.onboarding.auth.login.LoginScreen
 import io.loperilla.onboarding.auth.login.LoginViewModel
 import io.loperilla.onboarding.auth.register.RegisterScreen
 import io.loperilla.onboarding.auth.register.RegisterViewModel
+import io.loperilla.onboarding.commerce.CommerceScreen
+import io.loperilla.onboarding.commerce.CommerceViewModel
 import io.loperilla.onboarding.home.HomeScreen
 import io.loperilla.onboarding.home.HomeViewModel
 
@@ -75,10 +77,22 @@ fun AppNavigation(
             state.newRoute?.let {
                 when (it) {
                     is NavAction.Navigate -> navController.navigate(it.route.route)
-                    NavAction.PopBackStack -> {}
+                    NavAction.PopBackStack -> navController.navigate(Routes.AUTH.route)
                 }
             }
             HomeScreen(state, homeViewModel::onEvent)
+        }
+
+        composable(Routes.COMMERCE.route) {
+            val commerceViewModel = hiltViewModel<CommerceViewModel>()
+            val state by commerceViewModel.stateFlow.collectAsStateWithLifecycle()
+            state.newRoute?.let {
+                when (it) {
+                    is NavAction.Navigate -> navController.navigate(it.route.route)
+                    NavAction.PopBackStack -> navController.navigate(Routes.HOME.route)
+                }
+            }
+            CommerceScreen(state, commerceViewModel::onEvent)
         }
 //
 //        navigation(

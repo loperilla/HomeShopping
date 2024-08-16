@@ -1,9 +1,9 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import nl.littlerobots.vcu.plugin.versionCatalogUpdate
 
 buildscript {
     dependencies {
-        classpath(libs.kotlin.gradle)
         classpath(libs.build.gradle)
         classpath(libs.hilt.gradle)
         classpath(libs.google.services)
@@ -30,6 +30,14 @@ fun isNonStable(version: String): Boolean {
     val regex = "^[0-9,.v-]+(-r)?$".toRegex()
     val isStable = stableKeyword || regex.matches(version)
     return isStable.not()
+}
+
+versionCatalogUpdate {
+    keep {
+        keepUnusedVersions = true
+        keepUnusedLibraries = true
+        keepUnusedPlugins = true
+    }
 }
 
 // Tarea para setear estas versiones estables al actualizar dependencias

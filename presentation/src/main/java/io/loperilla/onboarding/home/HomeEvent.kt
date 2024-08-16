@@ -12,6 +12,6 @@ sealed class HomeEvent {
     data object GoToShoppingBasket : HomeEvent()
     data class ItemSelected(val id: String) : HomeEvent()
     data object ChangeChipVisibility : HomeEvent()
-    data object AddCommerce : HomeEvent()
+    data object NavigateToCommerce : HomeEvent()
     data object LogOut : HomeEvent()
 }

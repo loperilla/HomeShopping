@@ -3,6 +3,8 @@ package io.loperilla.onboarding.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.loperilla.core_ui.routes.NavAction
+import io.loperilla.core_ui.routes.Routes
 import io.loperilla.onboarding_domain.usecase.auth.LogoutUseCase
 import io.loperilla.onboarding_domain.usecase.commerce.GetCommerceListUseCase
 import kotlinx.coroutines.Dispatchers
@@ -45,8 +47,21 @@ class HomeViewModel @Inject constructor(
     fun onEvent(newEvent: HomeEvent) = viewModelScope.launch(Dispatchers.IO) {
         when (newEvent) {
             is HomeEvent.LogOut -> {
-
+                logoutUseCase().getOrDefault(
+                    _stateFlow.update {
+                        it.copy(
+                            showAreYouSureLogout = false
+                        )
+                    }.run {
+                        _stateFlow.update {
+                            it.copy(
+                                newRoute = NavAction.PopBackStack
+                            )
+                        }
+                    }
+                )
             }
+
 
             HomeEvent.HideLogoutDialog -> _stateFlow.update {
                 it.copy(
@@ -61,14 +76,21 @@ class HomeViewModel @Inject constructor(
             }
 
             HomeEvent.GoToShoppingBasket -> {}
-            is HomeEvent.ItemSelected -> TODO()
+            is HomeEvent.ItemSelected -> {
+                // TODO
+            }
+
             HomeEvent.ChangeChipVisibility -> _stateFlow.update {
                 it.copy(
                     commerceListIsVisible = !it.commerceListIsVisible
                 )
             }
 
-            HomeEvent.AddCommerce -> TODO()
+            HomeEvent.NavigateToCommerce -> _stateFlow.update {
+                it.copy(
+                    newRoute = NavAction.Navigate(Routes.COMMERCE)
+                )
+            }
         }
     }
 

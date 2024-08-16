@@ -1,41 +1,33 @@
 package io.loperilla.onboarding.home
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material.icons.outlined.ShoppingCart
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import io.loperilla.core_ui.CommerceChip
 import io.loperilla.core_ui.CommonAlertDialog
+import io.loperilla.core_ui.CommonTopBar
 import io.loperilla.core_ui.MEDIUM
 import io.loperilla.core_ui.Screen
+import io.loperilla.core_ui.TransparentScaffold
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
 import io.loperilla.core_ui.text.TextTitle
 import io.loperilla.onboarding_domain.model.database.Commerce
@@ -49,21 +41,18 @@ import io.loperilla.onboarding_presentation.R
  */
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     state: HomeState,
     onEvent: (HomeEvent) -> Unit
 ) {
     Screen {
-        Scaffold(
+        TransparentScaffold(
             topBar = {
-                CenterAlignedTopAppBar(
-                    title = {
-                        TextTitle(
-                            stringResource(R.string.home_scaffold_title)
-                        )
-                    },
+                CommonTopBar(
+                    stringResource(R.string.home_scaffold_title),
+                    navActionClick = {},
+                    navIcon = null,
                     actions = {
                         IconButton(onClick = { onEvent(HomeEvent.ShowLogoutDialog) }) {
                             Icon(
@@ -111,6 +100,9 @@ fun CommerceList(
     onEvent: (HomeEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val rotationState by animateFloatAsState(
+        targetValue = if (state.commerceListIsVisible) 180f else 0f, label = ""
+    )
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -127,21 +119,15 @@ fun CommerceList(
             )
 
             Row {
-                IconButton(onClick = { onEvent(HomeEvent.AddCommerce) }) {
-                    Icon(imageVector = Icons.Filled.Add, contentDescription = "Icon add commerce")
+                IconButton(onClick = { onEvent(HomeEvent.NavigateToCommerce) }) {
+                    Icon(imageVector = Icons.Filled.Edit, contentDescription = "Icon add commerce")
                 }
                 IconButton(onClick = { onEvent(HomeEvent.ChangeChipVisibility) }) {
                     Icon(
                         imageVector = Icons.Default.KeyboardArrowUp,
                         contentDescription = "Icon show chips",
                         modifier = Modifier
-                            .rotate(
-                                if (!state.commerceListIsVisible) {
-                                    180f
-                                } else {
-                                    0f
-                                }
-                            )
+                            .rotate(rotationState)
                     )
                 }
             }
@@ -164,34 +150,7 @@ fun CommerceList(
                 }
             }
         }
-    }
 
-}
-
-
-@Composable
-fun EmptyShoppingBuyList() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(MEDIUM),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Icon(
-            imageVector = Icons.Outlined.ShoppingCart,
-            contentDescription = stringResource(R.string.empty_shopping_cart_icon_content_description),
-            modifier = Modifier
-                .size(100.dp)
-        )
-
-        Spacer(modifier = Modifier.height(MEDIUM))
-        Text(
-            text = stringResource(R.string.empty_shopping_cart_text),
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Thin,
-            textAlign = TextAlign.Center
-        )
     }
 }
 

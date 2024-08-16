@@ -23,6 +23,7 @@ fun CommonAlertDialog(
     onConfirmButton: () -> Unit,
     onDismissClick: () -> Unit,
     alertIcon: ImageVector? = null,
+    textContent: @Composable () -> Unit = {},
     onConfirmButtonText: String = stringResource(R.string.common_accept_button),
     onDismissButtonText: String = stringResource(R.string.common_cancel_button),
 ) {
@@ -37,6 +38,7 @@ fun CommonAlertDialog(
         },
         onDismissRequest = { onDismissClick() },
         title = { TextSemiBold(titleText) },
+        text = textContent,
         confirmButton = {
             TextButton(onClick = { onConfirmButton() }) {
                 TextSemiBold(
@@ -56,6 +58,17 @@ fun CommonAlertDialog(
             }
         }
     )
+}
+
+@Composable
+fun FormAlertDialog(
+    titleText: String,
+    onConfirmButton: () -> Unit,
+    onDismissClick: () -> Unit,
+    onConfirmButtonText: String = stringResource(R.string.common_accept_button),
+    onDismissButtonText: String = stringResource(R.string.common_cancel_button),
+) {
+    AlertDialog(onDismissRequest = { /*TODO*/ }, confirmButton = { /*TODO*/ })
 }
 
 @PIXEL_33_NIGHT

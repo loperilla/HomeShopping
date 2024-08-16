@@ -12,6 +12,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -79,6 +80,7 @@ fun LoginScreen(
 
         TextTitle(
             text = "Inicia sesión",
+            textColor = Color.White,
             modifier = Modifier
                 .constrainAs(titleLabel) {
                     top.linkTo(image.bottom, margin = MEDIUM)

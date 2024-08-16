@@ -43,6 +43,7 @@ import kotlin.reflect.KFunction1
  */
 
 @Composable
+@Deprecated("NewEmailInput")
 fun EmailInput(
     inputValue: String,
     modifier: Modifier = Modifier,
@@ -65,6 +66,7 @@ fun EmailInput(
 }
 
 @Composable
+@Deprecated("NewPasswordInput")
 fun PasswordInput(
     inputValue: String,
     modifier: Modifier = Modifier,
@@ -107,6 +109,7 @@ fun PasswordInput(
 }
 
 @Composable
+@Deprecated("NewTextInput")
 fun TextInput(
     inputValue: String,
     onValueChange: (String, Boolean) -> Unit,

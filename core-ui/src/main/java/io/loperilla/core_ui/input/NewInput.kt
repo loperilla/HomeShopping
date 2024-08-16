@@ -71,6 +71,26 @@ fun NewEmailInput(
 }
 
 @Composable
+fun NewTextInput(
+    text: String,
+    onTextChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    placeholderValue: String = "",
+    labelText: String = ""
+) {
+    CommonInput(
+        text = text,
+        labelText = labelText,
+        onTextChange = onTextChange,
+        placeholderText = placeholderValue,
+        keyboardType = KeyboardType.Text,
+        uiError = UiError("Ingresa un valor", text.isEmpty()),
+        imeAction = ImeAction.Next,
+        modifier = modifier
+    )
+}
+
+@Composable
 fun NewPasswordInput(
     text: Password,
     onTextChange: (String) -> Unit,
@@ -215,6 +235,12 @@ private fun NewInputPreview() {
                 text = "1234567",
                 onTextChange = {}
             )
+
+            NewTextInput(
+                text = "dssdfsdfsdf",
+                onTextChange = {}
+            )
+
         }
     }
 }

@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.android.junit)
     alias(libs.plugins.kspPlugin)
 }
 
@@ -12,7 +11,6 @@ android {
 
     defaultConfig {
         minSdk = MyConfiguration.configMinSdkVersion
-        targetSdk = MyConfiguration.configTargetSdkVersion
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")

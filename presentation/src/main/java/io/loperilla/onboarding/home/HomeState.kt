@@ -14,5 +14,5 @@ data class HomeState(
     val newRoute: NavAction? = null,
     val commerceList: List<Commerce> = emptyList(),
     val commerceListSelected: List<Long> = emptyList(),
-    val commerceListIsVisible: Boolean = false
+    val commerceListIsVisible: Boolean = false,
 )

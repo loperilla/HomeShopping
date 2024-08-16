@@ -1,16 +1,20 @@
 package io.loperilla.core_ui
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.tooling.preview.Preview
 import io.loperilla.core_ui.text.TextTitle
 
 /*****
@@ -28,8 +32,11 @@ fun CommonTopBar(
     modifier: Modifier = Modifier,
     actions: @Composable RowScope.() -> Unit = {},
     topBarTextColor: Color = Color.Unspecified,
-    navIcon: ImageVector = Icons.AutoMirrored.Filled.ArrowBack
+    navIcon: ImageVector? = Icons.AutoMirrored.Filled.ArrowBack
 ) {
+    val colors = TopAppBarDefaults.centerAlignedTopAppBarColors().copy(
+        containerColor = Color.Transparent
+    )
     TopAppBar(
         title = {
             if (topBarText.isNotEmpty()) {
@@ -41,14 +48,39 @@ fun CommonTopBar(
             }
         },
         navigationIcon = {
-            IconButton(onClick = navActionClick) {
-                Icon(
-                    imageVector = navIcon,
-                    contentDescription = "Back"
-                )
+            navIcon?.let {
+                IconButton(onClick = navActionClick) {
+                    Icon(
+                        imageVector = it,
+                        contentDescription = "Back"
+                    )
+                }
             }
         },
+        colors = colors,
         modifier = modifier,
         actions = actions
     )
+}
+
+@Preview
+@Composable
+private fun CommonTopbarPrev() {
+    Screen {
+        TransparentScaffold(
+            topBar = {
+                CommonTopBar(
+                    topBarText = "Comercios",
+                    navActionClick = {}
+                )
+            }
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(it)
+            ) {
+                TextTitle(text = "hola hola")
+            }
+        }
+    }
 }
