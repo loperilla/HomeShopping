@@ -6,8 +6,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import io.loperilla.datasource.datastore.IUserDataStoreDataSource
-import io.loperilla.datasource.datastore.UserDataStoreDataSourceImpl
+import io.loperilla.datasource.datastore.UserDataStore
+import io.loperilla.datasource.datastore.UserDataStoreImpl
 import javax.inject.Singleton
 
 /*****
@@ -24,12 +24,6 @@ object DataSourceDependencyInjector {
     @Singleton
     @Provides
     fun providesPreferenceDataStore(
-        context: Context
-    ): IUserDataStoreDataSource = UserDataStoreDataSourceImpl(context)
-
-    @Singleton
-    @Provides
-    fun provideContext(@ApplicationContext context: Context): Context {
-        return context
-    }
+        @ApplicationContext context: Context
+    ): UserDataStore = UserDataStoreImpl(context)
 }

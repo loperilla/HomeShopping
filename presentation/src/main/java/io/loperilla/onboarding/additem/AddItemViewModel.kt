@@ -4,15 +4,11 @@ import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.loperilla.core_ui.util.BitmapUtils.toByteArray
-import io.loperilla.model.database.ShoppingItem
-import io.loperilla.model.database.result.PostDatabaseResult
 import io.loperilla.onboarding_domain.usecase.itemShopping.ItemShoppingUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 /*****
@@ -62,20 +58,20 @@ class AddItemViewModel @Inject constructor(
 
     fun addProduct() {
         viewModelScope.launch(Dispatchers.IO) {
-            when (val result = itemShoppingUseCase.addItem(
-                ShoppingItem(
-                    name = inputNameValue.value
-                ), bitmapSelected.value!!.toByteArray()
-            )) {
-                is PostDatabaseResult.FAIL -> {
-                    Timber.e(result.exception)
-                }
-
-                PostDatabaseResult.SUCCESS -> {
-                    Timber.i("${inputNameValue.value} fue añadido con éxito")
-                    _insertItemSuccess.value = true
-                }
-            }
+//            when (val result = itemShoppingUseCase.addItem(
+//                ShoppingItem(
+//                    name = inputNameValue.value
+//                ), bitmapSelected.value!!.toByteArray()
+//            )) {
+//                is PostDatabaseResult.FAIL -> {
+//                    Timber.e(result.exception)
+//                }
+//
+//                PostDatabaseResult.SUCCESS -> {
+//                    Timber.i("${inputNameValue.value} fue añadido con éxito")
+//                    _insertItemSuccess.value = true
+//                }
+//            }
         }
     }
 }

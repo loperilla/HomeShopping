@@ -3,9 +3,7 @@ package io.loperilla.onboarding.addshoppingCart
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.loperilla.model.database.ShoppingItem
-import io.loperilla.model.database.result.ReadDatabaseResult
-import io.loperilla.onboarding_domain.usecase.itemShopping.ItemShoppingUseCase
+import io.loperilla.onboarding_domain.model.database.ShoppingItem
 import io.loperilla.onboarding_domain.usecase.shoppingcart.QueryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,7 +15,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 /*****
@@ -30,7 +27,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddShoppingCartViewModel @Inject constructor(
     private val queryUseCase: QueryUseCase,
-    private val itemShoppingUseCase: ItemShoppingUseCase
+//    private val itemShoppingUseCase: ItemShoppingUseCase
 ) : ViewModel() {
     private var _searchInputQuery: MutableStateFlow<String> = MutableStateFlow("")
     val searchInputQuery: StateFlow<String> = _searchInputQuery
@@ -63,21 +60,21 @@ class AddShoppingCartViewModel @Inject constructor(
                     }
                 },
                 async {
-                    itemShoppingUseCase.getItems()
-                        .collect { result ->
-                            when (result) {
-                                is ReadDatabaseResult.FAIL -> {
-                                    Timber.e(result.errorMessage)
-                                }
-
-                                is ReadDatabaseResult.SUCCESS -> {
-                                    Timber.i(
-                                        result.result.toString()
-                                    )
-                                    _itemShoppingList.value = result.result
-                                }
-                            }
-                        }
+//                    itemShoppingUseCase.getItems()
+//                        .collect { result ->
+//                            when (result) {
+//                                is ReadDatabaseResult.FAIL<*> -> {
+//                                    Timber.e(result.errorMessage)
+//                                }
+//
+//                                is ReadDatabaseResult.SUCCESS<*> -> {
+//                                    Timber.i(
+//                                        result.result.toString()
+//                                    )
+//                                    _itemShoppingList.value = result.result
+//                                }
+//                            }
+//                        }
                 }
             )
             deferred.awaitAll()

@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.androidLibrary)
-    kotlin("android")
-    alias(libs.plugins.android.junit)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kspPlugin)
 }
 
@@ -11,7 +11,6 @@ android {
 
     defaultConfig {
         minSdk = MyConfiguration.configMinSdkVersion
-        targetSdk = MyConfiguration.configTargetSdkVersion
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -34,18 +33,22 @@ android {
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    }
+
     kotlinOptions {
         jvmTarget = "17"
     }
 }
 
+composeCompiler {
+    enableStrongSkippingMode = true
+
+    reportsDestination = layout.buildDirectory.dir("compose_compiler")
+    //stabilityConfigurationFile = rootProject.layout.projectDirectory.file("stability_config.conf")
+}
+
 dependencies {
     implementation(project(MyConfiguration.Modules.COREUI))
     implementation(project(MyConfiguration.MAP_MODULES.DOMAIN))
-    implementation(project(MyConfiguration.MAP_MODULES.MODEL))
 
     //Runtime
     implementation(libs.lifecycle.runtime.ktx)

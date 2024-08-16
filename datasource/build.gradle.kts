@@ -35,11 +35,12 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
+    }
 }
 
 dependencies {
-    implementation(project(MyConfiguration.MAP_MODULES.MODEL))
-
     //Datastore
     implementation(libs.datastore)
     implementation(libs.timber)
@@ -48,9 +49,6 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.junit.ktx)
     ksp(libs.hilt.compiler)
-    //Firebase
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.bundles.firebase)
 
     // Room
     implementation(libs.room.ktx)

@@ -3,8 +3,8 @@ package io.loperilla.homeshopping
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.loperilla.model.SplashUIState
-import io.loperilla.onboarding_domain.usecase.splash.SplashUseCase
+import io.loperilla.onboarding_domain.model.SplashUIState
+import io.loperilla.onboarding_domain.usecase.auth.SplashUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -25,8 +25,14 @@ class MainActivityViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val newState = splashUseCase()
-            _splashUiState.value = newState
+            splashUseCase().fold(
+                onSuccess = {
+                    _splashUiState.value = SplashUIState.Success
+                },
+                onFailure = {
+                    _splashUiState.value = SplashUIState.NoAuthenticated
+                }
+            )
         }
     }
 }

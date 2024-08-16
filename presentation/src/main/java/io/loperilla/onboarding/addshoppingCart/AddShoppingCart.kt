@@ -17,12 +17,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.outlined.Backspace
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.ShoppingBasket
 import androidx.compose.material.icons.outlined.AddAPhoto
-import androidx.compose.material.icons.outlined.Backspace
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.Badge
@@ -63,7 +63,7 @@ import io.loperilla.core_ui.TextSmallSize
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
 import io.loperilla.core_ui.text.TextSemiBold
 import io.loperilla.core_ui.text.TextTitle
-import io.loperilla.model.database.ShoppingItem
+import io.loperilla.onboarding_domain.model.database.ShoppingItem
 import io.loperilla.onboarding_presentation.R
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -95,7 +95,7 @@ fun AddShoppingCart(
                     navigationIcon = {
                         IconButton(onClick = { popBackStack() }) {
                             Icon(
-                                imageVector = Icons.Filled.ArrowBack,
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = stringResource(R.string.backhome_icon_content_description)
                             )
                         }
@@ -187,7 +187,7 @@ fun AddShoppingCartScreen(
             trailingIcon = {
                 IconButton(onClick = removeInputQueryClicked) {
                     Icon(
-                        imageVector = Icons.Outlined.Backspace,
+                        imageVector = Icons.AutoMirrored.Outlined.Backspace,
                         contentDescription = stringResource(R.string.clear_searchbar_content_description_icon)
                     )
                 }

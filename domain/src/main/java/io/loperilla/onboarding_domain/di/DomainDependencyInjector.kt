@@ -4,14 +4,15 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
-import io.loperilla.data.firebase.auth.FirebaseAuthRepository
-import io.loperilla.data.firebase.database.ItemShoppingRepository
 import io.loperilla.data.firebase.database.ShoppingRepository
 import io.loperilla.data.repository.QueryRepository
+import io.loperilla.data.repository.auth.AuthRepository
+import io.loperilla.data.repository.database.CommerceRepository
 import io.loperilla.onboarding_domain.usecase.auth.DoLoginUseCase
+import io.loperilla.onboarding_domain.usecase.auth.LogoutUseCase
+import io.loperilla.onboarding_domain.usecase.auth.RegisterUseCase
+import io.loperilla.onboarding_domain.usecase.commerce.GetCommerceListUseCase
 import io.loperilla.onboarding_domain.usecase.home.HomeUseCase
-import io.loperilla.onboarding_domain.usecase.home.LogoutUseCase
-import io.loperilla.onboarding_domain.usecase.itemShopping.ItemShoppingUseCase
 import io.loperilla.onboarding_domain.usecase.shoppingcart.QueryUseCase
 
 /*****
@@ -26,13 +27,18 @@ import io.loperilla.onboarding_domain.usecase.shoppingcart.QueryUseCase
 object DomainDependencyInjector {
     @Provides
     fun providesDoLoginUseCase(
-        firebaseAuth: FirebaseAuthRepository
+        firebaseAuth: AuthRepository
     ): DoLoginUseCase = DoLoginUseCase(firebaseAuth)
 
     @Provides
     fun providesLogoutUseCase(
-        firebaseAuth: FirebaseAuthRepository
+        firebaseAuth: AuthRepository
     ): LogoutUseCase = LogoutUseCase(firebaseAuth)
+
+    @Provides
+    fun providesRegisterUseCase(
+        firebaseAuth: AuthRepository
+    ): RegisterUseCase = RegisterUseCase(firebaseAuth)
 
     @Provides
     fun providesHomeUseCase(
@@ -45,7 +51,7 @@ object DomainDependencyInjector {
     ): QueryUseCase = QueryUseCase(queryRepository)
 
     @Provides
-    fun providesItemShoppingUseCase(
-        itemShoppingRepository: ItemShoppingRepository
-    ) = ItemShoppingUseCase(itemShoppingRepository)
+    fun providesGetCommerceListUseCase(
+        commerceRepository: CommerceRepository
+    ): GetCommerceListUseCase= GetCommerceListUseCase(commerceRepository)
 }

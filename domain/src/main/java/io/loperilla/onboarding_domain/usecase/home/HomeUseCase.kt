@@ -12,5 +12,5 @@ import javax.inject.Inject
 class HomeUseCase @Inject constructor(
     private val shoppingDatabase: ShoppingRepository
 ) {
-    fun getAllShopping() = shoppingDatabase.getAllShopping()
+//    fun getAllShopping() =
 }

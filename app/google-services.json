@@ -1,44 +1,26 @@
 {
   "project_info": {
-    "project_number": "299324312481",
-    "project_id": "homeshopping-538ba",
-    "storage_bucket": "homeshopping-538ba.appspot.com"
+    "project_number": "1075937424293",
+    "project_id": "homeshopping-81d5a",
+    "storage_bucket": "homeshopping-81d5a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:299324312481:android:0219455172528970ce19e0",
+        "mobilesdk_app_id": "1:1075937424293:android:fc850c2faab4b9058f6e4c",
         "android_client_info": {
           "package_name": "io.loperilla.homeshopping"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "299324312481-3lv1j4cr2lsmgvrt9fkutmeofu4cdsc3.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "io.loperilla.homeshopping",
-            "certificate_hash": "2ae14fa4fb424e54bff9b78022d90f75120db8e0"
-          }
-        },
-        {
-          "client_id": "299324312481-638a9q1thfujcb7f6cjee7omvuh4vkdd.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDZhHD5CeIhTYMWRBrsEqWE9sqeMXlk43s"
+          "current_key": "AIzaSyBY61mh4sgkgJ239COenpwy3xvLQp0O0aI"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "299324312481-638a9q1thfujcb7f6cjee7omvuh4vkdd.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
