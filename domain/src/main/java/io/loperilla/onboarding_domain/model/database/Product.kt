@@ -6,10 +6,10 @@ package io.loperilla.onboarding_domain.model.database
  * Created By Manuel Lopera on 28/4/23 at 08:06
  * All rights reserved 2023
  */
-data class ShoppingItem(
-    var key: String? = null,
-    val name: String = "",
-    val imageUrl: String = ""
+data class Product(
+    var key: String,
+    val name: String,
+    val imageUrl: String
 ) {
     fun imageRef() = "${this.name}.jpg"
 }

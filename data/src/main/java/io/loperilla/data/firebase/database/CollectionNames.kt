@@ -8,3 +8,4 @@ package io.loperilla.data.firebase.database
  */
 
 const val COMMERCES = "commerces"
+const val PRODUCTS = "products"

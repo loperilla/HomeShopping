@@ -14,7 +14,7 @@
     <string name="empty_shopping_cart_icon_content_description">Carrito de la compra vacío</string>
     <string name="empty_shopping_cart_text">No hay carritos registrados</string>
     <!-- Add Shopping Cart -->
-    <string name="addshoppingcart_scaffold_title">Crear cesta</string>
+    <string name="addshoppingcart_scaffold_title">Crear cesta de %1$s</string>
     <string name="backhome_icon_content_description">Volver al inicio</string>
     <string name="shoppingbasket_icon_content_description">Contenido del nuevo carrito</string>
     <string name="seachbar_placeholder_text">Busca tu producto aquí</string>

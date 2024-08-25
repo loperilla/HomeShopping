@@ -11,7 +11,6 @@ object MyConfiguration  {
         const val COREUI = ":core-ui"
         const val DATA = ":data"
         const val DATASOURCE = ":datasource"
-        const val ONBOARDING = ":onboarding"
         const val ONB_DOMAIN = ":domain"
         const val ONB_PRESENTATION = ":presentation"
     }

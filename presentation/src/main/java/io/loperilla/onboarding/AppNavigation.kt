@@ -1,7 +1,5 @@
 package io.loperilla.onboarding
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -13,6 +11,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import io.loperilla.core_ui.routes.NavAction
 import io.loperilla.core_ui.routes.Routes
+import io.loperilla.onboarding.addshoppingCart.add.NewShoppingBasketScreen
+import io.loperilla.onboarding.addshoppingCart.add.NewShoppingBasketViewModel
+import io.loperilla.onboarding.addshoppingCart.add.NewShoppingBasketViewModelFactory
 import io.loperilla.onboarding.addshoppingCart.select_commerce.SelectCommerceScreen
 import io.loperilla.onboarding.addshoppingCart.select_commerce.SelectCommerceViewModel
 import io.loperilla.onboarding.auth.login.LoginScreen
@@ -123,24 +124,21 @@ fun AppNavigation(
                 SelectCommerceScreen(state, selectCommerceViewModel::onEvent)
             }
             composable(Routes.SHOPPING_BASKET.NEW.route) { navBackStackEntry ->
-                val id = navBackStackEntry.arguments?.getString("id")
-                val name = navBackStackEntry.arguments?.getString("name")
-                Column {
-                    Text(text = "$id")
-                    Text(text = "$name")
+                val id = navBackStackEntry.arguments?.getString("id") ?: ""
+                val name = navBackStackEntry.arguments?.getString("name") ?: ""
 
+                val shoppingBasketViewModel = hiltViewModel<NewShoppingBasketViewModel, NewShoppingBasketViewModelFactory> {
+                    it.create(id)
                 }
-//                Toast.makeText(LocalContext.current, "$id $name", Toast.LENGTH_SHORT).show()
-//                val shoppingBasketViewModel = hiltViewModel<NewShoppingBasketViewModel>()
-//                val state by shoppingBasketViewModel.stateFlow.collectAsStateWithLifecycle()
-//
-//                state.newActionNav?.let {
-//                    when (it) {
-//                        is NavAction.Navigate -> navController.navigate(it.route.route)
-//                        NavAction.PopBackStack -> navController.navigate(Routes.HOME.route)
-//                    }
-//                }
-//                NewShoppingBasketScreen(state, shoppingBasketViewModel::onEvent)
+                val state by shoppingBasketViewModel.stateFlow.collectAsStateWithLifecycle()
+
+                state.newActionNav?.let {
+                    when (it) {
+                        is NavAction.Navigate -> navController.navigate(it.route.route)
+                        NavAction.PopBackStack -> navController.navigate(Routes.HOME.route)
+                    }
+                }
+                NewShoppingBasketScreen(name, state, shoppingBasketViewModel::onEvent)
             }
         }
     }

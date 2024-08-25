@@ -1,14 +1,13 @@
-package io.loperilla.onboarding.addshoppingCart
+package io.loperilla.onboarding.addshoppingCart.add
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.loperilla.core_ui.routes.NavAction
-import io.loperilla.onboarding_domain.usecase.commerce.GetCommerceListUseCase
 import io.loperilla.onboarding_domain.usecase.query.QueryModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,7 +15,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 /*****
  * Project: HomeShopping
@@ -24,12 +22,11 @@ import javax.inject.Inject
  * Created By Manuel Lopera on 26/8/23 at 17:15
  * All rights reserved 2023
  */
-@ExperimentalCoroutinesApi
-@HiltViewModel
-class NewShoppingBasketViewModel @Inject constructor(
-    val getAllCommerceListUseCase: GetCommerceListUseCase,
+
+@HiltViewModel(assistedFactory = NewShoppingBasketViewModelFactory::class)
+class NewShoppingBasketViewModel @AssistedInject constructor(
+    @Assisted commerceId: String,
     private val queryModel: QueryModel,
-//    private val itemShoppingUseCase: ItemShoppingUseCase
 ) : ViewModel() {
     private var _stateFlow: MutableStateFlow<NewShoppingBasketState> =
         MutableStateFlow(NewShoppingBasketState())
@@ -45,15 +42,15 @@ class NewShoppingBasketViewModel @Inject constructor(
                 }
             }
 
-            async {
-                getAllCommerceListUseCase().collectLatest { commerceList ->
-                    _stateFlow.update {
-                        it.copy(
-                            commerceList = commerceList
-                        )
-                    }
-                }
-            }.await()
+//            async {
+//                getAllCommerceListUseCase().collectLatest { commerceList ->
+//                    _stateFlow.update {
+//                        it.copy(
+//                            commerceList = commerceList
+//                        )
+//                    }
+//                }
+//            }.await()
         }
     }
 

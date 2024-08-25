@@ -1,7 +1,7 @@
 package io.loperilla.onboarding
 
 import io.loperilla.onboarding_domain.model.database.Commerce
-import io.loperilla.onboarding_domain.model.database.ShoppingItem
+import io.loperilla.onboarding_domain.model.database.Product
 
 /*****
  * Project: HomeShopping
@@ -17,11 +17,11 @@ val commerces = listOf(
 )
 
 val products = listOf(
-    ShoppingItem(
+    Product(
         name = "Manzana",
         imageUrl = "https://cdn.icon-icons.com/icons2/16/PNG/256/fruit_apple_food_1815.png"
     ),
-    ShoppingItem(
+    Product(
         name = "Pera",
         imageUrl = "https://cdn.icon-icons.com/icons2/16/PNG/256/fruit_apple_food_1815.png"
     )

@@ -23,14 +23,6 @@ class QueryDaoFake : QueryDao {
         emit(queryList)
     }
 
-    override fun getQueriesBy(inputToFilter: String): Flow<List<QueryEntity>> = flow {
-        emit(
-            queryList.filter {
-                it.query.contains(inputToFilter)
-            }
-        )
-    }
-
     override fun removeQuery(queryToDelete: QueryEntity) {
         queryList.remove(queryToDelete)
     }

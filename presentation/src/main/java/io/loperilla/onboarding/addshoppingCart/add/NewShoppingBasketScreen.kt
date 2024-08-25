@@ -1,10 +1,11 @@
-package io.loperilla.onboarding.addshoppingCart
+package io.loperilla.onboarding.addshoppingCart.add
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -47,10 +48,8 @@ import io.loperilla.core_ui.TransparentScaffold
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
 import io.loperilla.core_ui.text.TextSemiBold
 import io.loperilla.onboarding.commerce.SwipeBox
-import io.loperilla.onboarding.commerces
-import io.loperilla.onboarding.home.FlowCommerce
 import io.loperilla.onboarding.products
-import io.loperilla.onboarding_domain.model.database.ShoppingItem
+import io.loperilla.onboarding_domain.model.database.Product
 import io.loperilla.onboarding_presentation.R
 
 /*****
@@ -62,6 +61,7 @@ import io.loperilla.onboarding_presentation.R
 
 @Composable
 fun NewShoppingBasketScreen(
+    commerceSelectedName: String,
     state: NewShoppingBasketState,
     onEvent: (NewShoppingBasketEvent) -> Unit
 ) {
@@ -71,7 +71,7 @@ fun NewShoppingBasketScreen(
                 .fillMaxSize(),
             topBar = {
                 CommonTopBar(
-                    stringResource(R.string.addshoppingcart_scaffold_title),
+                    stringResource(R.string.addshoppingcart_scaffold_title, commerceSelectedName),
                     navActionClick = { onEvent(NewShoppingBasketEvent.NavigateBack) }
                 )
             },
@@ -96,13 +96,13 @@ fun NewShoppingBasketScreen(
                         containerColor = MaterialTheme.colorScheme.secondary,
                         contentColor = Color.White,
                         shape = CircleShape,
-                        onClick = { onEvent(NewShoppingBasketEvent.ChangeSearchBarActive) }
+                        onClick = { onEvent(NewShoppingBasketEvent.ChangeSearchBarActive) },
+                        modifier = Modifier
+                            .imePadding()
                     ) {
                         Icon(
                             imageVector = Icons.Default.Search,
-                            contentDescription = stringResource(R.string.add_item_fab_text_value),
-                            modifier = Modifier
-                                .padding(end = LOW)
+                            contentDescription = stringResource(R.string.add_item_fab_text_value)
                         )
                     }
                 }
@@ -136,7 +136,7 @@ fun AddShoppingBasketScreen(
 
 @Composable
 private fun ProductsList(
-    itemShoppingList: List<ShoppingItem>,
+    itemShoppingList: List<Product>,
     onEvent: (NewShoppingBasketEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -200,12 +200,7 @@ private fun ProductsSearchBar(
             .fillMaxWidth()
             .padding(horizontal = LOW)
     ) {
-        FlowCommerce(
-            commerceList = state.commerceList,
-            onCommerceClicked = {
-                onEvent(NewShoppingBasketEvent.CommerceClicked(it))
-            }
-        )
+
         PreviousQueryList(
             previousQueryList = state.filteredQueryList,
             onEvent = onEvent
@@ -257,7 +252,7 @@ private fun PreviousQueryList(
 
 @Composable
 fun ItemShopping(
-    item: ShoppingItem,
+    item: Product,
     onEvent: (NewShoppingBasketEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -312,6 +307,7 @@ fun ItemShopping(
 fun AddShoppingBasketScreenPrev() {
     Screen {
         NewShoppingBasketScreen(
+            commerceSelectedName = "Mercadona",
             state = NewShoppingBasketState(),
             onEvent = {}
         )
@@ -323,11 +319,11 @@ fun AddShoppingBasketScreenPrev() {
 fun AddShoppingBasketScreenShoppingItemsPrev() {
     Screen {
         NewShoppingBasketScreen(
+            commerceSelectedName = "Mercadona",
             state = NewShoppingBasketState(
                 searchBarActive = false,
                 previousQueryList = listOf("Manzana", "Pera"),
                 searchBarQueryValue = "p",
-                commerceList = commerces,
                 itemShoppingList = products.plus(products)
             ),
             onEvent = {}
@@ -340,11 +336,11 @@ fun AddShoppingBasketScreenShoppingItemsPrev() {
 fun ShowSearchBarContentPrev() {
     Screen {
         NewShoppingBasketScreen(
+            commerceSelectedName = "Mercadona",
             state = NewShoppingBasketState(
                 searchBarActive = true,
                 previousQueryList = listOf("Manzana", "Pera"),
                 searchBarQueryValue = "",
-                commerceList = commerces
             ),
             onEvent = {}
         )

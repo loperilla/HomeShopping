@@ -1,4 +1,4 @@
-package io.loperilla.onboarding.addshoppingCart
+package io.loperilla.onboarding.addshoppingCart.add
 
 import io.loperilla.onboarding_domain.model.database.Commerce
 

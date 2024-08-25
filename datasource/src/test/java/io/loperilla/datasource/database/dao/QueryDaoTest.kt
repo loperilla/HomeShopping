@@ -70,20 +70,4 @@ class QueryDaoTest {
 
         assertThat(queryList.size).isEqualTo(1)
     }
-
-    @Test
-    fun `Search item, return only items matched`() = runBlocking {
-        // GIVEN
-        val appleQuery = appleQuery()
-        val pineAppleQuery = pineAppleQuery()
-
-        // ACTION
-        queryDaoFake.insertNewQuery(appleQuery)
-        queryDaoFake.insertNewQuery(pineAppleQuery)
-
-        // ASSERTION
-        val filteredQueryList = queryDaoFake.getQueriesBy("Manz").first()
-
-        assertThat(filteredQueryList.size).isEqualTo(1)
-    }
 }
