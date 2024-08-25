@@ -65,7 +65,7 @@ fun CommerceScreen(
             ) {
                 items(state.list.size) {
                     SwipeBox(
-                        onDelete = {
+                        endToStartSwipe = {
                             onEvent(
                                 CommerceEvent.DeleteCommerce(
                                     state.list[it].id
@@ -90,9 +90,9 @@ fun CommerceScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SwipeBox(
+fun SwipeBox(
     modifier: Modifier = Modifier,
-    onDelete: () -> Unit,
+    endToStartSwipe: () -> Unit,
     content: @Composable () -> Unit
 ) {
     val swipeState = rememberSwipeToDismissBoxState()
@@ -116,7 +116,8 @@ private fun SwipeBox(
     }
 
     SwipeToDismissBox(
-        modifier = modifier.animateContentSize(),
+        modifier = modifier
+            .animateContentSize(),
         state = swipeState,
         enableDismissFromStartToEnd = false,
         backgroundContent = {
@@ -131,7 +132,9 @@ private fun SwipeBox(
             ) {
                 Icon(
                     modifier = Modifier.minimumInteractiveComponentSize(),
-                    imageVector = icon, contentDescription = null
+                    imageVector = icon,
+                    tint = Color.White,
+                    contentDescription = null
                 )
             }
         }
@@ -142,7 +145,7 @@ private fun SwipeBox(
     when (swipeState.currentValue) {
         SwipeToDismissBoxValue.EndToStart -> {
             LaunchedEffect(swipeState.currentValue == SwipeToDismissBoxValue.StartToEnd) {
-                onDelete()
+                endToStartSwipe()
                 swipeState.snapTo(SwipeToDismissBoxValue.Settled)
             }
         }

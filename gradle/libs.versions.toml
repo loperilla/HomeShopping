@@ -10,14 +10,14 @@ camerax_version = "1.3.4"
 coil = "2.7.0"
 hilt-version = "2.52"
 jupiter-junit = "5.11.0"
-kotlin = "2.0.10"
-ksp = "2.0.10-1.0.24"
+kotlin = "2.0.20"
+ksp = "2.0.20-1.0.24"
 room-version = "2.6.1"
 
 [libraries]
 accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist_version" }
 accompanist-pager-indicator = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanist_version" }
-accompanist-permission = "com.google.accompanist:accompanist-permissions:0.35.1-alpha"
+accompanist-permission = "com.google.accompanist:accompanist-permissions:0.35.2-beta"
 #Compose
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 androidx-activity = { module = "androidx.activity:activity", version.ref = "androidx-activity" }
@@ -30,7 +30,7 @@ camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = 
 camera-view = { module = "androidx.camera:camera-view", version.ref = "camerax_version" }
 camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camerax_version" }
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
-compose-bom = "androidx.compose:compose-bom:2024.06.00"
+compose-bom = "androidx.compose:compose-bom:2024.08.00"
 compose-constraint = "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 compose-material3 = "androidx.compose.material3:material3:1.2.1"
 compose-material_icons_extends = "androidx.compose.material:material-icons-extended:1.6.8"
@@ -45,7 +45,7 @@ crashlytics-gradle = "com.google.firebase:firebase-crashlytics-gradle:3.0.2"
 datastore = "androidx.datastore:datastore-preferences:1.1.1"
 firebase-auth = { module = "com.google.firebase:firebase-auth-ktx" }
 #Firebase
-firebase-bom = "com.google.firebase:firebase-bom:33.1.2"
+firebase-bom = "com.google.firebase:firebase-bom:33.2.0"
 #crashlytics
 #auth
 #firestore
@@ -60,6 +60,7 @@ hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hil
 hilt-gradle = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt-version" }
 hilt-navigation = "androidx.hilt:hilt-navigation-compose:1.2.0"
 junit = "junit:junit:4.13.2"
+kotlin-reflect = {module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "jupiter-junit" }
 jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jupiter-junit" }
 jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "jupiter-junit" }

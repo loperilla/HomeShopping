@@ -9,7 +9,7 @@ package io.loperilla.onboarding.home
 sealed class HomeEvent {
     data object ShowLogoutDialog : HomeEvent()
     data object HideLogoutDialog : HomeEvent()
-    data object GoToShoppingBasket : HomeEvent()
+    data object CreateShoppingBasket : HomeEvent()
     data class ItemSelected(val id: String) : HomeEvent()
     data object ChangeChipVisibility : HomeEvent()
     data object NavigateToCommerce : HomeEvent()

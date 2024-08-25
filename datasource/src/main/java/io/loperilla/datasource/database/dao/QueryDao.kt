@@ -22,9 +22,6 @@ interface QueryDao {
     @Query("SELECT * FROM QueryEntity")
     fun getPreviousQuery(): Flow<List<QueryEntity>>
 
-    @Query("SELECT * FROM QueryEntity WHERE `query` LIKE '%' || :inputToFilter || '%'")
-    fun getQueriesBy(inputToFilter: String): Flow<List<QueryEntity>>
-
     @Delete
     fun removeQuery(queryToDelete: QueryEntity)
 }

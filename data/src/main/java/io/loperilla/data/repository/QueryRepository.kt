@@ -18,15 +18,11 @@ class QueryRepository @Inject constructor(
     fun insertNewQuery(query: String) =
         queryDao.insertNewQuery(QueryEntity(query = query))
 
-    fun getQueriesBy(): Flow<List<String>> {
-        return queryDao.getPreviousQuery().map { list ->
-            list.map {
-                it.query
-            }
-        }
+    fun getQueries(): Flow<List<String>> = queryDao.getPreviousQuery().map { list ->
+        list.map { it.query }
     }
 
-    suspend fun removeQuery(queryToDelete: String) {
+    fun removeQuery(queryToDelete: String) {
         queryDao.removeQuery(QueryEntity(queryToDelete))
     }
 }

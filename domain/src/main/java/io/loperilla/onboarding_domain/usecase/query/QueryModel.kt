@@ -1,4 +1,4 @@
-package io.loperilla.onboarding_domain.usecase.shoppingcart
+package io.loperilla.onboarding_domain.usecase.query
 
 import io.loperilla.data.repository.QueryRepository
 import javax.inject.Inject
@@ -9,11 +9,11 @@ import javax.inject.Inject
  * Created By Manuel Lopera on 26/8/23 at 19:58
  * All rights reserved 2023
  */
-class QueryUseCase @Inject constructor(
+class QueryModel @Inject constructor(
     private val queryRepository: QueryRepository
 ) {
-    operator fun invoke() = queryRepository.getQueriesBy()
+    fun getAllQueries() = queryRepository.getQueries()
 
     fun insertNewQuery(query: String) = queryRepository.insertNewQuery(query)
-    suspend fun removeQuery(queryToDelete: String) = queryRepository.removeQuery(queryToDelete)
+    fun removeQuery(queryToDelete: String) = queryRepository.removeQuery(queryToDelete)
 }

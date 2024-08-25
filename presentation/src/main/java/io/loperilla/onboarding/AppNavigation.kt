@@ -1,5 +1,7 @@
 package io.loperilla.onboarding
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -11,6 +13,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import io.loperilla.core_ui.routes.NavAction
 import io.loperilla.core_ui.routes.Routes
+import io.loperilla.onboarding.addshoppingCart.select_commerce.SelectCommerceScreen
+import io.loperilla.onboarding.addshoppingCart.select_commerce.SelectCommerceViewModel
 import io.loperilla.onboarding.auth.login.LoginScreen
 import io.loperilla.onboarding.auth.login.LoginViewModel
 import io.loperilla.onboarding.auth.register.RegisterScreen
@@ -19,6 +23,7 @@ import io.loperilla.onboarding.commerce.CommerceScreen
 import io.loperilla.onboarding.commerce.CommerceViewModel
 import io.loperilla.onboarding.home.HomeScreen
 import io.loperilla.onboarding.home.HomeViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /*****
  * Project: HomeShopping
@@ -27,6 +32,7 @@ import io.loperilla.onboarding.home.HomeViewModel
  * All rights reserved 2024
  */
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun AppNavigation(
     startDestination: Routes,
@@ -94,32 +100,48 @@ fun AppNavigation(
             }
             CommerceScreen(state, commerceViewModel::onEvent)
         }
+
+        navigation(
+            startDestination = Routes.SHOPPING_BASKET.SELECT_COMMERCE.route,
+            route = Routes.SHOPPING_BASKET.route
+        ) {
+            composable(Routes.SHOPPING_BASKET.SELECT_COMMERCE.route) {
+                val selectCommerceViewModel = hiltViewModel<SelectCommerceViewModel>()
+                val state by selectCommerceViewModel.stateFlow.collectAsStateWithLifecycle()
+                if (state.backPressed) {
+                    navController.navigate(Routes.HOME.route)
+                }
+
+                state.commerceSelected?.let {
+                    navController.navigate(
+                        Routes.SHOPPING_BASKET.NEW.createRoute(
+                            it.id,
+                            it.name
+                        )
+                    )
+                }
+                SelectCommerceScreen(state, selectCommerceViewModel::onEvent)
+            }
+            composable(Routes.SHOPPING_BASKET.NEW.route) { navBackStackEntry ->
+                val id = navBackStackEntry.arguments?.getString("id")
+                val name = navBackStackEntry.arguments?.getString("name")
+                Column {
+                    Text(text = "$id")
+                    Text(text = "$name")
+
+                }
+//                Toast.makeText(LocalContext.current, "$id $name", Toast.LENGTH_SHORT).show()
+//                val shoppingBasketViewModel = hiltViewModel<NewShoppingBasketViewModel>()
+//                val state by shoppingBasketViewModel.stateFlow.collectAsStateWithLifecycle()
 //
-//        navigation(
-//            startDestination = Routes.SHOPPING_BASKET.ADD_SHOPPING.route,
-//            route = Routes.SHOPPING_BASKET.route
-//        ) {
-//            composable(Routes.SHOPPING_BASKET.ADD_SHOPPING.route) {
-//                AddShoppingCart(
-//                    popBackStack = {
-//                        navController.navigate(Routes.HOME.route) {
-//                            popUpTo(Routes.HOME.route) {
-//                                inclusive = true
-//                            }
-//                        }
-//                    },
-//                    navigateToNewItem = {
-//                        navController.navigate(Routes.SHOPPING_BASKET.NEW_ITEM.route)
+//                state.newActionNav?.let {
+//                    when (it) {
+//                        is NavAction.Navigate -> navController.navigate(it.route.route)
+//                        NavAction.PopBackStack -> navController.navigate(Routes.HOME.route)
 //                    }
-//                )
-//            }
-//            composable(
-//                route = Routes.SHOPPING_BASKET.NEW_ITEM.route
-//            ) {
-//                AddItemScreen {
-//                    navController.navigate(Routes.SHOPPING_BASKET.ADD_SHOPPING.route)
 //                }
-//            }
-//        }
+//                NewShoppingBasketScreen(state, shoppingBasketViewModel::onEvent)
+            }
+        }
     }
 }

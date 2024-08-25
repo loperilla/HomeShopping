@@ -30,6 +30,7 @@ import io.loperilla.core_ui.Screen
 import io.loperilla.core_ui.TransparentScaffold
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
 import io.loperilla.core_ui.text.TextTitle
+import io.loperilla.onboarding.commerces
 import io.loperilla.onboarding_domain.model.database.Commerce
 import io.loperilla.onboarding_presentation.R
 
@@ -65,7 +66,7 @@ fun HomeScreen(
             },
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = { onEvent(HomeEvent.GoToShoppingBasket) }
+                    onClick = { onEvent(HomeEvent.CreateShoppingBasket) }
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Add,
@@ -133,24 +134,37 @@ fun CommerceList(
             }
         }
         AnimatedVisibility(visible = state.commerceListIsVisible) {
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(MEDIUM),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                items(state.commerceList.size) {
-                    CommerceChip(
-                        text = state.commerceList[it].name,
-                        isSelected = state.commerceList[it].isSelected,
-                        onClick = {
-                            onEvent(HomeEvent.ItemSelected(state.commerceList[it].id))
-                        }
-                    )
+            FlowCommerce(
+                state.commerceList,
+                onCommerceClicked = {
+                    onEvent(HomeEvent.ItemSelected(it.id))
                 }
-            }
+            )
         }
+    }
+}
 
+@Composable
+fun FlowCommerce(
+    commerceList: List<Commerce>,
+    onCommerceClicked: (Commerce) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    LazyRow(
+        modifier = modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(MEDIUM),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        items(commerceList.size) {
+            CommerceChip(
+                text = commerceList[it].name,
+                isSelected = commerceList[it].isSelected,
+                onClick = {
+                    onCommerceClicked(commerceList[it])
+                }
+            )
+        }
     }
 }
 
@@ -171,11 +185,7 @@ private fun CommerceVisibleListPreview() {
     Screen {
         CommerceList(
             state = HomeState(
-                commerceList = listOf(
-                    Commerce("1", "MasYMas", true),
-                    Commerce("2", "Mercadona", false),
-                    Commerce("3", "Carrefour", false),
-                ),
+                commerceList = commerces,
                 commerceListIsVisible = true
             ),
             onEvent = {}

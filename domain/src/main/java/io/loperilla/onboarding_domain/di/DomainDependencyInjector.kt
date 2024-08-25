@@ -13,7 +13,7 @@ import io.loperilla.onboarding_domain.usecase.auth.LogoutUseCase
 import io.loperilla.onboarding_domain.usecase.auth.RegisterUseCase
 import io.loperilla.onboarding_domain.usecase.commerce.GetCommerceListUseCase
 import io.loperilla.onboarding_domain.usecase.home.HomeUseCase
-import io.loperilla.onboarding_domain.usecase.shoppingcart.QueryUseCase
+import io.loperilla.onboarding_domain.usecase.query.QueryModel
 
 /*****
  * Project: CompraCasa
@@ -48,7 +48,7 @@ object DomainDependencyInjector {
     @Provides
     fun providesQueryUseCase(
         queryRepository: QueryRepository
-    ): QueryUseCase = QueryUseCase(queryRepository)
+    ): QueryModel = QueryModel(queryRepository)
 
     @Provides
     fun providesGetCommerceListUseCase(

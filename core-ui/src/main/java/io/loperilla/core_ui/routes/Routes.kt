@@ -16,8 +16,14 @@ sealed class Routes(val route: String) {
 
     data object COMMERCE : Routes("Commerce Screen")
 
-    data object SHOPPING_BASKET : Routes("ShoppingBasket Screen") {
-        data object ADD_SHOPPING : Routes("Add Shopping Cart")
+    data object SHOPPING_BASKET : Routes("ShoppingBasket Navigation") {
+        data object SELECT_COMMERCE : Routes("Select Commerce")
+        data object NEW : Routes("Shopping Basket From/{id}/{name}") {
+            fun createRoute(id: String, name: String) = this
+                .route
+                .replace("{id}", id)
+                .replace("{name}", name)
+        }
         data object NEW_ITEM : Routes("New Item")
     }
 }

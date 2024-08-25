@@ -11,7 +11,7 @@ import io.loperilla.data.model.CommerceModel
 data class Commerce(
     val id: String,
     val name: String,
-    val isSelected: Boolean = false
+    val isSelected: Boolean = true
 )
 
 fun CommerceModel.toDomain() = Commerce(
