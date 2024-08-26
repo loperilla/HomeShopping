@@ -1,6 +1,6 @@
 package io.loperilla.onboarding_domain.usecase.query
 
-import io.loperilla.data.repository.QueryRepository
+import io.loperilla.onboarding_domain.repository.QueryRepository
 import javax.inject.Inject
 
 /*****
@@ -14,6 +14,6 @@ class QueryModel @Inject constructor(
 ) {
     fun getAllQueries() = queryRepository.getQueries()
 
-    fun insertNewQuery(query: String) = queryRepository.insertNewQuery(query)
+    fun insertNewQuery(query: String) = queryRepository.insertQuery(query)
     fun removeQuery(queryToDelete: String) = queryRepository.removeQuery(queryToDelete)
 }

@@ -62,6 +62,7 @@ dependencies {
     implementation(libs.lifecycle.runtime.ktx)
     implementation(project(MyConfiguration.Modules.COREUI))
     implementation(project(MyConfiguration.Modules.ONB_DOMAIN))
+    implementation(project(MyConfiguration.Modules.DATA))
     implementation(project(MyConfiguration.Modules.ONB_PRESENTATION))
 
     // Compose

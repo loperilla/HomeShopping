@@ -1,8 +1,6 @@
 package io.loperilla.onboarding_domain.usecase.commerce
 
-import io.loperilla.data.repository.database.CommerceRepository
-import io.loperilla.onboarding_domain.model.database.toDomain
-import kotlinx.coroutines.flow.map
+import io.loperilla.onboarding_domain.repository.CommerceRepository
 import javax.inject.Inject
 
 /*****
@@ -14,7 +12,5 @@ import javax.inject.Inject
 class GetCommerceListUseCase @Inject constructor(
     private val commerceRepository: CommerceRepository
 ) {
-    suspend operator fun invoke() = commerceRepository.getCommerces().map { commerceModelList ->
-        commerceModelList.map { it.toDomain() }
-    }
+    suspend operator fun invoke() = commerceRepository.getCommerces()
 }

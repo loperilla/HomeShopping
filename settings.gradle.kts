@@ -15,7 +15,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "HomeShopping"
 include(":app")
-include(":datasource")
 include(":data")
 include(":domain")
 include(":presentation")
