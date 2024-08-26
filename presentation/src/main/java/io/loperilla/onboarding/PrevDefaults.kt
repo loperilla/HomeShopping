@@ -18,10 +18,12 @@ val commerces = listOf(
 
 val products = listOf(
     Product(
+        "sdfhjkl",
         name = "Manzana",
         imageUrl = "https://cdn.icon-icons.com/icons2/16/PNG/256/fruit_apple_food_1815.png"
     ),
     Product(
+        "sdfhjkasdfhjkl",
         name = "Pera",
         imageUrl = "https://cdn.icon-icons.com/icons2/16/PNG/256/fruit_apple_food_1815.png"
     )

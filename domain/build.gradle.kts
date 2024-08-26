@@ -35,7 +35,6 @@ android {
 }
 
 dependencies {
-    implementation(project(MyConfiguration.Modules.DATA))
 
     //Runtime
     implementation(libs.lifecycle.runtime.ktx)
@@ -47,10 +46,4 @@ dependencies {
 
     //Test
     testImplementation(libs.junit)
-    androidTestImplementation(libs.test.ext.junit)
-    androidTestImplementation(libs.test.espresso)
-    androidTestImplementation(platform(libs.compose.bom))
-    androidTestImplementation(libs.compose.ui.test)
-    debugImplementation(libs.compose.ui.tooling)
-    debugImplementation(libs.compose.ui.test.manifest)
 }

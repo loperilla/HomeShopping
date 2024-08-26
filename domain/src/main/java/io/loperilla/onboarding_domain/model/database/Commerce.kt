@@ -1,7 +1,5 @@
 package io.loperilla.onboarding_domain.model.database
 
-import io.loperilla.data.model.CommerceModel
-
 /*****
  * Project: HomeShopping
  * From: io.loperilla.onboarding_domain.model.database
@@ -12,9 +10,4 @@ data class Commerce(
     val id: String,
     val name: String,
     val isSelected: Boolean = true
-)
-
-fun CommerceModel.toDomain() = Commerce(
-    id = id ?: "",
-    name = name ?: "",
 )
