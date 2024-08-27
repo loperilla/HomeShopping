@@ -11,5 +11,7 @@ import io.loperilla.onboarding_domain.model.database.Commerce
  */
 data class CommerceState (
     val list: List<Commerce> = emptyList(),
-    val newRoute: NavAction? = null
+    val newRoute: NavAction? = null,
+    val showNewCommerceForm: Boolean = false,
+    val newCommerceInputValue: String = ""
 )

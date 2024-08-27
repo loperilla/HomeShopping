@@ -1,17 +1,23 @@
 package io.loperilla.onboarding.commerce
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SwipeToDismissBox
@@ -28,6 +34,8 @@ import androidx.compose.ui.unit.dp
 import io.loperilla.core_ui.CommonTopBar
 import io.loperilla.core_ui.Screen
 import io.loperilla.core_ui.TransparentScaffold
+import io.loperilla.core_ui.input.NewTextInput
+import io.loperilla.core_ui.itemPadding
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
 import io.loperilla.core_ui.text.TextSemiBold
 import io.loperilla.onboarding_domain.model.database.Commerce
@@ -44,6 +52,7 @@ fun CommerceScreen(
     state: CommerceState,
     onEvent: (CommerceEvent) -> Unit
 ) {
+
     BackHandler {
         onEvent(CommerceEvent.GoBack)
     }
@@ -56,6 +65,31 @@ fun CommerceScreen(
                         onEvent(CommerceEvent.GoBack)
                     }
                 )
+            },
+            floatingActionButton = {
+                FloatingActionButton(
+                    modifier = Modifier
+                        .imePadding(),
+                    onClick = {
+                        if (!state.showNewCommerceForm) {
+                            onEvent(CommerceEvent.ShowNewCommerceForm)
+                        } else {
+                            onEvent(CommerceEvent.AddCommerce)
+                        }
+                    }
+                ) {
+                    if (!state.showNewCommerceForm) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "Show form commerce"
+                        )
+                    } else {
+                        Icon(
+                            imageVector = Icons.Outlined.Check,
+                            contentDescription = "Delete commerce"
+                        )
+                    }
+                }
             }
         ) { paddingValues ->
             LazyColumn(
@@ -63,6 +97,14 @@ fun CommerceScreen(
                 modifier = Modifier
                     .fillMaxSize()
             ) {
+                item {
+                    AnimatedVisibility(visible = state.showNewCommerceForm) {
+                        AddCommerceForm(
+                            state,
+                            onEvent = onEvent
+                        )
+                    }
+                }
                 items(state.list.size) {
                     SwipeBox(
                         endToStartSwipe = {
@@ -79,12 +121,33 @@ fun CommerceScreen(
                             text = state.list[it].name,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(8.dp)
+                                .itemPadding()
                         )
                     }
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun AddCommerceForm(
+    state: CommerceState,
+    onEvent: (CommerceEvent) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .itemPadding()
+    ) {
+        NewTextInput(
+            text = state.newCommerceInputValue,
+            labelText = "Nombre del nuevo comercio",
+            onTextChange = { newName ->
+                onEvent(CommerceEvent.NewCommerceInputChanged(newName))
+            }
+        )
     }
 }
 
@@ -160,6 +223,23 @@ private fun CommerceScreenPrev() {
     Screen {
         CommerceScreen(
             state = CommerceState(
+                list = listOf(
+                    Commerce("1", "MasYMas", true),
+                    Commerce("2", "Mercadona", false),
+                    Commerce("3", "Carrefour", false),
+                )
+            ),
+            onEvent = {}
+        )
+    }
+}
+@PIXEL_33_NIGHT
+@Composable
+private fun CommerceScreenWithFormPrev() {
+    Screen {
+        CommerceScreen(
+            state = CommerceState(
+                showNewCommerceForm = true,
                 list = listOf(
                     Commerce("1", "MasYMas", true),
                     Commerce("2", "Mercadona", false),

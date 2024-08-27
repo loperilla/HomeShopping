@@ -11,4 +11,5 @@ import kotlinx.coroutines.flow.Flow
  */
 interface CommerceRepository {
     suspend fun getCommerces(): Flow<List<Commerce>>
+    suspend fun addCommerce(commerceName: String): Result<Unit>
 }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import io.loperilla.core_ui.CommonTopBar
+import io.loperilla.core_ui.HomeShoppingCard
 import io.loperilla.core_ui.Screen
 import io.loperilla.core_ui.TransparentScaffold
 import io.loperilla.core_ui.itemPadding
@@ -49,15 +50,20 @@ fun SelectCommerceScreen(
                 items(
                     state.commerceList.size
                 ) {
-                    TextRegular(
-                        text = state.commerceList[it].name,
+                    HomeShoppingCard(
                         modifier = Modifier
-                            .fillMaxWidth()
                             .itemPadding()
-                            .clickable {
-                                onEvent(SelectCommerceEvent.SelectCommerce(state.commerceList[it]))
-                            }
-                    )
+                    ){
+                        TextRegular(
+                            text = state.commerceList[it].name,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .itemPadding()
+                                .clickable {
+                                    onEvent(SelectCommerceEvent.SelectCommerce(state.commerceList[it]))
+                                }
+                        )
+                    }
                 }
             }
         }

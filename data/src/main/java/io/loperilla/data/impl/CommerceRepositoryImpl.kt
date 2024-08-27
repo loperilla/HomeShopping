@@ -7,6 +7,7 @@ import io.loperilla.onboarding_domain.model.database.Commerce
 import io.loperilla.onboarding_domain.repository.CommerceRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 /*****
@@ -27,5 +28,14 @@ class CommerceRepositoryImpl @Inject constructor(
                     it.toObject(CommerceModel::class.java)?.copy(id = id)?.toDomain()
                 }
             }
+    }
+
+    override suspend fun addCommerce(commerceName: String): Result<Unit> {
+        return try {
+            commerceCollection.add(CommerceModel(name = commerceName)).await()
+            Result.success(Unit)
+        } catch (ex: Exception) {
+            Result.failure(ex)
+        }
     }
 }

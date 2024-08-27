@@ -1,5 +1,6 @@
 package io.loperilla.core_ui.button
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,6 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import io.loperilla.core_ui.Screen
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
 import io.loperilla.core_ui.text.TextSemiBold
@@ -53,7 +55,10 @@ fun FormButtonPrev() {
     Screen {
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(
+                8.dp
+            )
         ) {
             FormButton(
                 "Prueba",
@@ -68,6 +73,8 @@ fun FormButtonPrev() {
             ) {
 
             }
+
+            
         }
     }
 }
