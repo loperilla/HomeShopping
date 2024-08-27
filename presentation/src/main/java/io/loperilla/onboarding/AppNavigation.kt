@@ -14,6 +14,9 @@ import io.loperilla.core_ui.routes.Routes
 import io.loperilla.onboarding.addshoppingCart.add.NewShoppingBasketScreen
 import io.loperilla.onboarding.addshoppingCart.add.NewShoppingBasketViewModel
 import io.loperilla.onboarding.addshoppingCart.add.NewShoppingBasketViewModelFactory
+import io.loperilla.onboarding.addshoppingCart.addProduct.AddProductScreen
+import io.loperilla.onboarding.addshoppingCart.addProduct.AddProductViewModel
+import io.loperilla.onboarding.addshoppingCart.addProduct.AddProductViewModelFactory
 import io.loperilla.onboarding.addshoppingCart.select_commerce.SelectCommerceScreen
 import io.loperilla.onboarding.addshoppingCart.select_commerce.SelectCommerceViewModel
 import io.loperilla.onboarding.auth.login.LoginScreen
@@ -24,6 +27,7 @@ import io.loperilla.onboarding.commerce.CommerceScreen
 import io.loperilla.onboarding.commerce.CommerceViewModel
 import io.loperilla.onboarding.home.HomeScreen
 import io.loperilla.onboarding.home.HomeViewModel
+import io.loperilla.onboarding_domain.model.database.Commerce
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /*****
@@ -126,19 +130,50 @@ fun AppNavigation(
             composable(Routes.SHOPPING_BASKET.NEW.route) { navBackStackEntry ->
                 val id = navBackStackEntry.arguments?.getString("id") ?: ""
                 val name = navBackStackEntry.arguments?.getString("name") ?: ""
-
-                val shoppingBasketViewModel = hiltViewModel<NewShoppingBasketViewModel, NewShoppingBasketViewModelFactory> {
-                    it.create(id)
-                }
+                val commerce = Commerce(id, name)
+                val shoppingBasketViewModel =
+                    hiltViewModel<NewShoppingBasketViewModel, NewShoppingBasketViewModelFactory> {
+                        it.create(commerce)
+                    }
                 val state by shoppingBasketViewModel.stateFlow.collectAsStateWithLifecycle()
 
                 state.newActionNav?.let {
                     when (it) {
-                        is NavAction.Navigate -> navController.navigate(it.route.route)
-                        NavAction.PopBackStack -> navController.navigate(Routes.HOME.route)
+                        is NavAction.Navigate -> {
+                            if (it.route == Routes.SHOPPING_BASKET.NEW_ITEM) {
+                                navController.navigate(
+                                    Routes.SHOPPING_BASKET.NEW_ITEM.createRoute(
+                                        id, name
+                                    )
+                                )
+                            } else {
+                                navController.navigate(it.route.route)
+                            }
+                        }
+
+                        NavAction.PopBackStack -> navController.navigateUp()
                     }
                 }
                 NewShoppingBasketScreen(name, state, shoppingBasketViewModel::onEvent)
+            }
+
+            composable(Routes.SHOPPING_BASKET.NEW_ITEM.route) { navBackStackEntry ->
+                val id = navBackStackEntry.arguments?.getString("id") ?: ""
+                val name = navBackStackEntry.arguments?.getString("name") ?: ""
+                val commerce = Commerce(id, name)
+                val viewModel = hiltViewModel<AddProductViewModel, AddProductViewModelFactory> {
+                    it.create(commerce)
+                }
+                val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+
+                state.newRoute?.let {
+                    when (it) {
+                        is NavAction.Navigate -> navController.navigate(it.route.route)
+                        NavAction.PopBackStack -> navController.navigateUp()
+                    }
+                }
+
+                AddProductScreen(state, viewModel::onEvent)
             }
         }
     }

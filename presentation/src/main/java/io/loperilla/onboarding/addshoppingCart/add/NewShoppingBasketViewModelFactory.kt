@@ -1,6 +1,7 @@
 package io.loperilla.onboarding.addshoppingCart.add
 
 import dagger.assisted.AssistedFactory
+import io.loperilla.onboarding_domain.model.database.Commerce
 
 /*****
  * Project: HomeShopping
@@ -10,5 +11,5 @@ import dagger.assisted.AssistedFactory
  */
 @AssistedFactory
 interface NewShoppingBasketViewModelFactory {
-    fun create(commerceId: String): NewShoppingBasketViewModel
+    fun create(commerce: Commerce): NewShoppingBasketViewModel
 }

@@ -6,6 +6,8 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.loperilla.core_ui.routes.NavAction
+import io.loperilla.core_ui.routes.Routes
+import io.loperilla.onboarding_domain.model.database.Commerce
 import io.loperilla.onboarding_domain.usecase.query.QueryModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +27,7 @@ import kotlinx.coroutines.withContext
 
 @HiltViewModel(assistedFactory = NewShoppingBasketViewModelFactory::class)
 class NewShoppingBasketViewModel @AssistedInject constructor(
-    @Assisted commerceId: String,
+    @Assisted private val commerce: Commerce,
     private val queryModel: QueryModel,
 ) : ViewModel() {
     private var _stateFlow: MutableStateFlow<NewShoppingBasketState> =
@@ -56,7 +58,14 @@ class NewShoppingBasketViewModel @AssistedInject constructor(
 
     fun onEvent(newEvent: NewShoppingBasketEvent) = viewModelScope.launch {
         when (newEvent) {
-            NewShoppingBasketEvent.AddItem -> TODO()
+            NewShoppingBasketEvent.AddItem -> _stateFlow.update {
+                it.copy(
+                    newActionNav = NavAction.Navigate(
+                        Routes.SHOPPING_BASKET.NEW_ITEM
+                    )
+                )
+            }
+
             NewShoppingBasketEvent.ChangeSearchBarActive -> {
                 _stateFlow.update {
                     it.copy(
