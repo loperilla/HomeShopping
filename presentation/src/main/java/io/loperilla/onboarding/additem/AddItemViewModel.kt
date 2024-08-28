@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.loperilla.onboarding_domain.usecase.itemShopping.ItemShoppingUseCase
+import io.loperilla.onboarding_domain.usecase.product.AddProductUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +19,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class AddItemViewModel @Inject constructor(
-    private val itemShoppingUseCase: ItemShoppingUseCase
+    private val itemShoppingUseCase: AddProductUseCase
 ) : ViewModel() {
     private var _pagerUserInputEnabled: MutableStateFlow<Boolean> = MutableStateFlow(true)
     val pagerUserInputEnabled: StateFlow<Boolean> = _pagerUserInputEnabled

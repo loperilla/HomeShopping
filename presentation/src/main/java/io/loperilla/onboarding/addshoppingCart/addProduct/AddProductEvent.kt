@@ -13,6 +13,8 @@ sealed class AddProductEvent {
     data object AddProduct: AddProductEvent()
     data object ShowMenuToSelectPhoto: AddProductEvent()
     data object HideMenuToSelectPhoto: AddProductEvent()
+    data object ChangeChipVisibility: AddProductEvent()
     data class NewProductInput(val text: String): AddProductEvent()
     data class NewPhoto(val bitmap: Bitmap): AddProductEvent()
+    data class SelectCommerce(val commerceId: String): AddProductEvent()
 }

@@ -9,3 +9,5 @@ package io.loperilla.data
 
 const val COMMERCES = "commerces"
 const val PRODUCTS = "products"
+
+const val PRODUCT_PATH = "products"

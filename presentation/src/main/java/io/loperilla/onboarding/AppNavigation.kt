@@ -167,7 +167,12 @@ fun AppNavigation(
                 state.newRoute?.let {
                     when (it) {
                         is NavAction.Navigate -> navController.navigate(it.route.route)
-                        NavAction.PopBackStack -> navController.navigateUp()
+                        NavAction.PopBackStack -> navController.navigate(
+                            Routes.SHOPPING_BASKET.NEW.createRoute(
+                                id,
+                                name
+                            )
+                        )
                     }
                 }
 

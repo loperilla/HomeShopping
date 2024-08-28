@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.material.icons.filled.Add
@@ -22,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.stringResource
-import io.loperilla.core_ui.CommerceChip
 import io.loperilla.core_ui.CommonAlertDialog
 import io.loperilla.core_ui.CommonTopBar
 import io.loperilla.core_ui.MEDIUM
@@ -30,8 +28,8 @@ import io.loperilla.core_ui.Screen
 import io.loperilla.core_ui.TransparentScaffold
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
 import io.loperilla.core_ui.text.TextTitle
+import io.loperilla.onboarding.FlowCommerce
 import io.loperilla.onboarding.commerces
-import io.loperilla.onboarding_domain.model.database.Commerce
 import io.loperilla.onboarding_presentation.R
 
 /*****
@@ -143,31 +141,6 @@ fun CommerceList(
         }
     }
 }
-
-@Composable
-fun FlowCommerce(
-    commerceList: List<Commerce>,
-    onCommerceClicked: (Commerce) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    LazyRow(
-        modifier = modifier
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(MEDIUM),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        items(commerceList.size) {
-            CommerceChip(
-                text = commerceList[it].name,
-                isSelected = commerceList[it].isSelected,
-                onClick = {
-                    onCommerceClicked(commerceList[it])
-                }
-            )
-        }
-    }
-}
-
 @PIXEL_33_NIGHT
 @Composable
 fun EmptyShoppingBuyListPrev() {

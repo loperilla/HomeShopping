@@ -8,5 +8,8 @@ package io.loperilla.onboarding_domain.model.database.product
  */
 data class ProductDto(
     val name: String,
-    val image: ByteArray,
-)
+    val commerceIdList: List<String>,
+    val urlImage: String? = null
+) {
+    fun buildImageName() = "${this.name}.jpg"
+}

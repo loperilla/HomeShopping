@@ -11,5 +11,5 @@ import io.loperilla.onboarding_domain.model.database.product.ProductDto
  */
 interface ProductRepository {
     suspend fun getProductsByCommerce(commerceKey: String): List<Product>
-    suspend fun addProduct(dtoProductDto: ProductDto): Result<Unit>
+    suspend fun addProduct(dtoProduct: ProductDto, bytes: ByteArray?): Result<Unit>
 }
