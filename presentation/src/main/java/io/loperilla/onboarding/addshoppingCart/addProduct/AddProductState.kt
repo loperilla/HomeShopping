@@ -11,6 +11,7 @@ import io.loperilla.core_ui.routes.NavAction
  */
 data class AddProductState(
     val newProductInputValue: String = "",
+    val showMenuToProductPhoto: Boolean = false,
     val bitmapSelected: Bitmap? = null,
     val newRoute: NavAction? = null
 )

@@ -28,7 +28,6 @@ import io.loperilla.onboarding.commerce.CommerceViewModel
 import io.loperilla.onboarding.home.HomeScreen
 import io.loperilla.onboarding.home.HomeViewModel
 import io.loperilla.onboarding_domain.model.database.Commerce
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /*****
  * Project: HomeShopping
@@ -37,7 +36,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
  * All rights reserved 2024
  */
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun AppNavigation(
     startDestination: Routes,
@@ -151,7 +149,7 @@ fun AppNavigation(
                             }
                         }
 
-                        NavAction.PopBackStack -> navController.navigateUp()
+                        NavAction.PopBackStack -> navController.navigate(Routes.SHOPPING_BASKET.SELECT_COMMERCE.route)
                     }
                 }
                 NewShoppingBasketScreen(name, state, shoppingBasketViewModel::onEvent)
@@ -173,7 +171,7 @@ fun AppNavigation(
                     }
                 }
 
-                AddProductScreen(state, viewModel::onEvent)
+                AddProductScreen(name, state, viewModel::onEvent)
             }
         }
     }

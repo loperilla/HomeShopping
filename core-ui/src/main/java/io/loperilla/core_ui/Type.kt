@@ -13,9 +13,9 @@ val myFontFamily = FontFamily(
     Font(R.font.bold, FontWeight.Bold),
 )
 
+val TextSmallSize = 14.sp
 val TextBodySize = 18.sp
 val TextTitleSize = 22.sp
-val TextSmallSize = 14.sp
 
 // Set of Material typography styles to start with
 val Typography = Typography(

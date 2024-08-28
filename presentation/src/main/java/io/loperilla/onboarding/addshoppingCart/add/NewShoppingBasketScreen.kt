@@ -16,7 +16,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Backspace
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.SearchOff
 import androidx.compose.material.icons.outlined.AddAPhoto
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -280,7 +279,7 @@ fun ItemShopping(
                 },
                 error = {
                     Icon(
-                        imageVector = Icons.Filled.SearchOff,
+                        imageVector = Icons.Filled.Search,
                         contentDescription = "${item.name}_not_fount",
                     )
                 },

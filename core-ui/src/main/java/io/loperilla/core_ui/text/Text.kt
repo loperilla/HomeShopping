@@ -29,7 +29,8 @@ fun TextRegular(
     text: String,
     modifier: Modifier = Modifier,
     textSize: TextUnit = TextBodySize,
-    textColor: Color = Color.Unspecified
+    textColor: Color = Color.Unspecified,
+    textAlign: TextAlign = TextAlign.Start
 ) {
     Text(
         text,
@@ -37,7 +38,8 @@ fun TextRegular(
         color = textColor,
         fontSize = textSize,
         fontWeight = FontWeight.Medium,
-        fontFamily = myFontFamily
+        fontFamily = myFontFamily,
+        textAlign = textAlign
     )
 }
 

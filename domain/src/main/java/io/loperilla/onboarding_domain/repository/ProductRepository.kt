@@ -1,6 +1,7 @@
 package io.loperilla.onboarding_domain.repository
 
 import io.loperilla.onboarding_domain.model.database.Product
+import io.loperilla.onboarding_domain.model.database.product.ProductDto
 
 /*****
  * Project: HomeShopping
@@ -10,4 +11,5 @@ import io.loperilla.onboarding_domain.model.database.Product
  */
 interface ProductRepository {
     suspend fun getProductsByCommerce(commerceKey: String): List<Product>
+    suspend fun addProduct(dtoProductDto: ProductDto): Result<Unit>
 }

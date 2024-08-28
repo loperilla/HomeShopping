@@ -1,5 +1,6 @@
 package io.loperilla.data.impl
 
+import io.loperilla.onboarding_domain.model.database.product.ProductDto
 import io.loperilla.onboarding_domain.repository.ProductRepository
 import javax.inject.Inject
 
@@ -14,4 +15,5 @@ class ProductsRepositoryImpl @Inject constructor(
 ): ProductRepository {
 
     override suspend fun getProductsByCommerce(commerceKey: String) = TODO()
+    override suspend fun addProduct(dtoProductDto: ProductDto): Result<Unit> = TODO()
 }

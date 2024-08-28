@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="fileprovider">io.loperilla.homeshopping.fileprovider</string>
     <!-- AUTH -->
     <string name="auth_fail_message">Falló el registro</string>
     <string name="login_button_message">Iniciar sesión</string>
@@ -28,7 +29,7 @@
     <!-- Add item-->
     <string name="tab_camera_text">Cámara</string>
     <string name="tab_storage_text">Galería</string>
-    <string name="add_item_scaffold_title">Nuevo producto</string>
+    <string name="add_item_scaffold_title">Nuevo producto de %1$s</string>
     <string name="add_item_back_createbasket_content_description">Volver a Add Item</string>
     <string name="fab_take_photo_text">Tomar foto</string>
     <string name="press_to_take_photo">Pulse para tomar una foto</string>
