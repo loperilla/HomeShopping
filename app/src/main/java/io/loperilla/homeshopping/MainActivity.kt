@@ -9,9 +9,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import io.loperilla.core_ui.Screen
-import io.loperilla.core_ui.routes.Routes
 import io.loperilla.onboarding.AppNavigation
+import io.loperilla.onboarding.navigator.Navigator
 import io.loperilla.onboarding_domain.model.SplashUIState
+import javax.inject.Inject
 
 /*****
  * Project: HomeShopping
@@ -21,6 +22,9 @@ import io.loperilla.onboarding_domain.model.SplashUIState
  */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject
+    lateinit var navigator: Navigator
+
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -36,10 +40,7 @@ class MainActivity : ComponentActivity() {
                     }
                 }
                 AppNavigation(
-                    startDestination = if (uiState == SplashUIState.NoAuthenticated)
-                        Routes.AUTH
-                    else
-                        Routes.HOME
+                    navigator
                 )
             }
         }

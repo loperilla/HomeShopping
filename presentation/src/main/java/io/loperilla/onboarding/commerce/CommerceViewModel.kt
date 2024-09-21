@@ -3,7 +3,7 @@ package io.loperilla.onboarding.commerce
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.loperilla.core_ui.routes.NavAction
+import io.loperilla.onboarding.navigator.Navigator
 import io.loperilla.onboarding_domain.usecase.commerce.GetCommerceListUseCase
 import io.loperilla.onboarding_domain.usecase.commerce.InsertNewCommerceUseCase
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +24,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CommerceViewModel @Inject constructor(
     getCommerceListUseCase: GetCommerceListUseCase,
-    private val addCommerceListUseCase: InsertNewCommerceUseCase
+    private val addCommerceListUseCase: InsertNewCommerceUseCase,
+    private val navigator: Navigator
 ) : ViewModel() {
     private var _stateFlow: MutableStateFlow<CommerceState> = MutableStateFlow(CommerceState())
     val stateFlow: StateFlow<CommerceState> = _stateFlow.asStateFlow()
@@ -43,13 +44,7 @@ class CommerceViewModel @Inject constructor(
 
     fun onEvent(newEvent: CommerceEvent) = viewModelScope.launch(Dispatchers.IO) {
         when (newEvent) {
-            is CommerceEvent.GoBack -> {
-                _stateFlow.update {
-                    it.copy(
-                        newRoute = NavAction.PopBackStack
-                    )
-                }
-            }
+            is CommerceEvent.GoBack -> navigator.navigateUp()
 
             is CommerceEvent.DeleteCommerce -> {
                 _stateFlow.update {

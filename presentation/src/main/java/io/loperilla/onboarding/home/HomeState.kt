@@ -1,6 +1,5 @@
 package io.loperilla.onboarding.home
 
-import io.loperilla.core_ui.routes.NavAction
 import io.loperilla.onboarding_domain.model.database.Commerce
 
 /*****
@@ -11,7 +10,6 @@ import io.loperilla.onboarding_domain.model.database.Commerce
  */
 data class HomeState(
     val showAreYouSureLogout: Boolean = false,
-    val newRoute: NavAction? = null,
     val commerceList: List<Commerce> = emptyList(),
     val commerceListSelected: List<Long> = emptyList(),
     val commerceListIsVisible: Boolean = false,

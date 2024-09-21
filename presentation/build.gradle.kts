@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kspPlugin)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 android {
@@ -67,10 +68,17 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
+    implementation(libs.kotlinx.serialization.json)
+
+
     //Test
     testImplementation(libs.junit)
-    testImplementation(libs.assertk)
     testImplementation(libs.bundles.jupiter)
+    testImplementation(libs.coroutine.test)
+    testImplementation(project(mapOf("path" to ":testutils")))
+    testImplementation(libs.mockk)
+    testImplementation(libs.assertk)
+    testImplementation(libs.turbine)
     testRuntimeOnly(libs.jupiter.engine)
 
     androidTestImplementation(libs.test.ext.junit)

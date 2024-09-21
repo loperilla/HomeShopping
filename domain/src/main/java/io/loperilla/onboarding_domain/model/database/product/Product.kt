@@ -1,4 +1,4 @@
-package io.loperilla.onboarding_domain.model.database
+package io.loperilla.onboarding_domain.model.database.product
 
 /*****
  * Project: CompraCasa
@@ -7,7 +7,7 @@ package io.loperilla.onboarding_domain.model.database
  * All rights reserved 2023
  */
 data class Product(
-    var key: String,
+    var id: String,
     val name: String,
     val imageUrl: String
 ) {

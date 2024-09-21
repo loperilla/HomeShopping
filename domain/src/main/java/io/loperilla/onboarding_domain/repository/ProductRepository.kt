@@ -1,7 +1,8 @@
 package io.loperilla.onboarding_domain.repository
 
-import io.loperilla.onboarding_domain.model.database.Product
+import io.loperilla.onboarding_domain.model.database.product.Product
 import io.loperilla.onboarding_domain.model.database.product.ProductDto
+import kotlinx.coroutines.flow.Flow
 
 /*****
  * Project: HomeShopping
@@ -10,6 +11,6 @@ import io.loperilla.onboarding_domain.model.database.product.ProductDto
  * All rights reserved 2024
  */
 interface ProductRepository {
-    suspend fun getProductsByCommerce(commerceKey: String): List<Product>
+    suspend fun getProductsByCommerce(commerceKey: String): Flow<List<Product>>
     suspend fun addProduct(dtoProduct: ProductDto, bytes: ByteArray?): Result<Unit>
 }

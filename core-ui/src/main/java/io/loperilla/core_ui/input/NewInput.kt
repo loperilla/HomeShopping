@@ -4,8 +4,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Password
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -20,7 +22,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
@@ -111,7 +112,7 @@ fun NewPasswordInput(
         imeAction = imeAction,
         modifier = modifier,
         leadingIcon = {
-            Icon(imageVector = Icons.Filled.Person, contentDescription = "passwordIcon")
+            Icon(imageVector = Icons.Filled.Password, contentDescription = "passwordIcon")
         },
         trailingIcon = {
             val endIcon = if (isPasswordVisible) {
@@ -148,7 +149,7 @@ private fun CommonInput(
     visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
     var hasFocus by remember { mutableStateOf(false) }
-    var showError by remember {
+    val showError by remember {
         mutableStateOf(if (text.isEmpty()) false else uiError.isVisible && !hasFocus)
     }
     val commonColors = TextFieldDefaults.colors(
@@ -220,10 +221,11 @@ private fun CommonInput(
 private fun NewInputPreview() {
     Screen {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp),
             verticalArrangement = Arrangement.spacedBy(
                 8.dp,
-                Alignment.CenterVertically
             )
         ) {
             NewEmailInput(
@@ -237,10 +239,10 @@ private fun NewInputPreview() {
             )
 
             NewTextInput(
+                labelText = "Nombre",
                 text = "dssdfsdfsdf",
                 onTextChange = {}
             )
-
         }
     }
 }

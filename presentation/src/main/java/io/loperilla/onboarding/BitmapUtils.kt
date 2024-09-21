@@ -1,4 +1,4 @@
-package io.loperilla.onboarding.additem
+package io.loperilla.onboarding
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -30,7 +30,6 @@ fun uriToBitmap(context: Context, selectedFileUri: Uri): Bitmap? {
     return null
 }
 
-// for takePhotoLauncher used
 fun getTempUri(context: Context): Uri? {
     val directory = File(context.cacheDir, "images")
     val authority = context.getString(R.string.fileprovider)

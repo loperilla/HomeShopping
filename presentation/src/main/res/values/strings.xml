@@ -21,7 +21,7 @@
     <string name="seachbar_placeholder_text">Busca tu producto aquí</string>
     <string name="clear_searchbar_content_description_icon">Limpiar buscdor</string>
     <string name="remove_query_icon_content_description">Eliminar búsqueda</string>
-    <string name="empty_shopping_item_list_icon_content_description">Carrito de la compra vacío</string>
+    <string name="shopping_cart_fab">Carrito de la compra</string>
     <string name="empty_item_list_text">No hay productos registrados</string>
     <string name="empty_query_list_icon_content_description">Carrito de la compra vacío</string>
     <string name="empty_query_list_text">Tus búsquedas estarán aquí</string>

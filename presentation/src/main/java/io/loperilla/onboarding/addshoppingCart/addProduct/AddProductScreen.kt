@@ -54,9 +54,9 @@ import io.loperilla.core_ui.text.TextRegular
 import io.loperilla.core_ui.text.TextSemiBold
 import io.loperilla.core_ui.text.TextTitle
 import io.loperilla.onboarding.FlowCommerce
-import io.loperilla.onboarding.additem.getTempUri
-import io.loperilla.onboarding.additem.uriToBitmap
 import io.loperilla.onboarding.commerces
+import io.loperilla.onboarding.getTempUri
+import io.loperilla.onboarding.uriToBitmap
 import io.loperilla.onboarding_presentation.R
 
 /*****

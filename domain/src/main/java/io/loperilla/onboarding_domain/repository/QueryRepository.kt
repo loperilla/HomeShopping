@@ -12,4 +12,5 @@ interface QueryRepository {
     fun getQueries(): Flow<List<String>>
     fun insertQuery(query: String)
     fun removeQuery(queryToDelete: String)
+    suspend fun deleteAll()
 }

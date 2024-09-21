@@ -39,7 +39,6 @@ import io.loperilla.onboarding_presentation.R
  * All rights reserved 2023
  */
 
-
 @Composable
 fun HomeScreen(
     state: HomeState,

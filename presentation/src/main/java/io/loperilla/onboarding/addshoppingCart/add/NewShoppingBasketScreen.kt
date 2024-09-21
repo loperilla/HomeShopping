@@ -3,6 +3,7 @@ package io.loperilla.onboarding.addshoppingCart.add
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
@@ -12,10 +13,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Backspace
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddShoppingCart
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.ShoppingCartCheckout
 import androidx.compose.material.icons.outlined.AddAPhoto
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,15 +28,18 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.SearchBarDefaults.colors
 import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.CachePolicy
@@ -44,11 +50,13 @@ import io.loperilla.core_ui.MEDIUM
 import io.loperilla.core_ui.Screen
 import io.loperilla.core_ui.TextSmallSize
 import io.loperilla.core_ui.TransparentScaffold
+import io.loperilla.core_ui.itemPadding
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
+import io.loperilla.core_ui.text.TextRegular
 import io.loperilla.core_ui.text.TextSemiBold
 import io.loperilla.onboarding.commerce.SwipeBox
 import io.loperilla.onboarding.products
-import io.loperilla.onboarding_domain.model.database.Product
+import io.loperilla.onboarding_domain.model.database.product.Product
 import io.loperilla.onboarding_presentation.R
 
 /*****
@@ -80,13 +88,13 @@ fun NewShoppingBasketScreen(
                         onClick = { onEvent(NewShoppingBasketEvent.AddItem) },
                     ) {
                         Icon(
-                            imageVector = Icons.Filled.Add,
+                            imageVector = Icons.Filled.ShoppingCartCheckout,
                             contentDescription = stringResource(R.string.add_item_fab_text_value),
                             modifier = Modifier
                                 .padding(end = LOW)
                         )
                         TextSemiBold(
-                            stringResource(R.string.add_item_fab_text_value),
+                            stringResource(R.string.shopping_cart_fab),
                             textSize = TextSmallSize
                         )
                     }
@@ -135,7 +143,7 @@ fun AddShoppingBasketScreen(
 
 @Composable
 private fun ProductsList(
-    itemShoppingList: List<Product>,
+    productList: List<Product>,
     onEvent: (NewShoppingBasketEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -144,12 +152,33 @@ private fun ProductsList(
         columns = GridCells.Fixed(2)
     ) {
         items(
-            count = itemShoppingList.size
+            count = productList.size
         ) { index ->
             ItemShopping(
-                itemShoppingList[index],
+                productList[index],
                 onEvent
             )
+        }
+        item {
+            Column(
+                modifier = modifier
+                    .itemPadding()
+                    .clickable { onEvent(NewShoppingBasketEvent.AddItem) },
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(LOW)
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.AddShoppingCart,
+                    contentDescription = "Add shopping cart",
+                    modifier = Modifier
+                        .size(50.dp)
+                        .clip(CircleShape)
+                )
+                TextRegular(
+                    text = "Crea un nuevo\nproducto",
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }
@@ -160,51 +189,64 @@ private fun ProductsSearchBar(
     state: NewShoppingBasketState,
     onEvent: (NewShoppingBasketEvent) -> Unit
 ) {
-    val colors = SearchBarDefaults.colors(
-        containerColor = if (state.searchBarActive) Color.Transparent else SearchBarDefaults.colors().containerColor,
-        inputFieldColors = SearchBarDefaults.inputFieldColors(
-            focusedTextColor = Color.White.copy(
-                alpha = 0.9f
-            ),
-            unfocusedTextColor = Color.White.copy(
-                alpha = 0.9f
-            )
+    SearchBarDefaults.inputFieldColors(
+        focusedTextColor = Color.White.copy(
+            alpha = 0.9f
+        ),
+        unfocusedTextColor = Color.White.copy(
+            alpha = 0.9f
         )
     )
+    val colors = colors(containerColor = if (state.searchBarActive) Color.Transparent else SearchBarDefaults.colors().containerColor )
+    val onActiveChange = {
+        onEvent(NewShoppingBasketEvent.ChangeSearchBarActive)
+    }
     SearchBar(
-        query = state.searchBarQueryValue,
-        onQueryChange = {
-            onEvent(NewShoppingBasketEvent.SearchQueryChanged(it))
+        inputField = {
+            SearchBarDefaults.InputField(
+                query = state.searchBarQueryValue,
+                onQueryChange = {
+                    onEvent(NewShoppingBasketEvent.SearchQueryChanged(it))
+                },
+                onSearch = {
+                    onEvent(NewShoppingBasketEvent.SearchShoppingProductWithCurrentValue(it))
+                },
+                expanded = state.searchBarActive,
+                onExpandedChange = onActiveChange,
+                enabled = true,
+                placeholder = {
+                    Text(stringResource(R.string.seachbar_placeholder_text))
+                },
+                leadingIcon = null,
+                trailingIcon = {
+                    IconButton(onClick = { onEvent(NewShoppingBasketEvent.CleanSearchBarInputValue) }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Outlined.Backspace,
+                            contentDescription = stringResource(R.string.clear_searchbar_content_description_icon)
+                        )
+                    }
+                },
+                colors = colors.inputFieldColors,
+                interactionSource = null,
+            )
         },
-        onSearch = {
-            onEvent(NewShoppingBasketEvent.SearchShoppingProductWithCurrentValue(it))
-        },
-        active = state.searchBarActive,
-        onActiveChange = {
-            onEvent(NewShoppingBasketEvent.ChangeSearchBarActive)
-        },
-        placeholder = {
-            Text(stringResource(R.string.seachbar_placeholder_text))
-        },
-        colors = colors,
-        trailingIcon = {
-            IconButton(onClick = { onEvent(NewShoppingBasketEvent.CleanSearchBarInputValue) }) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Outlined.Backspace,
-                    contentDescription = stringResource(R.string.clear_searchbar_content_description_icon)
-                )
-            }
-        },
+        expanded = state.searchBarActive,
+        onExpandedChange = onActiveChange,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = LOW)
-    ) {
-
-        PreviousQueryList(
-            previousQueryList = state.filteredQueryList,
-            onEvent = onEvent
-        )
-    }
+            .padding(horizontal = LOW),
+        shape = SearchBarDefaults.inputFieldShape,
+        colors = colors,
+        tonalElevation = SearchBarDefaults.TonalElevation,
+        shadowElevation = SearchBarDefaults.ShadowElevation,
+        windowInsets = SearchBarDefaults.windowInsets,
+        content = fun ColumnScope.() {
+            PreviousQueryList(
+                previousQueryList = state.filteredQueryList,
+                onEvent = onEvent
+            )
+        },
+    )
 }
 
 @Composable
@@ -273,7 +315,9 @@ fun ItemShopping(
                     .memoryCachePolicy(CachePolicy.ENABLED)
                     .build(),
                 modifier = Modifier
-                    .size(100.dp),
+                    .size(100.dp)
+                    .padding(LOW)
+                    .clip(RoundedCornerShape(25)),
                 loading = {
                     CircularProgressIndicator()
                 },
@@ -295,7 +339,7 @@ fun ItemShopping(
                     .size(24.dp)
             )
         }
-        Text(
+        TextRegular(
             text = item.name
         )
     }
@@ -323,7 +367,7 @@ fun AddShoppingBasketScreenShoppingItemsPrev() {
                 searchBarActive = false,
                 previousQueryList = listOf("Manzana", "Pera"),
                 searchBarQueryValue = "p",
-                itemShoppingList = products.plus(products)
+                productList = products.plus(products)
             ),
             onEvent = {}
         )

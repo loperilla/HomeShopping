@@ -1,7 +1,7 @@
 package io.loperilla.onboarding
 
 import io.loperilla.onboarding_domain.model.database.Commerce
-import io.loperilla.onboarding_domain.model.database.Product
+import io.loperilla.onboarding_domain.model.database.product.Product
 
 /*****
  * Project: HomeShopping

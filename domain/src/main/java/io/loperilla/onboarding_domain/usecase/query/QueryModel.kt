@@ -16,4 +16,5 @@ class QueryModel @Inject constructor(
 
     fun insertNewQuery(query: String) = queryRepository.insertQuery(query)
     fun removeQuery(queryToDelete: String) = queryRepository.removeQuery(queryToDelete)
+    suspend fun deleteAll() = queryRepository.deleteAll()
 }

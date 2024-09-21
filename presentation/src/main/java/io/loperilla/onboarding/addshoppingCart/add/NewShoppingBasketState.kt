@@ -1,7 +1,7 @@
 package io.loperilla.onboarding.addshoppingCart.add
 
-import io.loperilla.core_ui.routes.NavAction
-import io.loperilla.onboarding_domain.model.database.Product
+import io.loperilla.onboarding.navigator.routes.NavigationAction
+import io.loperilla.onboarding_domain.model.database.product.Product
 
 /*****
  * Project: HomeShopping
@@ -12,15 +12,15 @@ import io.loperilla.onboarding_domain.model.database.Product
 data class NewShoppingBasketState(
     val searchBarActive: Boolean = false,
     val previousQueryList: List<String> = emptyList(),
-    val newActionNav: NavAction? = null,
+    val newActionNav: NavigationAction? = null,
     val searchBarQueryValue: String = "",
-    val itemShoppingList: List<Product> = emptyList()
+    val productList: List<Product> = emptyList()
 ) {
     val filteredQueryList = previousQueryList.filter {
         it.contains(searchBarQueryValue)
     }.ifEmpty { previousQueryList }
 
-    val filteredItemShoppingList = itemShoppingList.filter {
+    val filteredItemShoppingList = productList.filter {
         it.name.contains(
             searchBarQueryValue,
             true

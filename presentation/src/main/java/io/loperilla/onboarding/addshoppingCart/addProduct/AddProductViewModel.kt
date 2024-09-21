@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.loperilla.core_ui.routes.NavAction
 import io.loperilla.core_ui.util.BitmapUtils.toByteArray
+import io.loperilla.onboarding.navigator.routes.NavigationAction
 import io.loperilla.onboarding_domain.model.database.Commerce
 import io.loperilla.onboarding_domain.model.database.product.ProductDto
 import io.loperilla.onboarding_domain.usecase.commerce.GetCommerceListUseCase
@@ -60,13 +60,13 @@ class AddProductViewModel @AssistedInject constructor(
 
                 addProductUseCase(productDto, stateFlow.value.bitmapSelected?.toByteArray())
                     .fold(
-                        onSuccess = { _stateFlow.update { it.copy(newRoute = NavAction.PopBackStack) } },
+                        onSuccess = { _stateFlow.update { it.copy(newRoute = NavigationAction.NavigateUp) } },
                         onFailure = { it.printStackTrace() }
                     )
             }
             AddProductEvent.NavigateBack -> _stateFlow.update {
                 it.copy(
-                    newRoute = NavAction.PopBackStack
+                    newRoute = NavigationAction.NavigateUp
                 )
             }
 

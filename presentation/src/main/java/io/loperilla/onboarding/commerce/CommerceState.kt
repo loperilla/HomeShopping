@@ -1,6 +1,5 @@
 package io.loperilla.onboarding.commerce
 
-import io.loperilla.core_ui.routes.NavAction
 import io.loperilla.onboarding_domain.model.database.Commerce
 
 /*****
@@ -11,7 +10,6 @@ import io.loperilla.onboarding_domain.model.database.Commerce
  */
 data class CommerceState (
     val list: List<Commerce> = emptyList(),
-    val newRoute: NavAction? = null,
     val showNewCommerceForm: Boolean = false,
     val newCommerceInputValue: String = ""
 )

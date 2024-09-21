@@ -26,4 +26,8 @@ class QueryRepositoryImpl @Inject constructor(
     override fun removeQuery(queryToDelete: String) {
         queryDao.removeQuery(QueryEntity(queryToDelete))
     }
+
+    override suspend fun deleteAll() {
+        queryDao.deleteAll()
+    }
 }

@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kspPlugin)
+    alias(libs.plugins.androidJUnit5)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
     kotlin("android")
 }
 
@@ -35,6 +37,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.kotlinx.serialization.json)
 
     //Runtime
     implementation(libs.lifecycle.runtime.ktx)
@@ -46,4 +49,10 @@ dependencies {
 
     //Test
     testImplementation(libs.junit)
+    testImplementation(libs.bundles.jupiter)
+    testImplementation(libs.coroutine.test)
+    testImplementation(project(mapOf("path" to ":testutils")))
+    testImplementation(libs.mockk)
+    testImplementation(libs.assertk)
+    testRuntimeOnly(libs.jupiter.engine)
 }

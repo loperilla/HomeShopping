@@ -3,8 +3,8 @@ package io.loperilla.onboarding.auth.register
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.loperilla.core_ui.routes.NavAction
-import io.loperilla.core_ui.routes.Routes
+import io.loperilla.onboarding.navigator.Navigator
+import io.loperilla.onboarding.navigator.routes.Destination
 import io.loperilla.onboarding_domain.usecase.auth.RegisterUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,12 +22,13 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val registerUseCase: RegisterUseCase
+    private val registerUseCase: RegisterUseCase,
+    private val navigator: Navigator
 ) : ViewModel() {
     private var _stateFlow: MutableStateFlow<RegisterState> = MutableStateFlow(RegisterState())
     val stateFlow: StateFlow<RegisterState> = _stateFlow.asStateFlow()
 
-    fun onEvent(event: RegisterEvent) {
+    fun onEvent(event: RegisterEvent) = viewModelScope.launch {
         when (event) {
             is RegisterEvent.EmailValueChange -> _stateFlow.update {
                 it.copy(
@@ -42,9 +43,7 @@ class RegisterViewModel @Inject constructor(
             }
 
             RegisterEvent.DoRegister -> doRegister()
-            RegisterEvent.OnBackPressed -> _stateFlow.update {
-                it.copy(newRoute = NavAction.PopBackStack)
-            }
+            RegisterEvent.OnBackPressed -> navigator.navigateUp()
 
             RegisterEvent.HideSnackbar -> _stateFlow.update {
                 it.copy(showErrorSnackbar = false)
@@ -58,9 +57,14 @@ class RegisterViewModel @Inject constructor(
             _stateFlow.value.passwordInputValue
         ).fold(
             onSuccess = {
-                _stateFlow.update {
-                    it.copy(newRoute = NavAction.Navigate(Routes.HOME))
-                }
+                navigator.navigate(
+                    Destination.Home,
+                    navOptions = {
+                        popUpTo(Destination.AuthGraph) {
+                            inclusive = true
+                        }
+                    }
+                )
             },
             onFailure = {
                 _stateFlow.update {

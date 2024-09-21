@@ -3,6 +3,8 @@ package io.loperilla.homeshopping
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.loperilla.onboarding.navigator.Navigator
+import io.loperilla.onboarding.navigator.routes.Destination
 import io.loperilla.onboarding_domain.model.SplashUIState
 import io.loperilla.onboarding_domain.usecase.auth.SplashUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,21 +20,25 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class MainActivityViewModel @Inject constructor(
-    splashUseCase: SplashUseCase
+    splashUseCase: SplashUseCase,
+    private val navigator: Navigator
 ) : ViewModel() {
     private var _splashUiState: MutableStateFlow<SplashUIState> = MutableStateFlow(SplashUIState.Loading)
     val splashUiState: StateFlow<SplashUIState> = _splashUiState
 
     init {
         viewModelScope.launch {
-            splashUseCase().fold(
-                onSuccess = {
-                    _splashUiState.value = SplashUIState.Success
-                },
-                onFailure = {
-                    _splashUiState.value = SplashUIState.NoAuthenticated
-                }
-            )
+            if (splashUseCase().isSuccess) {
+                _splashUiState.value = SplashUIState.Success
+                navigator.navigate(
+                    Destination.Home
+                )
+            } else {
+                _splashUiState.value = SplashUIState.NoAuthenticated
+                navigator.navigate(
+                    Destination.AuthGraph
+                )
+            }
         }
     }
 }

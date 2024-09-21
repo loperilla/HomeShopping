@@ -5,15 +5,17 @@ import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.loperilla.core_ui.routes.NavAction
-import io.loperilla.core_ui.routes.Routes
+import io.loperilla.onboarding.navigator.routes.NavigationAction
 import io.loperilla.onboarding_domain.model.database.Commerce
+import io.loperilla.onboarding_domain.usecase.product.GetProductsByCommerceUseCase
 import io.loperilla.onboarding_domain.usecase.query.QueryModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -28,6 +30,7 @@ import kotlinx.coroutines.withContext
 @HiltViewModel(assistedFactory = NewShoppingBasketViewModelFactory::class)
 class NewShoppingBasketViewModel @AssistedInject constructor(
     @Assisted private val commerce: Commerce,
+    getProductsByCommerceUseCase: GetProductsByCommerceUseCase,
     private val queryModel: QueryModel,
 ) : ViewModel() {
     private var _stateFlow: MutableStateFlow<NewShoppingBasketState> =
@@ -35,24 +38,23 @@ class NewShoppingBasketViewModel @AssistedInject constructor(
     val stateFlow: StateFlow<NewShoppingBasketState> = _stateFlow.asStateFlow()
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
-            queryModel.getAllQueries().collectLatest { queryList ->
+        viewModelScope.launch {
+            queryModel.getAllQueries().flowOn(Dispatchers.IO).collectLatest { queryList ->
                 _stateFlow.update {
                     it.copy(
                         previousQueryList = queryList
                     )
                 }
             }
-
-//            async {
-//                getAllCommerceListUseCase().collectLatest { commerceList ->
-//                    _stateFlow.update {
-//                        it.copy(
-//                            commerceList = commerceList
-//                        )
-//                    }
-//                }
-//            }.await()
+            async {
+                getProductsByCommerceUseCase(commerce.id).collectLatest { productList ->
+                    _stateFlow.update {
+                        it.copy(
+                            productList = productList
+                        )
+                    }
+                }
+            }.await()
         }
     }
 
@@ -60,9 +62,9 @@ class NewShoppingBasketViewModel @AssistedInject constructor(
         when (newEvent) {
             NewShoppingBasketEvent.AddItem -> _stateFlow.update {
                 it.copy(
-                    newActionNav = NavAction.Navigate(
-                        Routes.SHOPPING_BASKET.NEW_ITEM
-                    )
+//                    newActionNav = NavAction.Navigate(
+//                        Routes.SHOPPING_BASKET.NEW_ITEM
+//                    )
                 )
             }
 
@@ -85,7 +87,7 @@ class NewShoppingBasketViewModel @AssistedInject constructor(
             is NewShoppingBasketEvent.CommerceClicked -> TODO()
             NewShoppingBasketEvent.NavigateBack -> _stateFlow.update {
                 it.copy(
-                    newActionNav = NavAction.PopBackStack
+                    newActionNav = NavigationAction.NavigateUp
                 )
             }
 

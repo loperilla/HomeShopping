@@ -3,8 +3,8 @@ package io.loperilla.onboarding.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.loperilla.core_ui.routes.NavAction
-import io.loperilla.core_ui.routes.Routes
+import io.loperilla.onboarding.navigator.Navigator
+import io.loperilla.onboarding.navigator.routes.Destination
 import io.loperilla.onboarding_domain.usecase.auth.LogoutUseCase
 import io.loperilla.onboarding_domain.usecase.commerce.GetCommerceListUseCase
 import kotlinx.coroutines.Dispatchers
@@ -26,6 +26,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val commerceListUseCase: GetCommerceListUseCase,
     private val logoutUseCase: LogoutUseCase,
+    private val navigator: Navigator
 //    private val homeUseCase: HomeUseCase
 ) : ViewModel() {
 
@@ -53,11 +54,14 @@ class HomeViewModel @Inject constructor(
                             showAreYouSureLogout = false
                         )
                     }.run {
-                        _stateFlow.update {
-                            it.copy(
-                                newRoute = NavAction.PopBackStack
-                            )
-                        }
+                        navigator.navigate(
+                            Destination.AuthGraph,
+                            navOptions = {
+                                popUpTo(Destination.Home) {
+                                    inclusive = true
+                                }
+                            }
+                        )
                     }
                 )
             }
@@ -78,10 +82,11 @@ class HomeViewModel @Inject constructor(
             HomeEvent.CreateShoppingBasket -> {
                 _stateFlow.update {
                     it.copy(
-                        newRoute = NavAction.Navigate(Routes.SHOPPING_BASKET)
+//                        newRoute = NavAction.Navigate(Routes.SHOPPING_BASKET)
                     )
                 }
             }
+
             is HomeEvent.ItemSelected -> {
                 // TODO
             }
@@ -92,12 +97,9 @@ class HomeViewModel @Inject constructor(
                 )
             }
 
-            HomeEvent.NavigateToCommerce -> _stateFlow.update {
-                it.copy(
-                    newRoute = NavAction.Navigate(Routes.COMMERCE)
-                )
-            }
+            HomeEvent.NavigateToCommerce -> navigator.navigate(
+                Destination.COMMERCE
+            )
         }
     }
-
 }

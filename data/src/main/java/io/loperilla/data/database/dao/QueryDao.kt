@@ -24,4 +24,6 @@ interface QueryDao {
 
     @Delete
     fun removeQuery(queryToDelete: QueryEntity)
+    @Query("DELETE FROM QueryEntity")
+    suspend fun deleteAll()
 }

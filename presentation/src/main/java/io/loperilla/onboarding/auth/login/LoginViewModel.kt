@@ -3,7 +3,8 @@ package io.loperilla.onboarding.auth.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.loperilla.core_ui.routes.Routes
+import io.loperilla.onboarding.navigator.Navigator
+import io.loperilla.onboarding.navigator.routes.Destination
 import io.loperilla.onboarding_domain.usecase.auth.DoLoginUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,12 +23,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val doLoginUseCase: DoLoginUseCase
+    private val doLoginUseCase: DoLoginUseCase,
+    private val navigator: Navigator
 ) : ViewModel() {
     private var _stateFlow: MutableStateFlow<LoginState> = MutableStateFlow(LoginState())
     val stateFlow: StateFlow<LoginState> = _stateFlow.asStateFlow()
 
-    fun onEvent(event: LoginEvent) {
+    fun onEvent(event: LoginEvent) = viewModelScope.launch {
         when (event) {
             is LoginEvent.EmailValueChange -> _stateFlow.update {
                 it.copy(
@@ -44,11 +46,14 @@ class LoginViewModel @Inject constructor(
             }
 
             is LoginEvent.LoginButtonClicked -> loginButtonClicked()
-            LoginEvent.RegisterButtonClicked -> _stateFlow.update {
-                it.copy(
-                    newRoute = Routes.AUTH.REGISTER
-                )
-            }
+            LoginEvent.RegisterButtonClicked -> navigator.navigate(
+                Destination.Register,
+                navOptions = {
+                    popUpTo(Destination.AuthGraph) {
+                        inclusive = true
+                    }
+                }
+            )
 
             LoginEvent.HideSnackbar -> _stateFlow.update {
                 it.copy(showSnackbarError = false)
@@ -62,9 +67,9 @@ class LoginViewModel @Inject constructor(
             password = stateFlow.value.passwordInputValue
         ).fold(
             onSuccess = {
-                _stateFlow.update {
-                    it.copy(newRoute = Routes.HOME)
-                }
+                navigator.navigate(
+                    Destination.Home
+                )
             },
             onFailure = {
                 _stateFlow.update {
