@@ -3,6 +3,8 @@ package io.loperilla.onboarding.addshoppingCart.select_commerce
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.loperilla.onboarding.navigator.Navigator
+import io.loperilla.onboarding.navigator.routes.Destination
 import io.loperilla.onboarding_domain.usecase.commerce.GetCommerceListUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +24,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SelectCommerceViewModel @Inject constructor(
-    getCommerceListUseCase: GetCommerceListUseCase
+    getCommerceListUseCase: GetCommerceListUseCase,
+    private val navigator: Navigator
 ): ViewModel() {
     private var _stateFlow: MutableStateFlow<SelectCommerceState> = MutableStateFlow(SelectCommerceState())
     val stateFlow: StateFlow<SelectCommerceState> = _stateFlow.asStateFlow()
@@ -38,16 +41,12 @@ class SelectCommerceViewModel @Inject constructor(
             }
         }
     }
-    fun onEvent(newEvent: SelectCommerceEvent) {
+    fun onEvent(newEvent: SelectCommerceEvent) = viewModelScope.launch {
         when(newEvent) {
-            SelectCommerceEvent.OnBack -> _stateFlow.update {
-                it.copy(
-                    backPressed = true
-                )
-            }
-            is SelectCommerceEvent.SelectCommerce -> _stateFlow.update {
-                it.copy(commerceSelected = newEvent.commerce)
-            }
+            SelectCommerceEvent.OnBack -> navigator.navigateUp()
+            is SelectCommerceEvent.SelectCommerce -> navigator.navigate(
+                Destination.NewBasketFromCommerce(newEvent.commerce)
+            )
         }
     }
 }

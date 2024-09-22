@@ -1,7 +1,6 @@
 package io.loperilla.onboarding.addshoppingCart.addProduct
 
 import android.graphics.Bitmap
-import io.loperilla.onboarding.navigator.routes.NavigationAction
 import io.loperilla.onboarding_domain.model.database.Commerce
 
 /*****
@@ -16,7 +15,6 @@ data class AddProductState(
     val commerceListIsVisible: Boolean = false,
     val commerceList: List<Commerce> = emptyList(),
     val bitmapSelected: Bitmap? = null,
-    val newRoute: NavigationAction? = null
 ) {
     private val hasSelectAlmostOneCommerce = commerceList.any { it.isSelected }
     val validProduct = newProductInputValue.isNotEmpty() && hasSelectAlmostOneCommerce

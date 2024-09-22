@@ -3,7 +3,6 @@ package io.loperilla.onboarding.addshoppingCart.add
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
@@ -103,7 +102,7 @@ fun NewShoppingBasketScreen(
                         containerColor = MaterialTheme.colorScheme.secondary,
                         contentColor = Color.White,
                         shape = CircleShape,
-                        onClick = { onEvent(NewShoppingBasketEvent.ChangeSearchBarActive) },
+                        onClick = { onEvent(NewShoppingBasketEvent.ChangeSearchBarActive(false)) },
                         modifier = Modifier
                             .imePadding()
                     ) {
@@ -197,10 +196,7 @@ private fun ProductsSearchBar(
             alpha = 0.9f
         )
     )
-    val colors = colors(containerColor = if (state.searchBarActive) Color.Transparent else SearchBarDefaults.colors().containerColor )
-    val onActiveChange = {
-        onEvent(NewShoppingBasketEvent.ChangeSearchBarActive)
-    }
+    val colors = colors(containerColor = if (state.searchBarActive) Color.Transparent else colors().containerColor )
     SearchBar(
         inputField = {
             SearchBarDefaults.InputField(
@@ -212,7 +208,9 @@ private fun ProductsSearchBar(
                     onEvent(NewShoppingBasketEvent.SearchShoppingProductWithCurrentValue(it))
                 },
                 expanded = state.searchBarActive,
-                onExpandedChange = onActiveChange,
+                onExpandedChange = {
+                    onEvent(NewShoppingBasketEvent.ChangeSearchBarActive(it))
+                },
                 enabled = true,
                 placeholder = {
                     Text(stringResource(R.string.seachbar_placeholder_text))
@@ -231,7 +229,9 @@ private fun ProductsSearchBar(
             )
         },
         expanded = state.searchBarActive,
-        onExpandedChange = onActiveChange,
+        onExpandedChange = {
+            onEvent(NewShoppingBasketEvent.ChangeSearchBarActive(it))
+        },
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = LOW),
@@ -240,7 +240,7 @@ private fun ProductsSearchBar(
         tonalElevation = SearchBarDefaults.TonalElevation,
         shadowElevation = SearchBarDefaults.ShadowElevation,
         windowInsets = SearchBarDefaults.windowInsets,
-        content = fun ColumnScope.() {
+        content = {
             PreviousQueryList(
                 previousQueryList = state.filteredQueryList,
                 onEvent = onEvent

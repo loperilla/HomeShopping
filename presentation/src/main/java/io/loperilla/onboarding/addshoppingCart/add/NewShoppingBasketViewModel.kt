@@ -5,7 +5,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.loperilla.onboarding.navigator.routes.NavigationAction
+import io.loperilla.onboarding.navigator.Navigator
+import io.loperilla.onboarding.navigator.routes.Destination
 import io.loperilla.onboarding_domain.model.database.Commerce
 import io.loperilla.onboarding_domain.usecase.product.GetProductsByCommerceUseCase
 import io.loperilla.onboarding_domain.usecase.query.QueryModel
@@ -32,6 +33,7 @@ class NewShoppingBasketViewModel @AssistedInject constructor(
     @Assisted private val commerce: Commerce,
     getProductsByCommerceUseCase: GetProductsByCommerceUseCase,
     private val queryModel: QueryModel,
+    private val navigator: Navigator
 ) : ViewModel() {
     private var _stateFlow: MutableStateFlow<NewShoppingBasketState> =
         MutableStateFlow(NewShoppingBasketState())
@@ -60,18 +62,16 @@ class NewShoppingBasketViewModel @AssistedInject constructor(
 
     fun onEvent(newEvent: NewShoppingBasketEvent) = viewModelScope.launch {
         when (newEvent) {
-            NewShoppingBasketEvent.AddItem -> _stateFlow.update {
-                it.copy(
-//                    newActionNav = NavAction.Navigate(
-//                        Routes.SHOPPING_BASKET.NEW_ITEM
-//                    )
+            NewShoppingBasketEvent.AddItem -> navigator.navigate(
+                Destination.NewProduct(
+                    commerce
                 )
-            }
+            )
 
-            NewShoppingBasketEvent.ChangeSearchBarActive -> {
+            is NewShoppingBasketEvent.ChangeSearchBarActive -> {
                 _stateFlow.update {
                     it.copy(
-                        searchBarActive = !it.searchBarActive
+                        searchBarActive = newEvent.searchBarActive
                     )
                 }
             }
@@ -85,11 +85,7 @@ class NewShoppingBasketViewModel @AssistedInject constructor(
             }
 
             is NewShoppingBasketEvent.CommerceClicked -> TODO()
-            NewShoppingBasketEvent.NavigateBack -> _stateFlow.update {
-                it.copy(
-                    newActionNav = NavigationAction.NavigateUp
-                )
-            }
+            NewShoppingBasketEvent.NavigateBack -> navigator.navigateUp()
 
             is NewShoppingBasketEvent.QueryClicked -> {
                 _stateFlow.update {

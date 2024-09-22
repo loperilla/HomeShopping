@@ -6,7 +6,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.loperilla.core_ui.util.BitmapUtils.toByteArray
-import io.loperilla.onboarding.navigator.routes.NavigationAction
+import io.loperilla.onboarding.navigator.Navigator
 import io.loperilla.onboarding_domain.model.database.Commerce
 import io.loperilla.onboarding_domain.model.database.product.ProductDto
 import io.loperilla.onboarding_domain.usecase.commerce.GetCommerceListUseCase
@@ -30,7 +30,8 @@ import kotlinx.coroutines.launch
 class AddProductViewModel @AssistedInject constructor(
     @Assisted private val commerce: Commerce,
     getAllCommerces: GetCommerceListUseCase,
-    private val addProductUseCase: AddProductUseCase
+    private val addProductUseCase: AddProductUseCase,
+    private val navigator: Navigator
 ) : ViewModel() {
     private var _stateFlow: MutableStateFlow<AddProductState> = MutableStateFlow(AddProductState())
     val stateFlow: StateFlow<AddProductState> = _stateFlow.asStateFlow()
@@ -60,15 +61,11 @@ class AddProductViewModel @AssistedInject constructor(
 
                 addProductUseCase(productDto, stateFlow.value.bitmapSelected?.toByteArray())
                     .fold(
-                        onSuccess = { _stateFlow.update { it.copy(newRoute = NavigationAction.NavigateUp) } },
+                        onSuccess = { navigator.navigateUp() },
                         onFailure = { it.printStackTrace() }
                     )
             }
-            AddProductEvent.NavigateBack -> _stateFlow.update {
-                it.copy(
-                    newRoute = NavigationAction.NavigateUp
-                )
-            }
+            AddProductEvent.NavigateBack -> navigator.navigateUp()
 
             is AddProductEvent.NewPhoto -> _stateFlow.update {
                 it.copy(

@@ -79,13 +79,9 @@ class HomeViewModel @Inject constructor(
                 )
             }
 
-            HomeEvent.CreateShoppingBasket -> {
-                _stateFlow.update {
-                    it.copy(
-//                        newRoute = NavAction.Navigate(Routes.SHOPPING_BASKET)
-                    )
-                }
-            }
+            HomeEvent.CreateShoppingBasket -> navigator.navigate(
+                Destination.NewBasketGraph
+            )
 
             is HomeEvent.ItemSelected -> {
                 // TODO
@@ -98,7 +94,7 @@ class HomeViewModel @Inject constructor(
             }
 
             HomeEvent.NavigateToCommerce -> navigator.navigate(
-                Destination.COMMERCE
+                Destination.CommerceDest
             )
         }
     }

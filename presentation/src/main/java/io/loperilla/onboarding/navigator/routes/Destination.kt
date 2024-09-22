@@ -25,18 +25,21 @@ sealed interface Destination {
     data object Home : Destination
 
     @Serializable
-    data object COMMERCE : Destination
+    data object CommerceDest : Destination
 
     @Serializable
-    data object SELECT_COMMERCE : Destination
+    data object NewBasketGraph : Destination
 
     @Serializable
-    data class NEW(
+    data object SelectCommerce : Destination
+
+    @Serializable
+    data class NewBasketFromCommerce(
         val commerce: Commerce
-    )
+    ): Destination
 
     @Serializable
-    data class NEW_ITEM(
+    data class NewProduct(
         val commerce: Commerce
-    )
+    ): Destination
 }

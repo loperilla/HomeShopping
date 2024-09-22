@@ -1,6 +1,5 @@
 package io.loperilla.onboarding.addshoppingCart.add
 
-import io.loperilla.onboarding.navigator.routes.NavigationAction
 import io.loperilla.onboarding_domain.model.database.product.Product
 
 /*****
@@ -12,7 +11,6 @@ import io.loperilla.onboarding_domain.model.database.product.Product
 data class NewShoppingBasketState(
     val searchBarActive: Boolean = false,
     val previousQueryList: List<String> = emptyList(),
-    val newActionNav: NavigationAction? = null,
     val searchBarQueryValue: String = "",
     val productList: List<Product> = emptyList()
 ) {

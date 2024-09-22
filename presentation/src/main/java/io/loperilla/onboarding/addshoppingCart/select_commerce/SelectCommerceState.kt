@@ -9,7 +9,5 @@ import io.loperilla.onboarding_domain.model.database.Commerce
  * All rights reserved 2024
  */
 data class SelectCommerceState(
-    val commerceList: List<Commerce> = emptyList(),
-    val backPressed: Boolean = false,
-    val commerceSelected: Commerce? = null
+    val commerceList: List<Commerce> = emptyList()
 )
