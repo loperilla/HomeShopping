@@ -25,8 +25,8 @@ import io.loperilla.core_ui.CommonTopBar
 import io.loperilla.core_ui.Screen
 import io.loperilla.core_ui.TransparentScaffold
 import io.loperilla.core_ui.button.FormButton
-import io.loperilla.core_ui.input.NewEmailInput
-import io.loperilla.core_ui.input.NewPasswordInput
+import io.loperilla.core_ui.input.EmailInput
+import io.loperilla.core_ui.input.PasswordInput
 import io.loperilla.core_ui.isValidEmail
 import io.loperilla.core_ui.isValidPassword
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
@@ -96,7 +96,7 @@ fun RegisterScreen(
                     modifier = Modifier
                 )
 
-                NewEmailInput(
+                EmailInput(
                     text = state.emailInputValue,
                     imeAction = ImeAction.Next,
                     onTextChange = { newValue ->
@@ -105,7 +105,7 @@ fun RegisterScreen(
                     modifier = Modifier
                 )
 
-                NewPasswordInput(
+                PasswordInput(
                     modifier = Modifier,
                     text = state.passwordInputValue,
                     imeAction = ImeAction.Done,

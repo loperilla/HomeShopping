@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import io.loperilla.core_ui.CommonTopBar
 import io.loperilla.core_ui.Screen
 import io.loperilla.core_ui.TransparentScaffold
-import io.loperilla.core_ui.input.NewTextInput
+import io.loperilla.core_ui.input.TextInput
 import io.loperilla.core_ui.itemPadding
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
 import io.loperilla.core_ui.text.TextSemiBold
@@ -141,7 +141,7 @@ private fun AddCommerceForm(
             .fillMaxWidth()
             .itemPadding()
     ) {
-        NewTextInput(
+        TextInput(
             text = state.newCommerceInputValue,
             labelText = "Nombre del nuevo comercio",
             onTextChange = { newName ->

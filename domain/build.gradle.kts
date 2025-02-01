@@ -51,7 +51,6 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.bundles.jupiter)
     testImplementation(libs.coroutine.test)
-    testImplementation(project(mapOf("path" to ":testutils")))
     testImplementation(libs.mockk)
     testImplementation(libs.assertk)
     testRuntimeOnly(libs.jupiter.engine)

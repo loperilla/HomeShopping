@@ -29,7 +29,6 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.SearchBarDefaults.colors
 import androidx.compose.material3.SmallFloatingActionButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -126,7 +125,7 @@ fun NewShoppingBasketScreen(
 }
 
 @Composable
-fun AddShoppingBasketScreen(
+private fun AddShoppingBasketScreen(
     state: NewShoppingBasketState,
     onEvent: (NewShoppingBasketEvent) -> Unit,
     modifier: Modifier = Modifier
@@ -188,15 +187,11 @@ private fun ProductsSearchBar(
     state: NewShoppingBasketState,
     onEvent: (NewShoppingBasketEvent) -> Unit
 ) {
-    SearchBarDefaults.inputFieldColors(
-        focusedTextColor = Color.White.copy(
-            alpha = 0.9f
-        ),
-        unfocusedTextColor = Color.White.copy(
-            alpha = 0.9f
-        )
+    val textFieldColors = SearchBarDefaults.inputFieldColors(
+        focusedTextColor = MaterialTheme.colorScheme.onTertiary,
+        unfocusedTextColor = MaterialTheme.colorScheme.onTertiary
     )
-    val colors = colors(containerColor = if (state.searchBarActive) Color.Transparent else colors().containerColor )
+    val searchBarColors = colors(containerColor = if (state.searchBarActive) Color.Transparent else MaterialTheme.colorScheme.tertiary)
     SearchBar(
         inputField = {
             SearchBarDefaults.InputField(
@@ -213,9 +208,10 @@ private fun ProductsSearchBar(
                 },
                 enabled = true,
                 placeholder = {
-                    Text(stringResource(R.string.seachbar_placeholder_text))
+                    TextRegular(stringResource(R.string.seachbar_placeholder_text))
                 },
                 leadingIcon = null,
+                colors = textFieldColors,
                 trailingIcon = {
                     IconButton(onClick = { onEvent(NewShoppingBasketEvent.CleanSearchBarInputValue) }) {
                         Icon(
@@ -224,7 +220,6 @@ private fun ProductsSearchBar(
                         )
                     }
                 },
-                colors = colors.inputFieldColors,
                 interactionSource = null,
             )
         },
@@ -236,7 +231,7 @@ private fun ProductsSearchBar(
             .fillMaxWidth()
             .padding(horizontal = LOW),
         shape = SearchBarDefaults.inputFieldShape,
-        colors = colors,
+        colors = searchBarColors,
         tonalElevation = SearchBarDefaults.TonalElevation,
         shadowElevation = SearchBarDefaults.ShadowElevation,
         windowInsets = SearchBarDefaults.windowInsets,
@@ -330,7 +325,6 @@ fun ItemShopping(
                 contentDescription = "${item.name}_image",
                 filterQuality = FilterQuality.High
             )
-//            https://cdn.icon-icons.com/icons2/16/PNG/256/fruit_apple_food_1815.png
         } else {
             Icon(
                 imageVector = Icons.Outlined.AddAPhoto,

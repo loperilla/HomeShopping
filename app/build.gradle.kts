@@ -6,7 +6,6 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
-//    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -19,7 +18,6 @@ android {
         targetSdk = MyConfiguration.configTargetSdkVersion
         versionCode = MyConfiguration.configTargetSdkVersion
         versionName = MyConfiguration.configVersionName
-        multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

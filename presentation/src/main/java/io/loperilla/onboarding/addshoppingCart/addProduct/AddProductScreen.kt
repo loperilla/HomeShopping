@@ -47,7 +47,7 @@ import io.loperilla.core_ui.Screen
 import io.loperilla.core_ui.TextBodySize
 import io.loperilla.core_ui.TransparentScaffold
 import io.loperilla.core_ui.button.FormButton
-import io.loperilla.core_ui.input.NewTextInput
+import io.loperilla.core_ui.input.TextInput
 import io.loperilla.core_ui.itemPadding
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
 import io.loperilla.core_ui.text.TextRegular
@@ -145,7 +145,7 @@ fun AddProductScreen(
                         .weight(1f),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    NewTextInput(
+                    TextInput(
                         text = state.newProductInputValue,
                         labelText = "Nombre del nuevo producto",
                         onTextChange = { newName ->

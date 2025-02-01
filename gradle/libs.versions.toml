@@ -1,9 +1,9 @@
 [versions]
 accompanist_version = "0.36.0"
-agp = "8.6.0"
+agp = "8.6.1"
 android-junit5 = "1.11.0.0"
 androidx-activity = "1.9.2"
-androidx-lifecycle = "2.8.5"
+androidx-lifecycle = "2.8.6"
 androidx-test-espresso = "3.6.1"
 androidx-test-ext = "1.2.1"
 appcompat-version = "1.7.0"
@@ -11,11 +11,11 @@ camerax_version = "1.3.4"
 coil = "2.7.0"
 core-ktx-version = "1.13.1"
 hilt-version = "2.52"
-jupiter-junit = "5.11.0"
+jupiter-junit = "5.11.1"
 kotlin = "2.0.20"
 ksp = "2.0.20-1.0.25"
 material-version = "1.12.0"
-nav-version = "2.8.0"
+nav-version = "2.8.1"
 room-version = "2.6.1"
 
 [libraries]
@@ -29,16 +29,16 @@ androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "a
 androidx-core-ktx = "androidx.test:core-ktx:1.6.1"
 androidx-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.ref = "androidx-test-ext" }
 assertk = "com.willowtreeapps.assertk:assertk:0.28.1"
-build-gradle = "com.android.tools.build:gradle:8.6.0"
+build-gradle = "com.android.tools.build:gradle:8.6.1"
 camera-extension = { module = "androidx.camera:camera-extensions", version.ref = "camerax_version" }
 camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "camerax_version" }
 camera-view = { module = "androidx.camera:camera-view", version.ref = "camerax_version" }
 camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camerax_version" }
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
-compose-bom = "androidx.compose:compose-bom:2024.09.01"
+compose-bom = "androidx.compose:compose-bom:2024.09.02"
 compose-constraint = "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 compose-material3 = "androidx.compose.material3:material3:1.3.0"
-compose-material_icons_extends = "androidx.compose.material:material-icons-extended:1.7.1"
+compose-material_icons_extends = "androidx.compose.material:material-icons-extended:1.7.2"
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "nav-version" }
 compose-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 compose-ui = { module = "androidx.compose.ui:ui" }
@@ -71,7 +71,7 @@ jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "j
 jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jupiter-junit" }
 jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "jupiter-junit" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
-kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.6.3" }
+kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3"
 lifecycle-compose-runtime = { module = "androidx.lifecycle:lifecycle-runtime-compose" }
 lifecycle-compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose" }
 lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
@@ -129,6 +129,6 @@ androidLibrary = { id = "com.android.library", version.ref = "agp" }
 ben-manes-versions = "com.github.ben-manes.versions:0.51.0"
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kspPlugin = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kspPlugin = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 version-catalog-update = "nl.littlerobots.version-catalog-update:0.8.4"

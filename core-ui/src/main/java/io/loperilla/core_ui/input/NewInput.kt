@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Password
@@ -48,13 +49,14 @@ import io.loperilla.core_ui.text.TextThin
  */
 
 @Composable
-fun NewEmailInput(
+fun EmailInput(
     text: Email,
     onTextChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     placeholderText: String = "",
     labelText: String = "EMAIL",
-    imeAction: ImeAction = ImeAction.Default
+    imeAction: ImeAction = ImeAction.Default,
+    onKeyBoardNextAction: () -> Unit = {}
 ) {
     CommonInput(
         text = text,
@@ -65,6 +67,7 @@ fun NewEmailInput(
         uiError = UiError("Ingresa un formato de email válido", !text.isValidEmail),
         imeAction = imeAction,
         modifier = modifier,
+        onKeyBoardNextAction = onKeyBoardNextAction,
         leadingIcon = {
             Icon(imageVector = Icons.Filled.Person, contentDescription = "emailIcon")
         }
@@ -72,7 +75,7 @@ fun NewEmailInput(
 }
 
 @Composable
-fun NewTextInput(
+fun TextInput(
     text: String,
     onTextChange: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -92,13 +95,14 @@ fun NewTextInput(
 }
 
 @Composable
-fun NewPasswordInput(
+fun PasswordInput(
     text: Password,
     onTextChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     placeholderText: String = "",
     labelText: String = "CONTRASEÑA",
-    imeAction: ImeAction = ImeAction.Default
+    imeAction: ImeAction = ImeAction.Default,
+    onKeyBoardDoneAction: () -> Unit = {}
 ) {
     var isPasswordVisible by rememberSaveable { mutableStateOf(false) }
 
@@ -111,6 +115,7 @@ fun NewPasswordInput(
         uiError = UiError("Ingresa una contraseña segura", !text.isValidPassword),
         imeAction = imeAction,
         modifier = modifier,
+        onKeyBoardDoneAction = onKeyBoardDoneAction,
         leadingIcon = {
             Icon(imageVector = Icons.Filled.Password, contentDescription = "passwordIcon")
         },
@@ -146,6 +151,8 @@ private fun CommonInput(
     imeAction: ImeAction = ImeAction.Default,
     trailingIcon: @Composable (() -> Unit)? = null,
     leadingIcon: @Composable (() -> Unit)? = null,
+    onKeyBoardDoneAction: () -> Unit = {},
+    onKeyBoardNextAction: () -> Unit = {},
     visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
     var hasFocus by remember { mutableStateOf(false) }
@@ -203,6 +210,14 @@ private fun CommonInput(
             keyboardType = keyboardType,
             imeAction = imeAction
         ),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                onKeyBoardDoneAction()
+            },
+            onNext = {
+                onKeyBoardNextAction()
+            }
+        ),
         colors = commonColors,
         visualTransformation = visualTransformation,
         supportingText = {
@@ -228,17 +243,17 @@ private fun NewInputPreview() {
                 8.dp,
             )
         ) {
-            NewEmailInput(
+            EmailInput(
                 text = "correo@dominio.com",
                 onTextChange = {}
             )
 
-            NewPasswordInput(
+            PasswordInput(
                 text = "1234567",
                 onTextChange = {}
             )
 
-            NewTextInput(
+            TextInput(
                 labelText = "Nombre",
                 text = "dssdfsdfsdf",
                 onTextChange = {}

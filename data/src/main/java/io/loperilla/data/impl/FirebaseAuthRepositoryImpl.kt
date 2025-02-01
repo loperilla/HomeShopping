@@ -18,8 +18,12 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
 ) : AuthRepository {
     override suspend fun doLogin(email: String, password: String): Result<Unit> {
         return try {
-            firebaseAuth.signInWithEmailAndPassword(email, password)
-            Result.success(Unit)
+            val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
+            if (result.user != null) {
+                Result.success(Unit)
+            } else {
+                Result.failure(Exception("Login failed"))
+            }
         } catch (ex: Exception) {
             Result.failure(ex)
         }
@@ -27,8 +31,12 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
 
     override suspend fun doRegister(email: String, password: String): Result<Unit> {
         return try {
-            firebaseAuth.createUserWithEmailAndPassword(email, password)
-            Result.success(Unit)
+            val result = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+            if (result.user != null) {
+                Result.success(Unit)
+            } else {
+                Result.failure(Exception("Register failed"))
+            }
         } catch (ex: Exception) {
             Result.failure(ex)
         }
