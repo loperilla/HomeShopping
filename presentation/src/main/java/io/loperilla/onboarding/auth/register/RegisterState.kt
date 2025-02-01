@@ -2,7 +2,6 @@ package io.loperilla.onboarding.auth.register
 
 import io.loperilla.core_ui.Email
 import io.loperilla.core_ui.Password
-import io.loperilla.core_ui.routes.NavAction
 
 /*****
  * Project: HomeShopping
@@ -13,6 +12,5 @@ import io.loperilla.core_ui.routes.NavAction
 data class RegisterState(
     val emailInputValue: Email = "",
     val passwordInputValue: Password = "",
-    val showErrorSnackbar: Boolean = false,
-    val newRoute: NavAction? = null
+    val showErrorSnackbar: Boolean = false
 )

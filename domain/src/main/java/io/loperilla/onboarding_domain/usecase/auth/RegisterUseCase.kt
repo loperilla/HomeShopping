@@ -1,6 +1,6 @@
 package io.loperilla.onboarding_domain.usecase.auth
 
-import io.loperilla.data.repository.auth.AuthRepository
+import io.loperilla.onboarding_domain.repository.AuthRepository
 import javax.inject.Inject
 
 /*****

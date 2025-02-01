@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kspPlugin)
+    alias(libs.plugins.androidJUnit5)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
     kotlin("android")
 }
 
@@ -10,7 +12,6 @@ android {
 
     defaultConfig {
         minSdk = MyConfiguration.configMinSdkVersion
-        targetSdk = MyConfiguration.configTargetSdkVersion
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -36,7 +37,7 @@ android {
 }
 
 dependencies {
-    implementation(project(MyConfiguration.Modules.DATA))
+    implementation(libs.kotlinx.serialization.json)
 
     //Runtime
     implementation(libs.lifecycle.runtime.ktx)
@@ -48,10 +49,9 @@ dependencies {
 
     //Test
     testImplementation(libs.junit)
-    androidTestImplementation(libs.test.ext.junit)
-    androidTestImplementation(libs.test.espresso)
-    androidTestImplementation(platform(libs.compose.bom))
-    androidTestImplementation(libs.compose.ui.test)
-    debugImplementation(libs.compose.ui.tooling)
-    debugImplementation(libs.compose.ui.test.manifest)
+    testImplementation(libs.bundles.jupiter)
+    testImplementation(libs.coroutine.test)
+    testImplementation(libs.mockk)
+    testImplementation(libs.assertk)
+    testRuntimeOnly(libs.jupiter.engine)
 }

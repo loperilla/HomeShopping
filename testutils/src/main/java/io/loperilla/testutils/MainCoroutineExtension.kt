@@ -1,0 +1,31 @@
+package io.loperilla.testutils
+
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import org.junit.jupiter.api.extension.AfterEachCallback
+import org.junit.jupiter.api.extension.BeforeEachCallback
+import org.junit.jupiter.api.extension.ExtensionContext
+
+/*****
+ * Project: HomeShopping
+ * From: io.loperilla.testutils
+ * Created By Manuel Lopera on 29/8/24 at 11:28
+ * All rights reserved 2024
+ */
+@OptIn(ExperimentalCoroutinesApi::class)
+class MainCoroutineExtension(
+    val testDispatcher: TestDispatcher = StandardTestDispatcher()
+): BeforeEachCallback, AfterEachCallback {
+
+    override fun beforeEach(context: ExtensionContext?) {
+        Dispatchers.setMain(testDispatcher)
+    }
+
+    override fun afterEach(context: ExtensionContext?) {
+        Dispatchers.resetMain()
+    }
+}

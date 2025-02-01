@@ -4,8 +4,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Password
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -20,7 +23,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
@@ -47,13 +49,14 @@ import io.loperilla.core_ui.text.TextThin
  */
 
 @Composable
-fun NewEmailInput(
+fun EmailInput(
     text: Email,
     onTextChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     placeholderText: String = "",
     labelText: String = "EMAIL",
-    imeAction: ImeAction = ImeAction.Default
+    imeAction: ImeAction = ImeAction.Default,
+    onKeyBoardNextAction: () -> Unit = {}
 ) {
     CommonInput(
         text = text,
@@ -64,6 +67,7 @@ fun NewEmailInput(
         uiError = UiError("Ingresa un formato de email válido", !text.isValidEmail),
         imeAction = imeAction,
         modifier = modifier,
+        onKeyBoardNextAction = onKeyBoardNextAction,
         leadingIcon = {
             Icon(imageVector = Icons.Filled.Person, contentDescription = "emailIcon")
         }
@@ -71,7 +75,7 @@ fun NewEmailInput(
 }
 
 @Composable
-fun NewTextInput(
+fun TextInput(
     text: String,
     onTextChange: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -91,13 +95,14 @@ fun NewTextInput(
 }
 
 @Composable
-fun NewPasswordInput(
+fun PasswordInput(
     text: Password,
     onTextChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     placeholderText: String = "",
     labelText: String = "CONTRASEÑA",
-    imeAction: ImeAction = ImeAction.Default
+    imeAction: ImeAction = ImeAction.Default,
+    onKeyBoardDoneAction: () -> Unit = {}
 ) {
     var isPasswordVisible by rememberSaveable { mutableStateOf(false) }
 
@@ -110,8 +115,9 @@ fun NewPasswordInput(
         uiError = UiError("Ingresa una contraseña segura", !text.isValidPassword),
         imeAction = imeAction,
         modifier = modifier,
+        onKeyBoardDoneAction = onKeyBoardDoneAction,
         leadingIcon = {
-            Icon(imageVector = Icons.Filled.Person, contentDescription = "passwordIcon")
+            Icon(imageVector = Icons.Filled.Password, contentDescription = "passwordIcon")
         },
         trailingIcon = {
             val endIcon = if (isPasswordVisible) {
@@ -145,10 +151,12 @@ private fun CommonInput(
     imeAction: ImeAction = ImeAction.Default,
     trailingIcon: @Composable (() -> Unit)? = null,
     leadingIcon: @Composable (() -> Unit)? = null,
+    onKeyBoardDoneAction: () -> Unit = {},
+    onKeyBoardNextAction: () -> Unit = {},
     visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
     var hasFocus by remember { mutableStateOf(false) }
-    var showError by remember {
+    val showError by remember {
         mutableStateOf(if (text.isEmpty()) false else uiError.isVisible && !hasFocus)
     }
     val commonColors = TextFieldDefaults.colors(
@@ -202,6 +210,14 @@ private fun CommonInput(
             keyboardType = keyboardType,
             imeAction = imeAction
         ),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                onKeyBoardDoneAction()
+            },
+            onNext = {
+                onKeyBoardNextAction()
+            }
+        ),
         colors = commonColors,
         visualTransformation = visualTransformation,
         supportingText = {
@@ -220,27 +236,28 @@ private fun CommonInput(
 private fun NewInputPreview() {
     Screen {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp),
             verticalArrangement = Arrangement.spacedBy(
                 8.dp,
-                Alignment.CenterVertically
             )
         ) {
-            NewEmailInput(
+            EmailInput(
                 text = "correo@dominio.com",
                 onTextChange = {}
             )
 
-            NewPasswordInput(
+            PasswordInput(
                 text = "1234567",
                 onTextChange = {}
             )
 
-            NewTextInput(
+            TextInput(
+                labelText = "Nombre",
                 text = "dssdfsdfsdf",
                 onTextChange = {}
             )
-
         }
     }
 }

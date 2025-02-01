@@ -10,8 +10,6 @@ object MyConfiguration  {
     object Modules {
         const val COREUI = ":core-ui"
         const val DATA = ":data"
-        const val DATASOURCE = ":datasource"
-        const val ONBOARDING = ":onboarding"
         const val ONB_DOMAIN = ":domain"
         const val ONB_PRESENTATION = ":presentation"
     }
@@ -19,6 +17,5 @@ object MyConfiguration  {
     object MAP_MODULES {
         val DOMAIN = mapOf("path" to Modules.ONB_DOMAIN)
         val DATA = mapOf("path" to Modules.DATA)
-        val DATASOURCE = mapOf("path" to Modules.DATASOURCE)
     }
 }

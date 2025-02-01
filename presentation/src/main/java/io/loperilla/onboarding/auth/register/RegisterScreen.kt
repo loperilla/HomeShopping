@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
@@ -24,9 +23,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import io.loperilla.core_ui.CommonTopBar
 import io.loperilla.core_ui.Screen
+import io.loperilla.core_ui.TransparentScaffold
 import io.loperilla.core_ui.button.FormButton
-import io.loperilla.core_ui.input.NewEmailInput
-import io.loperilla.core_ui.input.NewPasswordInput
+import io.loperilla.core_ui.input.EmailInput
+import io.loperilla.core_ui.input.PasswordInput
 import io.loperilla.core_ui.isValidEmail
 import io.loperilla.core_ui.isValidPassword
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
@@ -61,28 +61,26 @@ fun RegisterScreen(
     BackHandler {
         onEvent(RegisterEvent.OnBackPressed)
     }
-    Scaffold(
-        modifier = modifier,
-        topBar = {
-            CommonTopBar(
-                topBarText = "",
-                navActionClick = {
-                    keyboardController?.hide()
-                    onEvent(RegisterEvent.OnBackPressed)
-                }
-            )
-        }
-    ) { paddingValues ->
-        Screen(
-            modifier = Modifier
-                .padding(paddingValues)
-        ) {
+    Screen {
+        TransparentScaffold(
+            modifier = modifier,
+            topBar = {
+                CommonTopBar(
+                    topBarText = "",
+                    navActionClick = {
+                        keyboardController?.hide()
+                        onEvent(RegisterEvent.OnBackPressed)
+                    }
+                )
+            }
+        ) { paddingValues ->
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(
                     8.dp
                 ),
                 modifier = Modifier
+                    .padding(paddingValues)
                     .padding(16.dp)
             ) {
                 Image(
@@ -98,7 +96,7 @@ fun RegisterScreen(
                     modifier = Modifier
                 )
 
-                NewEmailInput(
+                EmailInput(
                     text = state.emailInputValue,
                     imeAction = ImeAction.Next,
                     onTextChange = { newValue ->
@@ -107,7 +105,7 @@ fun RegisterScreen(
                     modifier = Modifier
                 )
 
-                NewPasswordInput(
+                PasswordInput(
                     modifier = Modifier,
                     text = state.passwordInputValue,
                     imeAction = ImeAction.Done,

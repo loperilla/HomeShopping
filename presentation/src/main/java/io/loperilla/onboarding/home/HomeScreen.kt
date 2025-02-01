@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.material.icons.filled.Add
@@ -22,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.stringResource
-import io.loperilla.core_ui.CommerceChip
 import io.loperilla.core_ui.CommonAlertDialog
 import io.loperilla.core_ui.CommonTopBar
 import io.loperilla.core_ui.MEDIUM
@@ -30,7 +28,8 @@ import io.loperilla.core_ui.Screen
 import io.loperilla.core_ui.TransparentScaffold
 import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
 import io.loperilla.core_ui.text.TextTitle
-import io.loperilla.onboarding_domain.model.database.Commerce
+import io.loperilla.onboarding.FlowCommerce
+import io.loperilla.onboarding.commerces
 import io.loperilla.onboarding_presentation.R
 
 /*****
@@ -39,7 +38,6 @@ import io.loperilla.onboarding_presentation.R
  * Created By Manuel Lopera on 20/8/23 at 18:58
  * All rights reserved 2023
  */
-
 
 @Composable
 fun HomeScreen(
@@ -65,7 +63,7 @@ fun HomeScreen(
             },
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = { onEvent(HomeEvent.GoToShoppingBasket) }
+                    onClick = { onEvent(HomeEvent.CreateShoppingBasket) }
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Add,
@@ -133,27 +131,15 @@ fun CommerceList(
             }
         }
         AnimatedVisibility(visible = state.commerceListIsVisible) {
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(MEDIUM),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                items(state.commerceList.size) {
-                    CommerceChip(
-                        text = state.commerceList[it].name,
-                        isSelected = state.commerceList[it].isSelected,
-                        onClick = {
-                            onEvent(HomeEvent.ItemSelected(state.commerceList[it].id))
-                        }
-                    )
+            FlowCommerce(
+                state.commerceList,
+                onCommerceClicked = {
+                    onEvent(HomeEvent.ItemSelected(it.id))
                 }
-            }
+            )
         }
-
     }
 }
-
 @PIXEL_33_NIGHT
 @Composable
 fun EmptyShoppingBuyListPrev() {
@@ -171,11 +157,7 @@ private fun CommerceVisibleListPreview() {
     Screen {
         CommerceList(
             state = HomeState(
-                commerceList = listOf(
-                    Commerce("1", "MasYMas", true),
-                    Commerce("2", "Mercadona", false),
-                    Commerce("3", "Carrefour", false),
-                ),
+                commerceList = commerces,
                 commerceListIsVisible = true
             ),
             onEvent = {}

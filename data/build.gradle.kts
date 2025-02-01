@@ -11,7 +11,6 @@ android {
 
     defaultConfig {
         minSdk = MyConfiguration.configMinSdkVersion
-        targetSdk = MyConfiguration.configTargetSdkVersion
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -34,10 +33,14 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
+    }
 }
 
 dependencies {
-    implementation(project(MyConfiguration.MAP_MODULES.DATASOURCE))
+    implementation(project(MyConfiguration.MAP_MODULES.DOMAIN))
+
     //Compose
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
@@ -50,5 +53,16 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.bundles.firebase)
 
+    // Room
+    implementation(libs.room.ktx)
+    annotationProcessor(libs.room.compiler)
+    ksp(libs.room.compiler)
+    //Datastore
+    implementation(libs.datastore)
     implementation(libs.timber)
+    //Test
+    testImplementation(libs.junit)
+    testImplementation(libs.assertk)
+    testImplementation(libs.bundles.jupiter)
+    testRuntimeOnly(libs.jupiter.engine)
 }

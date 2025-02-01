@@ -11,7 +11,6 @@ android {
 
     defaultConfig {
         minSdk = MyConfiguration.configMinSdkVersion
-        targetSdk = MyConfiguration.configTargetSdkVersion
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -52,6 +51,7 @@ dependencies {
     implementation(libs.bundles.compose)
 
     implementation(libs.timber)
+    implementation(libs.kotlin.reflect)
 
     //Test
     testImplementation(libs.junit)
