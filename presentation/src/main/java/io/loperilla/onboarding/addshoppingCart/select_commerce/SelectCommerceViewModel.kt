@@ -2,7 +2,6 @@ package io.loperilla.onboarding.addshoppingCart.select_commerce
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
 import io.loperilla.onboarding.navigator.Navigator
 import io.loperilla.onboarding.navigator.routes.Destination
 import io.loperilla.onboarding_domain.usecase.commerce.GetCommerceListUseCase
@@ -13,7 +12,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /*****
  * Project: HomeShopping
@@ -22,8 +20,8 @@ import javax.inject.Inject
  * All rights reserved 2024
  */
 
-@HiltViewModel
-class SelectCommerceViewModel @Inject constructor(
+
+class SelectCommerceViewModel(
     getCommerceListUseCase: GetCommerceListUseCase,
     private val navigator: Navigator
 ): ViewModel() {

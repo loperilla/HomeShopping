@@ -10,7 +10,6 @@ import io.loperilla.onboarding_domain.repository.ProductRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.tasks.await
-import javax.inject.Inject
 
 /*****
  * Project: HomeShopping
@@ -18,7 +17,7 @@ import javax.inject.Inject
  * Created By Manuel Lopera on 26/8/24 at 18:50
  * All rights reserved 2024
  */
-class ProductsRepositoryImpl @Inject constructor(
+class ProductsRepositoryImpl(
     private val storage: StorageReference,
     private val productCollection: CollectionReference
 ): ProductRepository {

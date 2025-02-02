@@ -43,9 +43,6 @@ dependencies {
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.timber)
 
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
 
     //Test
     testImplementation(libs.junit)

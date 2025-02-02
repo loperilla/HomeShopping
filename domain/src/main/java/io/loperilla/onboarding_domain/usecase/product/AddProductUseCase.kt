@@ -2,7 +2,6 @@ package io.loperilla.onboarding_domain.usecase.product
 
 import io.loperilla.onboarding_domain.model.database.product.ProductDto
 import io.loperilla.onboarding_domain.repository.ProductRepository
-import javax.inject.Inject
 
 /*****
  * Project: HomeShopping
@@ -10,7 +9,7 @@ import javax.inject.Inject
  * Created By Manuel Lopera on 31/8/23 at 16:39
  * All rights reserved 2023
  */
-class AddProductUseCase @Inject constructor(
+class AddProductUseCase(
     private val repository: ProductRepository
 ) {
     suspend operator fun invoke(

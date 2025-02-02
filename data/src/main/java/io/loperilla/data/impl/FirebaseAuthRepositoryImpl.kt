@@ -4,7 +4,6 @@ import com.google.firebase.auth.FirebaseAuth
 import io.loperilla.onboarding_domain.repository.AuthRepository
 import io.loperilla.onboarding_domain.repository.UserDataStore
 import kotlinx.coroutines.tasks.await
-import javax.inject.Inject
 
 /*****
  * Project: CompraCasa
@@ -12,7 +11,7 @@ import javax.inject.Inject
  * Created By Manuel Lopera on 23/4/23 at 18:16
  * All rights reserved 2023
  */
-class FirebaseAuthRepositoryImpl @Inject constructor(
+class FirebaseAuthRepositoryImpl(
     private val firebaseAuth: FirebaseAuth,
     private val userDataStore: UserDataStore
 ) : AuthRepository {

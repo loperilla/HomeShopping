@@ -2,7 +2,6 @@ package io.loperilla.homeshopping
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
 import io.loperilla.onboarding.navigator.Navigator
 import io.loperilla.onboarding.navigator.routes.Destination
 import io.loperilla.onboarding_domain.model.SplashUIState
@@ -10,7 +9,6 @@ import io.loperilla.onboarding_domain.usecase.auth.SplashUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /*****
  * Project: HomeShopping
@@ -18,8 +16,8 @@ import javax.inject.Inject
  * Created By Manuel Lopera on 25/8/23 at 20:14
  * All rights reserved 2023
  */
-@HiltViewModel
-class MainActivityViewModel @Inject constructor(
+
+class MainActivityViewModel(
     splashUseCase: SplashUseCase,
     private val navigator: Navigator
 ) : ViewModel() {

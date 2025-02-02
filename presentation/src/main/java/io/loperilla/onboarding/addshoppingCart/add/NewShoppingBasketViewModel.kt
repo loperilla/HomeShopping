@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import dagger.hilt.android.lifecycle.HiltViewModel
 import io.loperilla.onboarding.navigator.Navigator
 import io.loperilla.onboarding.navigator.routes.Destination
 import io.loperilla.onboarding_domain.model.database.Commerce
@@ -28,7 +27,7 @@ import kotlinx.coroutines.withContext
  * All rights reserved 2023
  */
 
-@HiltViewModel(assistedFactory = NewShoppingBasketViewModelFactory::class)
+(assistedFactory = NewShoppingBasketViewModelFactory::class)
 class NewShoppingBasketViewModel @AssistedInject constructor(
     @Assisted private val commerce: Commerce,
     getProductsByCommerceUseCase: GetProductsByCommerceUseCase,

@@ -58,15 +58,11 @@ dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
     implementation(libs.bundles.accompanist)
-    implementation(libs.hilt.navigation)
     implementation(libs.timber)
 
     // Camera
     implementation(libs.bundles.camera)
 
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
 
     implementation(libs.kotlinx.serialization.json)
 

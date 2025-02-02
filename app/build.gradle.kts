@@ -65,13 +65,9 @@ dependencies {
     // Compose
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
-    implementation(libs.hilt.navigation)
     implementation(libs.splashscreen)
     implementation(libs.timber)
-//
-//    // Hilt
-//    implementation(libs.hilt.android)
-//    ksp(libs.hilt.compiler)
+
 //
 //    //Firebase
 //    implementation(platform(libs.firebase.bom))

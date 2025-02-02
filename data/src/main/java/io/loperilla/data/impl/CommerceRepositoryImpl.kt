@@ -8,7 +8,6 @@ import io.loperilla.onboarding_domain.repository.CommerceRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.tasks.await
-import javax.inject.Inject
 
 /*****
  * Project: HomeShopping
@@ -16,7 +15,7 @@ import javax.inject.Inject
  * Created By Manuel Lopera on 11/8/24 at 12:09
  * All rights reserved 2024
  */
-class CommerceRepositoryImpl @Inject constructor(
+class CommerceRepositoryImpl(
     private val commerceCollection: CollectionReference
 ) : CommerceRepository {
     override suspend fun getCommerces(): Flow<List<Commerce>> {
