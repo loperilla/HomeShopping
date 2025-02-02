@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "${MyConfiguration.baseProjectName}.onboarding_presentation"
-    compileSdk = MyConfiguration.configCompileSdkVersion
+    namespace = "io.loperilla.onboarding_presentation"
+    compileSdk = 35
 
     defaultConfig {
-        minSdk = MyConfiguration.configMinSdkVersion
+        minSdk = 26
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -48,8 +48,8 @@ composeCompiler {
 }
 
 dependencies {
-    implementation(project(MyConfiguration.Modules.COREUI))
-    implementation(project(MyConfiguration.MAP_MODULES.DOMAIN))
+    implementation(project(":core-ui"))
+    implementation(project(":domain"))
 
     //Runtime
     implementation(libs.lifecycle.runtime.ktx)

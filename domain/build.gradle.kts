@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "${MyConfiguration.baseProjectName}.onboarding_domain"
-    compileSdk = MyConfiguration.configCompileSdkVersion
+    namespace = "io.loperilla.onboarding_domain"
+    compileSdk = 35
 
     defaultConfig {
-        minSdk = MyConfiguration.configMinSdkVersion
+        minSdk = 26
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")

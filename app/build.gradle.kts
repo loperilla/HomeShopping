@@ -3,21 +3,20 @@ plugins {
     alias(libs.plugins.kspPlugin)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("dagger.hilt.android.plugin")
-    id("com.google.gms.google-services")
-    id("com.google.firebase.crashlytics")
+//    id("com.google.gms.google-services")
+//    id("com.google.firebase.crashlytics")
 }
 
 android {
-    compileSdk = MyConfiguration.configCompileSdkVersion
-    namespace = MyConfiguration.myApplicationIdConfig
+    compileSdk = 35
+    namespace = "io.loperilla.homeshopping"
 
     defaultConfig {
-        applicationId = MyConfiguration.myApplicationIdConfig
-        minSdk = MyConfiguration.configMinSdkVersion
-        targetSdk = MyConfiguration.configTargetSdkVersion
-        versionCode = MyConfiguration.configTargetSdkVersion
-        versionName = MyConfiguration.configVersionName
+        applicationId = "io.loperilla.homeshopping"
+        minSdk = 26
+        targetSdk = 35
+        versionCode = 1
+        versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -58,10 +57,10 @@ composeCompiler {
 dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.lifecycle.runtime.ktx)
-    implementation(project(MyConfiguration.Modules.COREUI))
-    implementation(project(MyConfiguration.Modules.ONB_DOMAIN))
-    implementation(project(MyConfiguration.Modules.DATA))
-    implementation(project(MyConfiguration.Modules.ONB_PRESENTATION))
+    implementation(project(":core-ui"))
+    implementation(project(":domain"))
+    implementation(project(":data"))
+    implementation(project(":presentation"))
 
     // Compose
     implementation(platform(libs.compose.bom))
@@ -69,14 +68,14 @@ dependencies {
     implementation(libs.hilt.navigation)
     implementation(libs.splashscreen)
     implementation(libs.timber)
-
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-
-    //Firebase
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.bundles.firebase)
+//
+//    // Hilt
+//    implementation(libs.hilt.android)
+//    ksp(libs.hilt.compiler)
+//
+//    //Firebase
+//    implementation(platform(libs.firebase.bom))
+//    implementation(libs.bundles.firebase)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.test.ext.junit)
