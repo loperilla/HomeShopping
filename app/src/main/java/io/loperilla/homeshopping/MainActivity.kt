@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import io.loperilla.core_ui.Screen
 import io.loperilla.onboarding.navigator.Navigator
 
 /*****
@@ -21,7 +20,7 @@ class MainActivity : ComponentActivity() {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         setContent {
-            Screen {
+            io.loperilla.ui.Screen {
 //                val viewModel: MainActivityViewModel = koinViewModel()
 //                val uiState: SplashUIState by viewModel.splashUiState.collectAsStateWithLifecycle()
 //

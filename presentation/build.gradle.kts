@@ -48,7 +48,6 @@ composeCompiler {
 }
 
 dependencies {
-    implementation(project(":core-ui"))
     implementation(project(":domain"))
 
     //Runtime
@@ -71,7 +70,6 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.bundles.jupiter)
     testImplementation(libs.coroutine.test)
-    testImplementation(project(mapOf("path" to ":testutils")))
     testImplementation(libs.mockk)
     testImplementation(libs.assertk)
     testImplementation(libs.turbine)

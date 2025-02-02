@@ -19,14 +19,6 @@ room-version = "2.6.1"
 androidTools = "31.8.0"
 koin = "3.5.6"
 
-# Project versions
-projectApplicationId = "io.loperilla.homeshopping"
-projectVersionName = "1.0"
-projectMinSdkVersion = "26"
-projectTargetSdkVersion = "35"
-projectCompileSdkVersion = "35"
-projectVersionCode = "1"
-
 [libraries]
 accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist_version" }
 accompanist-pager-indicator = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanist_version" }
@@ -140,7 +132,7 @@ jupiter = [
     "jupiter-api",
     "jupiter-params",
 ]
-
+koin = ["koin-core", "koin-android"]
 koin-compose = ["koin-core", "koin-android", "koin-androidx-compose"]
 
 
@@ -154,7 +146,7 @@ jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = 
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kspPlugin = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-version-catalog-update = "nl.littlerobots.version-catalog-update:0.8.4"
+version-catalog-update = "nl.littlerobots.version-catalog-update:0.8.5"
 
 # Own Plugins
 loperilla-application-compose = { id = "homeshopping.application.compose", version = "unspecified" }

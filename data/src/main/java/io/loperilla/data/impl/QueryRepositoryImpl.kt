@@ -1,6 +1,6 @@
 package io.loperilla.data.impl
 
-import io.loperilla.data.database.dao.QueryDao
+import io.loperilla.data.database.QueryDao
 import io.loperilla.data.database.entities.QueryEntity
 import io.loperilla.onboarding_domain.repository.QueryRepository
 import kotlinx.coroutines.flow.Flow
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.map
  * All rights reserved 2023
  */
 class QueryRepositoryImpl(
-    private val queryDao: QueryDao
+    private val queryDao: io.loperilla.data.database.QueryDao
 ): QueryRepository {
     override fun insertQuery(query: String) =
         queryDao.insertNewQuery(QueryEntity(query = query))

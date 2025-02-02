@@ -25,19 +25,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import io.loperilla.core_ui.LOW
-import io.loperilla.core_ui.MEDIUM
-import io.loperilla.core_ui.Screen
-import io.loperilla.core_ui.button.FormButton
-import io.loperilla.core_ui.input.EmailInput
-import io.loperilla.core_ui.input.PasswordInput
-import io.loperilla.core_ui.isValidEmail
-import io.loperilla.core_ui.isValidPassword
-import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
-import io.loperilla.core_ui.spacers.LowSpacer
-import io.loperilla.core_ui.spacers.MediumSpacer
-import io.loperilla.core_ui.text.TextTitle
 import io.loperilla.onboarding_presentation.R
+import io.loperilla.ui.LOW
+import io.loperilla.ui.MEDIUM
+import io.loperilla.ui.Screen
+import io.loperilla.ui.button.FormButton
+import io.loperilla.ui.input.EmailInput
+import io.loperilla.ui.input.PasswordInput
+import io.loperilla.ui.isValidEmail
+import io.loperilla.ui.isValidPassword
+import io.loperilla.ui.previews.PIXEL_33_NIGHT
+import io.loperilla.ui.spacers.LowSpacer
+import io.loperilla.ui.spacers.MediumSpacer
+import io.loperilla.ui.text.TextTitle
 
 /*****
  * Project: CompraCasa
@@ -72,7 +72,7 @@ fun LoginScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .fillMaxSize()
-            .padding(MEDIUM)
+            .padding(io.loperilla.ui.MEDIUM)
     ) {
         Image(
             painter = painterResource(R.mipmap.home_shopping_logo_foreground),
@@ -82,14 +82,14 @@ fun LoginScreen(
                 .clip(CircleShape)
         )
 
-        TextTitle(
+        io.loperilla.ui.text.TextTitle(
             text = "Inicia sesión",
             textColor = Color.White,
             modifier = Modifier
-                .padding(top = MEDIUM)
+                .padding(top = io.loperilla.ui.MEDIUM)
         )
-        MediumSpacer()
-        EmailInput(
+        io.loperilla.ui.spacers.MediumSpacer()
+        io.loperilla.ui.input.EmailInput(
             text = state.emailInputValue,
             imeAction = ImeAction.Next,
             onTextChange = { newValue ->
@@ -102,10 +102,10 @@ fun LoginScreen(
             },
             modifier = Modifier
                 .focusRequester(focusRequester)
-                .padding(top = LOW)
+                .padding(top = io.loperilla.ui.LOW)
         )
-        LowSpacer()
-        PasswordInput(
+        io.loperilla.ui.spacers.LowSpacer()
+        io.loperilla.ui.input.PasswordInput(
             text = state.passwordInputValue,
             imeAction = ImeAction.Done,
             onTextChange = { newValue ->
@@ -116,13 +116,13 @@ fun LoginScreen(
                 onEvent(LoginEvent.LoginButtonClicked)
             },
             modifier = Modifier
-                .padding(top = LOW)
+                .padding(top = io.loperilla.ui.LOW)
         )
-        LowSpacer(
+        io.loperilla.ui.spacers.LowSpacer(
             modifier = Modifier
                 .weight(1f)
         )
-        FormButton(
+        io.loperilla.ui.button.FormButton(
             textButton = stringResource(R.string.login_button_message),
             onClickButton = {
                 keyboardController?.hide()
@@ -130,8 +130,8 @@ fun LoginScreen(
             },
             enableButton = state.emailInputValue.isValidEmail && state.passwordInputValue.isValidPassword
         )
-        LowSpacer()
-        FormButton(
+        io.loperilla.ui.spacers.LowSpacer()
+        io.loperilla.ui.button.FormButton(
             textButton = stringResource(R.string.login_register_button_text),
             true,
             onClickButton = {
@@ -141,10 +141,10 @@ fun LoginScreen(
     }
 }
 
-@PIXEL_33_NIGHT
+@io.loperilla.ui.previews.PIXEL_33_NIGHT
 @Composable
 fun LoginScreenPrev() {
-    Screen {
+    io.loperilla.ui.Screen {
         LoginScreen(
             state = LoginState(),
             onEvent = {}

@@ -1,6 +1,9 @@
 package io.loperilla.homeshopping
 
 import android.app.Application
+import io.loperilla.data.di.dataModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.GlobalContext.startKoin
 
 /*****
  * Project: HomeShopping
@@ -9,4 +12,13 @@ import android.app.Application
  * All rights reserved 2023
  */
 class App : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        startKoin {
+            androidContext(this@App)
+            modules(
+                dataModule
+            )
+        }
+    }
 }

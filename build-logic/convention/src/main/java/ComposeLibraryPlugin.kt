@@ -1,5 +1,3 @@
-package io.loperilla.convention
-
 import com.android.build.api.dsl.LibraryExtension
 import io.loperilla.convention.utils.configureAndroidCompose
 import org.gradle.api.Plugin
@@ -16,8 +14,9 @@ class ComposeLibraryPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         target.run {
             pluginManager.run {
-                apply("io.loperilla.homeshopping.library")
+                apply("homeshopping.android.library")
                 apply("org.jetbrains.kotlin.plugin.compose")
+                apply("org.jetbrains.kotlin.plugin.serialization")
             }
 
             val extension = extensions.getByType<LibraryExtension>()

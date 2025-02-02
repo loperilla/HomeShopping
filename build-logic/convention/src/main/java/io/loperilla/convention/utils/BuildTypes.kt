@@ -14,7 +14,7 @@ import org.gradle.kotlin.dsl.configure
  * All rights reserved 2025
  */
 
-internal fun Project.configureBuildTypes(
+fun Project.configureBuildTypes(
     commonExtension: CommonExtension<*, *, *, *, *, *>,
     extensionType: ExtensionType
 ) {

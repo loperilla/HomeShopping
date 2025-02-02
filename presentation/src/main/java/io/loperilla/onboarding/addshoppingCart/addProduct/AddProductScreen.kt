@@ -39,25 +39,25 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import io.loperilla.core_ui.CommonTopBar
-import io.loperilla.core_ui.HomeShoppingBottomSheet
-import io.loperilla.core_ui.HomeShoppingCard
-import io.loperilla.core_ui.ItemBottomSheet
-import io.loperilla.core_ui.Screen
 import io.loperilla.core_ui.TextBodySize
-import io.loperilla.core_ui.TransparentScaffold
-import io.loperilla.core_ui.button.FormButton
-import io.loperilla.core_ui.input.TextInput
-import io.loperilla.core_ui.itemPadding
-import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
-import io.loperilla.core_ui.text.TextRegular
-import io.loperilla.core_ui.text.TextSemiBold
-import io.loperilla.core_ui.text.TextTitle
 import io.loperilla.onboarding.FlowCommerce
 import io.loperilla.onboarding.commerces
 import io.loperilla.onboarding.getTempUri
 import io.loperilla.onboarding.uriToBitmap
 import io.loperilla.onboarding_presentation.R
+import io.loperilla.ui.CommonTopBar
+import io.loperilla.ui.HomeShoppingBottomSheet
+import io.loperilla.ui.HomeShoppingCard
+import io.loperilla.ui.ItemBottomSheet
+import io.loperilla.ui.Screen
+import io.loperilla.ui.TransparentScaffold
+import io.loperilla.ui.button.FormButton
+import io.loperilla.ui.input.TextInput
+import io.loperilla.ui.itemPadding
+import io.loperilla.ui.previews.PIXEL_33_NIGHT
+import io.loperilla.ui.text.TextRegular
+import io.loperilla.ui.text.TextSemiBold
+import io.loperilla.ui.text.TextTitle
 
 /*****
  * Project: HomeShopping
@@ -120,12 +120,12 @@ fun AddProductScreen(
     BackHandler {
         onEvent(AddProductEvent.NavigateBack)
     }
-    Screen {
-        TransparentScaffold(
+    io.loperilla.ui.Screen {
+        io.loperilla.ui.TransparentScaffold(
             modifier = modifier
                 .fillMaxSize(),
             topBar = {
-                CommonTopBar(
+                io.loperilla.ui.CommonTopBar(
                     stringResource(R.string.add_item_scaffold_title, commerceName),
                     navActionClick = { onEvent(AddProductEvent.NavigateBack) }
                 )
@@ -145,7 +145,7 @@ fun AddProductScreen(
                         .weight(1f),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    TextInput(
+                    io.loperilla.ui.input.TextInput(
                         text = state.newProductInputValue,
                         labelText = "Nombre del nuevo producto",
                         onTextChange = { newName ->
@@ -153,12 +153,12 @@ fun AddProductScreen(
                         }
                     )
                     SelectAnotherCommerce(state = state, onEvent = onEvent)
-                    TextRegular(text = "Agrega imagen a tu nuevo producto")
+                    io.loperilla.ui.text.TextRegular(text = "Agrega imagen a tu nuevo producto")
                     AnimatedVisibility(visible = state.showMenuToProductPhoto) {
-                        HomeShoppingBottomSheet(
+                        io.loperilla.ui.HomeShoppingBottomSheet(
                             title = "Selecciona una imagen",
                             items = listOf(
-                                ItemBottomSheet(
+                                io.loperilla.ui.ItemBottomSheet(
                                     title = "Galería",
                                     icon = Icons.Filled.Photo,
                                     onClick = {
@@ -169,7 +169,7 @@ fun AddProductScreen(
                                         )
                                     },
                                 ),
-                                ItemBottomSheet(
+                                io.loperilla.ui.ItemBottomSheet(
                                     title = "Camara",
                                     icon = Icons.Filled.Camera,
                                     onClick = {
@@ -184,7 +184,7 @@ fun AddProductScreen(
                     }
 
                     AnimatedVisibility(visible = !state.showMenuToProductPhoto) {
-                        HomeShoppingCard(
+                        io.loperilla.ui.HomeShoppingCard(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(200.dp)
@@ -220,7 +220,7 @@ fun AddProductScreen(
                                         modifier = Modifier
                                             .size(48.dp)
                                     )
-                                    TextSemiBold(
+                                    io.loperilla.ui.text.TextSemiBold(
                                         text = "Selecciona una imagen para tu nuevo producto",
                                         textAlign = TextAlign.Center
                                     )
@@ -232,7 +232,7 @@ fun AddProductScreen(
                 }
 
 
-                FormButton(
+                io.loperilla.ui.button.FormButton(
                     textButton = "Agregar producto",
                     enableButton = state.validProduct,
                     modifier = Modifier
@@ -264,7 +264,7 @@ fun SelectAnotherCommerce(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            TextTitle(
+            io.loperilla.ui.text.TextTitle(
                 text = "¿Quieres agregar otro comercio?",
                 textSize = TextBodySize
             )
@@ -289,7 +289,7 @@ fun SelectAnotherCommerce(
     }
 }
 
-@PIXEL_33_NIGHT
+@io.loperilla.ui.previews.PIXEL_33_NIGHT
 @Composable
 private fun AddProductScreenPreview() {
     AddProductScreen(
@@ -299,7 +299,7 @@ private fun AddProductScreenPreview() {
     )
 }
 
-@PIXEL_33_NIGHT
+@io.loperilla.ui.previews.PIXEL_33_NIGHT
 @Composable
 private fun AddProductScreenWithNamePreview() {
     AddProductScreen(

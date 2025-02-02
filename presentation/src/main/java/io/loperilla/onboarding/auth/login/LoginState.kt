@@ -1,7 +1,7 @@
 package io.loperilla.onboarding.auth.login
 
-import io.loperilla.core_ui.Email
-import io.loperilla.core_ui.Password
+import io.loperilla.ui.Email
+import io.loperilla.ui.Password
 
 /*****
  * Project: HomeShopping
@@ -10,7 +10,7 @@ import io.loperilla.core_ui.Password
  * All rights reserved 2024
  */
 data class LoginState(
-    val emailInputValue: Email = "",
-    val passwordInputValue: Password = "",
+    val emailInputValue: io.loperilla.ui.Email = "",
+    val passwordInputValue: io.loperilla.ui.Password = "",
     val showSnackbarError: Boolean = false,
 )

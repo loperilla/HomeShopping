@@ -42,20 +42,20 @@ import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
-import io.loperilla.core_ui.CommonTopBar
-import io.loperilla.core_ui.LOW
-import io.loperilla.core_ui.MEDIUM
-import io.loperilla.core_ui.Screen
 import io.loperilla.core_ui.TextSmallSize
-import io.loperilla.core_ui.TransparentScaffold
-import io.loperilla.core_ui.itemPadding
-import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
-import io.loperilla.core_ui.text.TextRegular
-import io.loperilla.core_ui.text.TextSemiBold
 import io.loperilla.onboarding.commerce.SwipeBox
 import io.loperilla.onboarding.products
 import io.loperilla.onboarding_domain.model.database.product.Product
 import io.loperilla.onboarding_presentation.R
+import io.loperilla.ui.CommonTopBar
+import io.loperilla.ui.LOW
+import io.loperilla.ui.MEDIUM
+import io.loperilla.ui.Screen
+import io.loperilla.ui.TransparentScaffold
+import io.loperilla.ui.itemPadding
+import io.loperilla.ui.previews.PIXEL_33_NIGHT
+import io.loperilla.ui.text.TextRegular
+import io.loperilla.ui.text.TextSemiBold
 
 /*****
  * Project: HomeShopping
@@ -70,12 +70,12 @@ fun NewShoppingBasketScreen(
     state: NewShoppingBasketState,
     onEvent: (NewShoppingBasketEvent) -> Unit
 ) {
-    Screen {
-        TransparentScaffold(
+    io.loperilla.ui.Screen {
+        io.loperilla.ui.TransparentScaffold(
             modifier = Modifier
                 .fillMaxSize(),
             topBar = {
-                CommonTopBar(
+                io.loperilla.ui.CommonTopBar(
                     stringResource(R.string.addshoppingcart_scaffold_title, commerceSelectedName),
                     navActionClick = { onEvent(NewShoppingBasketEvent.NavigateBack) }
                 )
@@ -89,9 +89,9 @@ fun NewShoppingBasketScreen(
                             imageVector = Icons.Filled.ShoppingCartCheckout,
                             contentDescription = stringResource(R.string.add_item_fab_text_value),
                             modifier = Modifier
-                                .padding(end = LOW)
+                                .padding(end = io.loperilla.ui.LOW)
                         )
-                        TextSemiBold(
+                        io.loperilla.ui.text.TextSemiBold(
                             stringResource(R.string.shopping_cart_fab),
                             textSize = TextSmallSize
                         )
@@ -132,7 +132,7 @@ private fun AddShoppingBasketScreen(
 ) {
     Column(
         modifier = modifier
-            .padding(LOW)
+            .padding(io.loperilla.ui.LOW)
     ) {
         ProductsSearchBar(state, onEvent)
         ProductsList(state.filteredItemShoppingList, onEvent)
@@ -163,7 +163,7 @@ private fun ProductsList(
                     .itemPadding()
                     .clickable { onEvent(NewShoppingBasketEvent.AddItem) },
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(LOW)
+                verticalArrangement = Arrangement.spacedBy(io.loperilla.ui.LOW)
             ) {
                 Icon(
                     imageVector = Icons.Filled.AddShoppingCart,
@@ -172,7 +172,7 @@ private fun ProductsList(
                         .size(50.dp)
                         .clip(CircleShape)
                 )
-                TextRegular(
+                io.loperilla.ui.text.TextRegular(
                     text = "Crea un nuevo\nproducto",
                     textAlign = TextAlign.Center
                 )
@@ -208,7 +208,7 @@ private fun ProductsSearchBar(
                 },
                 enabled = true,
                 placeholder = {
-                    TextRegular(stringResource(R.string.seachbar_placeholder_text))
+                    io.loperilla.ui.text.TextRegular(stringResource(R.string.seachbar_placeholder_text))
                 },
                 leadingIcon = null,
                 colors = textFieldColors,
@@ -229,7 +229,7 @@ private fun ProductsSearchBar(
         },
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = LOW),
+            .padding(horizontal = io.loperilla.ui.LOW),
         shape = SearchBarDefaults.inputFieldShape,
         colors = searchBarColors,
         tonalElevation = SearchBarDefaults.TonalElevation,
@@ -253,8 +253,8 @@ private fun PreviousQueryList(
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = MEDIUM),
-            verticalArrangement = Arrangement.spacedBy(MEDIUM)
+                .padding(horizontal = io.loperilla.ui.MEDIUM),
+            verticalArrangement = Arrangement.spacedBy(io.loperilla.ui.MEDIUM)
         ) {
             items(previousQueryList.size) {
                 SwipeBox(
@@ -266,7 +266,7 @@ private fun PreviousQueryList(
                         )
                     }
                 ) {
-                    TextSemiBold(
+                    io.loperilla.ui.text.TextSemiBold(
                         text = previousQueryList[it],
                         textColor = Color.White,
                         modifier = Modifier
@@ -296,7 +296,7 @@ fun ItemShopping(
         modifier = modifier
             .clickable { onEvent },
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(LOW)
+        verticalArrangement = Arrangement.spacedBy(io.loperilla.ui.LOW)
     ) {
         if (item.imageUrl.isNotEmpty()) {
             SubcomposeAsyncImage(
@@ -311,7 +311,7 @@ fun ItemShopping(
                     .build(),
                 modifier = Modifier
                     .size(100.dp)
-                    .padding(LOW)
+                    .padding(io.loperilla.ui.LOW)
                     .clip(RoundedCornerShape(25)),
                 loading = {
                     CircularProgressIndicator()
@@ -333,16 +333,16 @@ fun ItemShopping(
                     .size(24.dp)
             )
         }
-        TextRegular(
+        io.loperilla.ui.text.TextRegular(
             text = item.name
         )
     }
 }
 
-@PIXEL_33_NIGHT
+@io.loperilla.ui.previews.PIXEL_33_NIGHT
 @Composable
 fun AddShoppingBasketScreenPrev() {
-    Screen {
+    io.loperilla.ui.Screen {
         NewShoppingBasketScreen(
             commerceSelectedName = "Mercadona",
             state = NewShoppingBasketState(),
@@ -351,10 +351,10 @@ fun AddShoppingBasketScreenPrev() {
     }
 }
 
-@PIXEL_33_NIGHT
+@io.loperilla.ui.previews.PIXEL_33_NIGHT
 @Composable
 fun AddShoppingBasketScreenShoppingItemsPrev() {
-    Screen {
+    io.loperilla.ui.Screen {
         NewShoppingBasketScreen(
             commerceSelectedName = "Mercadona",
             state = NewShoppingBasketState(
@@ -368,10 +368,10 @@ fun AddShoppingBasketScreenShoppingItemsPrev() {
     }
 }
 
-@PIXEL_33_NIGHT
+@io.loperilla.ui.previews.PIXEL_33_NIGHT
 @Composable
 fun ShowSearchBarContentPrev() {
-    Screen {
+    io.loperilla.ui.Screen {
         NewShoppingBasketScreen(
             commerceSelectedName = "Mercadona",
             state = NewShoppingBasketState(

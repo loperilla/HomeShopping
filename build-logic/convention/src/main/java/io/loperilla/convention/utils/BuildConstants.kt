@@ -11,6 +11,6 @@ const val rootPackage = "io.loperilla"
 const val configCompileSdkVersion = 35
 const val configTargetSdkVersion = 35
 const val configMinSdkVersion = 26
-const val myApplicationIdConfig = "$rootPackage.homeshopping"
+const val myApplicationIdConfig = "io.loperilla.homeshopping"
 const val configVersionCode = 1
 const val configVersionName = "1.0"

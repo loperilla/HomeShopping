@@ -7,7 +7,7 @@ import org.gradle.kotlin.dsl.getByType
 class ComposeApplicationPlugin: Plugin<Project> {
     override fun apply(target: Project) {
         target.run {
-            pluginManager.apply("io.loperilla.application")
+            pluginManager.apply("homeshopping.android.application")
             pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
 
             val extension = extensions.getByType<ApplicationExtension>()

@@ -26,7 +26,6 @@
             <option value="$PROJECT_DIR$/build-logic" />
             <option value="$PROJECT_DIR$/build-logic/convention" />
             <option value="$PROJECT_DIR$/core" />
-            <option value="$PROJECT_DIR$/core-ui" />
             <option value="$PROJECT_DIR$/core/data" />
             <option value="$PROJECT_DIR$/core/domain" />
             <option value="$PROJECT_DIR$/core/presentation" />
@@ -35,8 +34,10 @@
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/login" />
+            <option value="$PROJECT_DIR$/login/data" />
+            <option value="$PROJECT_DIR$/login/domain" />
+            <option value="$PROJECT_DIR$/login/presentation" />
             <option value="$PROJECT_DIR$/presentation" />
-            <option value="$PROJECT_DIR$/testutils" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

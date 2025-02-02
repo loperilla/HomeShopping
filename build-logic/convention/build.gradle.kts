@@ -30,7 +30,7 @@ gradlePlugin {
         }
         register("androidLibraryCompose") {
             id = "homeshopping.library.compose"
-            implementationClass = "AndroidLibraryComposePlugin"
+            implementationClass = "ComposeLibraryPlugin"
         }
         register("jvmLibrary") {
             id = "homeshopping.jvm.library"
