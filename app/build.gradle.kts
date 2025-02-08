@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.loperilla.application.compose)
-
 }
 
 android {

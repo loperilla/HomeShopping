@@ -9,10 +9,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
-import io.loperilla.core_ui.TextBodySize
-import io.loperilla.core_ui.TextSmallSize
-import io.loperilla.core_ui.TextTitleSize
-import io.loperilla.core_ui.myFontFamily
+import io.loperilla.designsystem.TextBodySize
+import io.loperilla.designsystem.TextSmallSize
+import io.loperilla.designsystem.TextTitleSize
+import io.loperilla.designsystem.composables.Screen
+import io.loperilla.designsystem.composables.previews.PIXEL_33_NIGHT
+import io.loperilla.designsystem.composables.spacers.LowSpacer
+import io.loperilla.designsystem.myFontFamily
 
 /*****
  * Project: HomeShopping
@@ -93,20 +96,20 @@ fun TextThin(
     )
 }
 
-@io.loperilla.designsystem.composables.previews.PIXEL_33_NIGHT
+@PIXEL_33_NIGHT
 @Composable
 fun TextsPreview() {
-    io.loperilla.designsystem.composables.Screen {
+    Screen {
         Column(
             modifier = Modifier
                 .fillMaxSize()
         ) {
             TextRegular("Soy TextRegular")
-            io.loperilla.designsystem.composables.spacers.LowSpacer()
+            LowSpacer()
             TextTitle("Soy TextTitle")
-            io.loperilla.designsystem.composables.spacers.LowSpacer()
+            LowSpacer()
             TextThin("Soy TextThin")
-            io.loperilla.designsystem.composables.spacers.LowSpacer()
+            LowSpacer()
             TextSemiBold("Soy TextSemiBold")
         }
     }

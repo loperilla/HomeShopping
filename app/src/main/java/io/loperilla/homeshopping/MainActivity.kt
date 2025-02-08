@@ -8,7 +8,6 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import io.loperilla.designsystem.composables.Screen
 import io.loperilla.ui.navigator.Navigator
 import org.koin.android.ext.android.inject
-import org.koin.androidx.compose.koinViewModel
 
 /*****
  * Project: HomeShopping
@@ -25,7 +24,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             Screen {
                 val navigator : Navigator by inject()
-                val viewModel: MainActivityViewModel = koinViewModel()
 
 //                val viewModel: MainActivityViewModel = koinViewModel()
 //                val uiState: SplashUIState by viewModel.splashUiState.collectAsStateWithLifecycle()

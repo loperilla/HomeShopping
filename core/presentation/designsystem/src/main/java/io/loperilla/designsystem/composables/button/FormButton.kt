@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import io.loperilla.designsystem.composables.Screen
 import io.loperilla.designsystem.composables.previews.PIXEL_33_NIGHT
-import io.loperilla.ui.text.TextSemiBold
+import io.loperilla.designsystem.composables.text.TextSemiBold
 
 /*****
  * Project: CompraCasa

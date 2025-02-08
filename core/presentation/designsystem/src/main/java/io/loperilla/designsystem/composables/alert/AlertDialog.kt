@@ -7,6 +7,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import io.loperilla.designsystem.TextSmallSize
+import io.loperilla.presentation.designsystem.R
 
 /*****
  * Project: HomeShopping

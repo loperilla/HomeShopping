@@ -15,6 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
+import io.loperilla.designsystem.TextTitleSize
+import io.loperilla.designsystem.composables.Screen
+import io.loperilla.designsystem.composables.TransparentScaffold
+import io.loperilla.designsystem.composables.text.TextTitle
 
 /*****
  * Project: HomeShopping
@@ -39,7 +43,7 @@ fun CommonTopBar(
     TopAppBar(
         title = {
             if (topBarText.isNotEmpty()) {
-                io.loperilla.designsystem.composables.text.TextTitle(
+                TextTitle(
                     text = topBarText,
                     textSize = TextTitleSize,
                     textColor = topBarTextColor
@@ -65,8 +69,8 @@ fun CommonTopBar(
 @Preview
 @Composable
 private fun CommonTopbarPrev() {
-    io.loperilla.designsystem.composables.Screen {
-        io.loperilla.designsystem.composables.TransparentScaffold(
+    Screen {
+        TransparentScaffold(
             topBar = {
                 CommonTopBar(
                     topBarText = "Comercios",
@@ -78,7 +82,7 @@ private fun CommonTopbarPrev() {
                 modifier = Modifier
                     .padding(it)
             ) {
-                io.loperilla.designsystem.composables.text.TextTitle(text = "hola hola")
+                TextTitle(text = "hola hola")
             }
         }
     }

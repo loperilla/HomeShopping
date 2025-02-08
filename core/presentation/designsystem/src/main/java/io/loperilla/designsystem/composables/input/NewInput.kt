@@ -31,11 +31,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import io.loperilla.core_ui.TextSmallSize
-import io.loperilla.ui.Email
-import io.loperilla.ui.Password
-import io.loperilla.ui.isValidEmail
-import io.loperilla.ui.isValidPassword
+import io.loperilla.designsystem.Email
+import io.loperilla.designsystem.Password
+import io.loperilla.designsystem.TextSmallSize
+import io.loperilla.designsystem.composables.Screen
+import io.loperilla.designsystem.composables.previews.PIXEL_33_NIGHT
+import io.loperilla.designsystem.composables.text.TextSemiBold
+import io.loperilla.designsystem.composables.text.TextThin
+import io.loperilla.designsystem.isValidEmail
+import io.loperilla.designsystem.isValidPassword
 
 /*****
  * Project: HomeShopping
@@ -194,13 +198,13 @@ private fun CommonInput(
         trailingIcon = trailingIcon,
         isError = showError,
         label = {
-            io.loperilla.designsystem.composables.text.TextSemiBold(
+            TextSemiBold(
                 labelText,
                 textSize = TextSmallSize
             )
         },
         placeholder = {
-            io.loperilla.designsystem.composables.text.TextThin(text = placeholderText)
+            TextThin(text = placeholderText)
         },
         keyboardOptions = KeyboardOptions(
             keyboardType = keyboardType,
@@ -218,7 +222,7 @@ private fun CommonInput(
         visualTransformation = visualTransformation,
         supportingText = {
             if (showError) {
-                io.loperilla.designsystem.composables.text.TextThin(
+                TextThin(
                     uiError.message,
                     textColor = MaterialTheme.colorScheme.error
                 )
@@ -227,10 +231,10 @@ private fun CommonInput(
     )
 }
 
-@io.loperilla.designsystem.composables.previews.PIXEL_33_NIGHT
+@PIXEL_33_NIGHT
 @Composable
 private fun NewInputPreview() {
-    io.loperilla.designsystem.composables.Screen {
+    Screen {
         Column(
             modifier = Modifier
                 .fillMaxSize()
