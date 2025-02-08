@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="21" />
+    <bytecodeTargetLevel target="17">
+      <module name="HomeShopping.core-ui" target="21" />
+      <module name="HomeShopping.data" target="21" />
+      <module name="HomeShopping.domain" target="21" />
+      <module name="HomeShopping.presentation" target="21" />
+    </bytecodeTargetLevel>
   </component>
 </project>

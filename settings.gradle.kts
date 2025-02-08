@@ -1,10 +1,20 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
-        google()
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
         mavenCentral()
         gradlePluginPortal()
     }
 }
+
+gradle.startParameter.excludedTaskNames.addAll(listOf(":build-logic:convention:testClasses"))
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -14,9 +24,15 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "HomeShopping"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
-include(":data")
-include(":domain")
-include(":presentation")
-include(":core-ui")
-include(":testutils")
+//include(":data")
+//include(":domain")
+//include(":presentation")
+include(":core:data")
+include(":core:domain")
+include(":core:presentation:ui")
+include(":core:presentation:designsystem")
+include(":login:presentation")
+include(":login:domain")
+include(":login:data")

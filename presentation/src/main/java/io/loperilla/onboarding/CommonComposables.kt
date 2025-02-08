@@ -6,9 +6,9 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import io.loperilla.core_ui.CommerceChip
-import io.loperilla.core_ui.MEDIUM
 import io.loperilla.onboarding_domain.model.database.Commerce
+import io.loperilla.ui.CommerceChip
+import io.loperilla.ui.MEDIUM
 
 /*****
  * Project: HomeShopping
@@ -26,11 +26,11 @@ fun FlowCommerce(
     LazyRow(
         modifier = modifier
             .fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(MEDIUM),
+        horizontalArrangement = Arrangement.spacedBy(io.loperilla.ui.MEDIUM),
         verticalAlignment = Alignment.CenterVertically
     ) {
         items(commerceList.size) {
-            CommerceChip(
+            io.loperilla.ui.CommerceChip(
                 text = commerceList[it].name,
                 isSelected = commerceList[it].isSelected,
                 onClick = {

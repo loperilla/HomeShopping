@@ -2,24 +2,14 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import nl.littlerobots.vcu.plugin.versionCatalogUpdate
 
-buildscript {
-    dependencies {
-        classpath(libs.build.gradle)
-        classpath(libs.hilt.gradle)
-        classpath(libs.google.services)
-        classpath(libs.crashlytics.gradle)
-    }
-}
-
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    `version-catalog`
-    `java-gradle-plugin`
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.androidLibrary) apply false
     alias(libs.plugins.jetbrains.kotlin.android) apply false
+    alias(libs.plugins.jetbrains.kotlin.serialization) apply false
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.kspPlugin) apply false
+    alias(libs.plugins.jetbrains.kotlin.jvm) apply false
     alias(libs.plugins.ben.manes.versions)
     alias(libs.plugins.version.catalog.update)
 }

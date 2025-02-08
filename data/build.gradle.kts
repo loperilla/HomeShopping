@@ -2,15 +2,15 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kspPlugin)
     kotlin("android")
-    id("dagger.hilt.android.plugin")
+//    id("dagger.hilt.android.plugin")
 }
 
 android {
-    namespace = "${MyConfiguration.baseProjectName}.data"
-    compileSdk = MyConfiguration.configCompileSdkVersion
+    namespace = "io.loperilla.data"
+    compileSdk = 35
 
     defaultConfig {
-        minSdk = MyConfiguration.configMinSdkVersion
+        minSdk = 26
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -39,19 +39,19 @@ android {
 }
 
 dependencies {
-    implementation(project(MyConfiguration.MAP_MODULES.DOMAIN))
+    implementation(project(":domain"))
 
     //Compose
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
     //Datastore
     implementation(libs.datastore)
-    //Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-    //Firebase
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.bundles.firebase)
+//    //Hilt
+//    implementation(libs.hilt.android)
+//    ksp(libs.hilt.compiler)
+//    //Firebase
+//    implementation(platform(libs.firebase.bom))
+//    implementation(libs.bundles.firebase)
 
     // Room
     implementation(libs.room.ktx)

@@ -21,16 +21,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.stringResource
-import io.loperilla.core_ui.CommonAlertDialog
-import io.loperilla.core_ui.CommonTopBar
-import io.loperilla.core_ui.MEDIUM
-import io.loperilla.core_ui.Screen
-import io.loperilla.core_ui.TransparentScaffold
-import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
-import io.loperilla.core_ui.text.TextTitle
 import io.loperilla.onboarding.FlowCommerce
 import io.loperilla.onboarding.commerces
 import io.loperilla.onboarding_presentation.R
+import io.loperilla.ui.CommonAlertDialog
+import io.loperilla.ui.CommonTopBar
+import io.loperilla.ui.MEDIUM
+import io.loperilla.ui.Screen
+import io.loperilla.ui.TransparentScaffold
+import io.loperilla.ui.previews.PIXEL_33_NIGHT
+import io.loperilla.ui.text.TextTitle
 
 /*****
  * Project: CompraCasa
@@ -44,10 +44,10 @@ fun HomeScreen(
     state: HomeState,
     onEvent: (HomeEvent) -> Unit
 ) {
-    Screen {
-        TransparentScaffold(
+    io.loperilla.ui.Screen {
+        io.loperilla.ui.TransparentScaffold(
             topBar = {
-                CommonTopBar(
+                io.loperilla.ui.CommonTopBar(
                     stringResource(R.string.home_scaffold_title),
                     navActionClick = {},
                     navIcon = null,
@@ -73,7 +73,7 @@ fun HomeScreen(
             }
         ) { paddingValues ->
             AnimatedVisibility(visible = state.showAreYouSureLogout) {
-                CommonAlertDialog(
+                io.loperilla.ui.CommonAlertDialog(
                     titleText = stringResource(R.string.logout_dialog_title),
                     onConfirmButton = { onEvent(HomeEvent.LogOut) },
                     onDismissClick = { onEvent(HomeEvent.HideLogoutDialog) }
@@ -104,7 +104,7 @@ fun CommerceList(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(MEDIUM)
+            .padding(io.loperilla.ui.MEDIUM)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -112,7 +112,7 @@ fun CommerceList(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            TextTitle(
+            io.loperilla.ui.text.TextTitle(
                 text = "Comercios",
             )
 
@@ -140,10 +140,10 @@ fun CommerceList(
         }
     }
 }
-@PIXEL_33_NIGHT
+@io.loperilla.ui.previews.PIXEL_33_NIGHT
 @Composable
 fun EmptyShoppingBuyListPrev() {
-    Screen {
+    io.loperilla.ui.Screen {
         HomeScreen(
             state = HomeState(),
             onEvent = {}
@@ -151,10 +151,10 @@ fun EmptyShoppingBuyListPrev() {
     }
 }
 
-@PIXEL_33_NIGHT
+@io.loperilla.ui.previews.PIXEL_33_NIGHT
 @Composable
 private fun CommerceVisibleListPreview() {
-    Screen {
+    io.loperilla.ui.Screen {
         CommerceList(
             state = HomeState(
                 commerceList = commerces,

@@ -21,17 +21,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import io.loperilla.core_ui.CommonTopBar
-import io.loperilla.core_ui.Screen
-import io.loperilla.core_ui.TransparentScaffold
-import io.loperilla.core_ui.button.FormButton
-import io.loperilla.core_ui.input.EmailInput
-import io.loperilla.core_ui.input.PasswordInput
-import io.loperilla.core_ui.isValidEmail
-import io.loperilla.core_ui.isValidPassword
-import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
-import io.loperilla.core_ui.text.TextTitle
 import io.loperilla.onboarding_presentation.R
+import io.loperilla.ui.CommonTopBar
+import io.loperilla.ui.Screen
+import io.loperilla.ui.TransparentScaffold
+import io.loperilla.ui.button.FormButton
+import io.loperilla.ui.input.EmailInput
+import io.loperilla.ui.input.PasswordInput
+import io.loperilla.ui.isValidEmail
+import io.loperilla.ui.isValidPassword
+import io.loperilla.ui.previews.PIXEL_33_NIGHT
+import io.loperilla.ui.text.TextTitle
 
 /*****
  * Project: CompraCasa
@@ -61,11 +61,11 @@ fun RegisterScreen(
     BackHandler {
         onEvent(RegisterEvent.OnBackPressed)
     }
-    Screen {
-        TransparentScaffold(
+    io.loperilla.ui.Screen {
+        io.loperilla.ui.TransparentScaffold(
             modifier = modifier,
             topBar = {
-                CommonTopBar(
+                io.loperilla.ui.CommonTopBar(
                     topBarText = "",
                     navActionClick = {
                         keyboardController?.hide()
@@ -90,13 +90,13 @@ fun RegisterScreen(
                         .clip(CircleShape)
                 )
 
-                TextTitle(
+                io.loperilla.ui.text.TextTitle(
                     text = "Registre tu cuenta",
                     textColor = Color.White,
                     modifier = Modifier
                 )
 
-                EmailInput(
+                io.loperilla.ui.input.EmailInput(
                     text = state.emailInputValue,
                     imeAction = ImeAction.Next,
                     onTextChange = { newValue ->
@@ -105,7 +105,7 @@ fun RegisterScreen(
                     modifier = Modifier
                 )
 
-                PasswordInput(
+                io.loperilla.ui.input.PasswordInput(
                     modifier = Modifier,
                     text = state.passwordInputValue,
                     imeAction = ImeAction.Done,
@@ -115,7 +115,7 @@ fun RegisterScreen(
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
-                FormButton(
+                io.loperilla.ui.button.FormButton(
                     textButton = stringResource(R.string.login_register_button_text),
                     modifier = Modifier,
                     onClickButton = {
@@ -129,10 +129,10 @@ fun RegisterScreen(
     }
 }
 
-@PIXEL_33_NIGHT
+@io.loperilla.ui.previews.PIXEL_33_NIGHT
 @Composable
 fun RegisterScreenPrev() {
-    Screen {
+    io.loperilla.ui.Screen {
         RegisterScreen(
             state = RegisterState(
                 emailInputValue = "correo@dominio.es",

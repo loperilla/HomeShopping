@@ -31,14 +31,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import io.loperilla.core_ui.CommonTopBar
-import io.loperilla.core_ui.Screen
-import io.loperilla.core_ui.TransparentScaffold
-import io.loperilla.core_ui.input.TextInput
-import io.loperilla.core_ui.itemPadding
-import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
-import io.loperilla.core_ui.text.TextSemiBold
 import io.loperilla.onboarding_domain.model.database.Commerce
+import io.loperilla.ui.CommonTopBar
+import io.loperilla.ui.Screen
+import io.loperilla.ui.TransparentScaffold
+import io.loperilla.ui.input.TextInput
+import io.loperilla.ui.itemPadding
+import io.loperilla.ui.previews.PIXEL_33_NIGHT
+import io.loperilla.ui.text.TextSemiBold
 
 /*****
  * Project: HomeShopping
@@ -56,10 +56,10 @@ fun CommerceScreen(
     BackHandler {
         onEvent(CommerceEvent.GoBack)
     }
-    Screen {
-        TransparentScaffold(
+    io.loperilla.ui.Screen {
+        io.loperilla.ui.TransparentScaffold(
             topBar = {
-                CommonTopBar(
+                io.loperilla.ui.CommonTopBar(
                     topBarText = "Comercios",
                     navActionClick = {
                         onEvent(CommerceEvent.GoBack)
@@ -117,7 +117,7 @@ fun CommerceScreen(
                         modifier = Modifier
                             .padding(8.dp)
                     ) {
-                        TextSemiBold(
+                        io.loperilla.ui.text.TextSemiBold(
                             text = state.list[it].name,
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -141,7 +141,7 @@ private fun AddCommerceForm(
             .fillMaxWidth()
             .itemPadding()
     ) {
-        TextInput(
+        io.loperilla.ui.input.TextInput(
             text = state.newCommerceInputValue,
             labelText = "Nombre del nuevo comercio",
             onTextChange = { newName ->
@@ -217,10 +217,10 @@ fun SwipeBox(
     }
 }
 
-@PIXEL_33_NIGHT
+@io.loperilla.ui.previews.PIXEL_33_NIGHT
 @Composable
 private fun CommerceScreenPrev() {
-    Screen {
+    io.loperilla.ui.Screen {
         CommerceScreen(
             state = CommerceState(
                 list = listOf(
@@ -233,10 +233,10 @@ private fun CommerceScreenPrev() {
         )
     }
 }
-@PIXEL_33_NIGHT
+@io.loperilla.ui.previews.PIXEL_33_NIGHT
 @Composable
 private fun CommerceScreenWithFormPrev() {
-    Screen {
+    io.loperilla.ui.Screen {
         CommerceScreen(
             state = CommerceState(
                 showNewCommerceForm = true,

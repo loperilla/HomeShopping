@@ -1,9 +1,12 @@
 package io.loperilla.homeshopping
 
 import android.app.Application
-import com.google.firebase.FirebaseApp
-import dagger.hilt.android.HiltAndroidApp
-import timber.log.Timber
+import io.loperilla.data.di.dataModule
+import io.loperilla.data.di.loginDataModule
+import io.loperilla.presentation.di.loginViewModelModule
+import io.loperilla.ui.di.uiModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.GlobalContext.startKoin
 
 /*****
  * Project: HomeShopping
@@ -11,18 +14,16 @@ import timber.log.Timber
  * Created By Manuel Lopera on 21/8/23 at 17:07
  * All rights reserved 2023
  */
-@HiltAndroidApp
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
-        FirebaseApp.initializeApp(this)
-        if (BuildConfig.DEBUG) {
-            Timber.plant(
-                object : Timber.DebugTree() {
-                    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-                        super.log(priority, "global_tag_$tag", message, t)
-                    }
-                }
+        startKoin {
+            androidContext(this@App)
+            modules(
+                dataModule,
+                uiModule,
+                loginDataModule,
+                loginViewModelModule
             )
         }
     }

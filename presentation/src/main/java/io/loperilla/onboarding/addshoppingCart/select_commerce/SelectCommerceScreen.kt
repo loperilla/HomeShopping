@@ -5,15 +5,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import io.loperilla.core_ui.CommonTopBar
-import io.loperilla.core_ui.HomeShoppingCard
-import io.loperilla.core_ui.Screen
-import io.loperilla.core_ui.TransparentScaffold
-import io.loperilla.core_ui.itemPadding
-import io.loperilla.core_ui.previews.PIXEL_33_NIGHT
-import io.loperilla.core_ui.text.TextRegular
-import io.loperilla.core_ui.text.TextSemiBold
 import io.loperilla.onboarding.commerces
+import io.loperilla.ui.CommonTopBar
+import io.loperilla.ui.HomeShoppingCard
+import io.loperilla.ui.Screen
+import io.loperilla.ui.TransparentScaffold
+import io.loperilla.ui.itemPadding
+import io.loperilla.ui.previews.PIXEL_33_NIGHT
+import io.loperilla.ui.text.TextRegular
+import io.loperilla.ui.text.TextSemiBold
 
 /*****
  * Project: HomeShopping
@@ -28,10 +28,10 @@ fun SelectCommerceScreen(
     onEvent: (SelectCommerceEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Screen {
-        TransparentScaffold(
+    io.loperilla.ui.Screen {
+        io.loperilla.ui.TransparentScaffold(
             topBar = {
-                CommonTopBar(
+                io.loperilla.ui.CommonTopBar(
                     topBarText = "Selecciona el comercio",
                     navActionClick = { onEvent(SelectCommerceEvent.OnBack) }
                 )
@@ -42,7 +42,7 @@ fun SelectCommerceScreen(
                 contentPadding = paddingValues
             ) {
                 item {
-                    TextSemiBold(
+                    io.loperilla.ui.text.TextSemiBold(
                         text = "Selecciona el comercio donde vayas a comprar",
                         modifier = Modifier.itemPadding()
                     )
@@ -50,11 +50,11 @@ fun SelectCommerceScreen(
                 items(
                     state.commerceList.size
                 ) {
-                    HomeShoppingCard(
+                    io.loperilla.ui.HomeShoppingCard(
                         modifier = Modifier
                             .itemPadding()
-                    ){
-                        TextRegular(
+                    ) {
+                        io.loperilla.ui.text.TextRegular(
                             text = state.commerceList[it].name,
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -70,7 +70,7 @@ fun SelectCommerceScreen(
     }
 }
 
-@PIXEL_33_NIGHT
+@io.loperilla.ui.previews.PIXEL_33_NIGHT
 @Composable
 private fun SelectCommerceScreenPrev() {
     SelectCommerceScreen(

@@ -2,7 +2,6 @@ package io.loperilla.onboarding.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
 import io.loperilla.onboarding.navigator.Navigator
 import io.loperilla.onboarding.navigator.routes.Destination
 import io.loperilla.onboarding_domain.usecase.auth.LogoutUseCase
@@ -14,7 +13,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /*****
  * Project: HomeShopping
@@ -22,8 +20,8 @@ import javax.inject.Inject
  * Created By Manuel Lopera on 24/8/23 at 20:19
  * All rights reserved 2023
  */
-@HiltViewModel
-class HomeViewModel @Inject constructor(
+
+class HomeViewModel(
     private val commerceListUseCase: GetCommerceListUseCase,
     private val logoutUseCase: LogoutUseCase,
     private val navigator: Navigator

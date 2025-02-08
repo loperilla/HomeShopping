@@ -4,13 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import dagger.hilt.android.lifecycle.HiltViewModel
-import io.loperilla.core_ui.util.BitmapUtils.toByteArray
 import io.loperilla.onboarding.navigator.Navigator
 import io.loperilla.onboarding_domain.model.database.Commerce
 import io.loperilla.onboarding_domain.model.database.product.ProductDto
 import io.loperilla.onboarding_domain.usecase.commerce.GetCommerceListUseCase
 import io.loperilla.onboarding_domain.usecase.product.AddProductUseCase
+import io.loperilla.ui.util.BitmapUtils.toByteArray
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,7 +25,7 @@ import kotlinx.coroutines.launch
  * All rights reserved 2024
  */
 
-@HiltViewModel(assistedFactory = AddProductViewModelFactory::class)
+(assistedFactory = AddProductViewModelFactory::class)
 class AddProductViewModel @AssistedInject constructor(
     @Assisted private val commerce: Commerce,
     getAllCommerces: GetCommerceListUseCase,

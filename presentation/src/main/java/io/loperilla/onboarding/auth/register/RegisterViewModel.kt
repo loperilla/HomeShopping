@@ -2,7 +2,6 @@ package io.loperilla.onboarding.auth.register
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
 import io.loperilla.onboarding.navigator.Navigator
 import io.loperilla.onboarding.navigator.routes.Destination
 import io.loperilla.onboarding_domain.usecase.auth.RegisterUseCase
@@ -12,7 +11,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /*****
  * Project: CompraCasa
@@ -20,8 +18,8 @@ import javax.inject.Inject
  * Created By Manuel Lopera on 20/8/23 at 17:24
  * All rights reserved 2023
  */
-@HiltViewModel
-class RegisterViewModel @Inject constructor(
+
+class RegisterViewModel(
     private val registerUseCase: RegisterUseCase,
     private val navigator: Navigator
 ) : ViewModel() {

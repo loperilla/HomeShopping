@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "${MyConfiguration.baseProjectName}.core_ui"
-    compileSdk = MyConfiguration.configCompileSdkVersion
+    namespace = "io.loperilla.core_ui"
+    compileSdk = 35
 
     defaultConfig {
-        minSdk = MyConfiguration.configMinSdkVersion
+        minSdk = 26
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")

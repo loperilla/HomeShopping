@@ -7,7 +7,6 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import io.loperilla.onboarding_domain.repository.DataStoreKey
 import io.loperilla.onboarding_domain.repository.UserDataStore
 import kotlinx.coroutines.flow.first
-import javax.inject.Inject
 
 /*****
  * Project: CompraCasa
@@ -15,7 +14,7 @@ import javax.inject.Inject
  * Created By Manuel Lopera on 21/4/23 at 13:32
  * All rights reserved 2023
  */
-class UserDataStoreImpl @Inject constructor(
+class UserDataStoreImpl(
     private val context: Context
 ) : UserDataStore {
     private val TAG = UserDataStoreImpl::class.java.simpleName
