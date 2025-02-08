@@ -2,6 +2,9 @@ package io.loperilla.homeshopping
 
 import android.app.Application
 import io.loperilla.data.di.dataModule
+import io.loperilla.data.di.loginDataModule
+import io.loperilla.presentation.di.loginViewModelModule
+import io.loperilla.ui.di.uiModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
 
@@ -17,7 +20,10 @@ class App : Application() {
         startKoin {
             androidContext(this@App)
             modules(
-                dataModule
+                dataModule,
+                uiModule,
+                loginDataModule,
+                loginViewModelModule
             )
         }
     }

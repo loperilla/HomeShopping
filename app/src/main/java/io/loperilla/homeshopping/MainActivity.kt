@@ -3,8 +3,12 @@ package io.loperilla.homeshopping
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import io.loperilla.onboarding.navigator.Navigator
+import io.loperilla.designsystem.composables.Screen
+import io.loperilla.ui.navigator.Navigator
+import org.koin.android.ext.android.inject
+import org.koin.androidx.compose.koinViewModel
 
 /*****
  * Project: HomeShopping
@@ -14,13 +18,15 @@ import io.loperilla.onboarding.navigator.Navigator
  */
 
 class MainActivity : ComponentActivity() {
-    lateinit var navigator: Navigator
-
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
-            io.loperilla.ui.Screen {
+            Screen {
+                val navigator : Navigator by inject()
+                val viewModel: MainActivityViewModel = koinViewModel()
+
 //                val viewModel: MainActivityViewModel = koinViewModel()
 //                val uiState: SplashUIState by viewModel.splashUiState.collectAsStateWithLifecycle()
 //

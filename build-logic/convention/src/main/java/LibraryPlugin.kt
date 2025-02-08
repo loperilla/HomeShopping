@@ -2,6 +2,7 @@ import com.android.build.api.dsl.LibraryExtension
 import io.loperilla.convention.utils.ExtensionType
 import io.loperilla.convention.utils.configureBuildTypes
 import io.loperilla.convention.utils.configureKotlinAndroid
+import io.loperilla.convention.utils.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -38,7 +39,7 @@ class LibraryPlugin : Plugin<Project> {
             }
 
             dependencies {
-
+                "implementation"(target.libs.findBundle("koin").get())
             }
         }
     }

@@ -8,5 +8,7 @@ android {
 
 dependencies {
     implementation(libs.bundles.compose)
+    implementation(libs.bundles.koin)
     implementation(projects.core.domain)
+    implementation(libs.kotlinx.serialization.json)
 }

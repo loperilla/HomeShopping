@@ -3,6 +3,8 @@ package io.loperilla.data.di
 import androidx.room.Room
 import io.loperilla.data.database.HomeShoppingDatabase
 import io.loperilla.data.database.dao.QueryDao
+import io.loperilla.data.network.AuthRepositoryImpl
+import io.loperilla.domain.repository.AuthRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
@@ -23,4 +25,5 @@ val dataModule = module {
             ).build()
     }
     factory<QueryDao> { get<HomeShoppingDatabase>().queryDao() }
+    single<AuthRepository> { AuthRepositoryImpl(get()) }
 }

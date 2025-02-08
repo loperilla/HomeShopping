@@ -2,10 +2,6 @@ package io.loperilla.homeshopping
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.loperilla.onboarding.navigator.Navigator
-import io.loperilla.onboarding.navigator.routes.Destination
-import io.loperilla.onboarding_domain.model.SplashUIState
-import io.loperilla.onboarding_domain.usecase.auth.SplashUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

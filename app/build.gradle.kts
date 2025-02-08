@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.loperilla.application.compose)
+
 }
 
 android {
@@ -17,14 +18,10 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.lifecycle.runtime.ktx)
 
-    implementation(project(":domain"))
-    implementation(project(":data"))
-    implementation(project(":presentation"))
-
     // Compose
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
-    implementation(libs.bundles.koin)
+    implementation(libs.bundles.koin.compose)
     implementation(libs.splashscreen)
     implementation(libs.timber)
 
@@ -43,6 +40,13 @@ dependencies {
 
     // project
     core()
+    login()
+}
+
+fun DependencyHandlerScope.login() {
+    implementation(projects.login.data)
+    implementation(projects.login.domain)
+    implementation(projects.login.presentation)
 }
 
 fun DependencyHandlerScope.core() {

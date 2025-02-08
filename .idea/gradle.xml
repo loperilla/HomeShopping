@@ -31,13 +31,10 @@
             <option value="$PROJECT_DIR$/core/presentation" />
             <option value="$PROJECT_DIR$/core/presentation/designsystem" />
             <option value="$PROJECT_DIR$/core/presentation/ui" />
-            <option value="$PROJECT_DIR$/data" />
-            <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/login" />
             <option value="$PROJECT_DIR$/login/data" />
             <option value="$PROJECT_DIR$/login/domain" />
             <option value="$PROJECT_DIR$/login/presentation" />
-            <option value="$PROJECT_DIR$/presentation" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

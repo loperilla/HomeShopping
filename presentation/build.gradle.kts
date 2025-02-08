@@ -48,7 +48,6 @@ composeCompiler {
 }
 
 dependencies {
-    implementation(project(":domain"))
 
     //Runtime
     implementation(libs.lifecycle.runtime.ktx)
