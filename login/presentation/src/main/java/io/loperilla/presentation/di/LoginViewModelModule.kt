@@ -1,7 +1,7 @@
 package io.loperilla.presentation.di
 
 import io.loperilla.presentation.LoginViewModel
-import org.koin.core.module.dsl.viewModel
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 /*****
@@ -12,5 +12,5 @@ import org.koin.dsl.module
  */
 
 val loginViewModelModule = module {
-    viewModel { LoginViewModel(get(), get()) }
+    viewModelOf(::LoginViewModel)
 }

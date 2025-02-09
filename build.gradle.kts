@@ -2,6 +2,12 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import nl.littlerobots.vcu.plugin.versionCatalogUpdate
 
+buildscript {
+    dependencies {
+        classpath(libs.google.services)
+        classpath(libs.crashlytics.gradle)
+    }
+}
 plugins {
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.androidLibrary) apply false

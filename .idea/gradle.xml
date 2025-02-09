@@ -35,6 +35,8 @@
             <option value="$PROJECT_DIR$/login/data" />
             <option value="$PROJECT_DIR$/login/domain" />
             <option value="$PROJECT_DIR$/login/presentation" />
+            <option value="$PROJECT_DIR$/welcome" />
+            <option value="$PROJECT_DIR$/welcome/presentation" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

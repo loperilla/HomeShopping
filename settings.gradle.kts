@@ -26,7 +26,6 @@ dependencyResolutionManagement {
 rootProject.name = "HomeShopping"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
-//include(":data")
 //include(":domain")
 //include(":presentation")
 include(":core:data")
@@ -36,3 +35,4 @@ include(":core:presentation:designsystem")
 include(":login:presentation")
 include(":login:domain")
 include(":login:data")
+include(":welcome:presentation")

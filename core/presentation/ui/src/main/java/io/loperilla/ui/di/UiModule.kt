@@ -2,6 +2,8 @@ package io.loperilla.ui.di
 
 import io.loperilla.ui.navigator.DefaultNavigator
 import io.loperilla.ui.navigator.Navigator
+import io.loperilla.ui.snackbar.SnackbarController
+import io.loperilla.ui.snackbar.SnackbarControllerImpl
 import org.koin.dsl.module
 
 /*****
@@ -13,4 +15,5 @@ import org.koin.dsl.module
 
 val uiModule = module {
     single<Navigator> { DefaultNavigator() }
+    single<SnackbarController> { SnackbarControllerImpl() }
 }

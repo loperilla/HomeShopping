@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import io.loperilla.designsystem.composables.Screen
 import io.loperilla.ui.navigator.Navigator
+import io.loperilla.ui.snackbar.SnackbarController
 import org.koin.android.ext.android.inject
 
 /*****
@@ -24,6 +25,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Screen {
                 val navigator : Navigator by inject()
+                val snackbarManager : SnackbarController by inject()
 
 //                val viewModel: MainActivityViewModel = koinViewModel()
 //                val uiState: SplashUIState by viewModel.splashUiState.collectAsStateWithLifecycle()
@@ -34,9 +36,10 @@ class MainActivity : ComponentActivity() {
 //                        else -> false
 //                    }
 //                }
-//                AppNavigation(
-//                    navigator
-//                )
+                AppNavigation(
+                    navigator,
+                    snackbarManager
+                )
             }
         }
     }

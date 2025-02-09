@@ -1,9 +1,11 @@
 package io.loperilla.homeshopping
 
 import android.app.Application
+import com.google.firebase.FirebaseApp
 import io.loperilla.data.di.dataModule
 import io.loperilla.data.di.loginDataModule
 import io.loperilla.presentation.di.loginViewModelModule
+import io.loperilla.splash.presentation.di.welcomeViewModelModule
 import io.loperilla.ui.di.uiModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
@@ -17,13 +19,15 @@ import org.koin.core.context.GlobalContext.startKoin
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
+        FirebaseApp.initializeApp(this)
         startKoin {
             androidContext(this@App)
             modules(
                 dataModule,
                 uiModule,
                 loginDataModule,
-                loginViewModelModule
+                loginViewModelModule,
+                welcomeViewModelModule
             )
         }
     }

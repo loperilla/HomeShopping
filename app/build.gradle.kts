@@ -39,7 +39,11 @@ dependencies {
 
     // project
     core()
+    welcome()
     login()
+}
+fun DependencyHandlerScope.welcome() {
+    implementation(projects.welcome.presentation)
 }
 
 fun DependencyHandlerScope.login() {

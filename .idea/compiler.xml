@@ -6,6 +6,7 @@
       <module name="HomeShopping.data" target="21" />
       <module name="HomeShopping.domain" target="21" />
       <module name="HomeShopping.presentation" target="21" />
+      <module name="HomeShopping.splash.presentation" target="21" />
     </bytecodeTargetLevel>
   </component>
 </project>

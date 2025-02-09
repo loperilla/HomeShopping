@@ -1,6 +1,9 @@
 package io.loperilla.data.di
 
 import androidx.room.Room
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import io.loperilla.data.database.HomeShoppingDatabase
 import io.loperilla.data.database.dao.QueryDao
 import io.loperilla.data.network.AuthRepositoryImpl
@@ -25,5 +28,8 @@ val dataModule = module {
             ).build()
     }
     factory<QueryDao> { get<HomeShoppingDatabase>().queryDao() }
-    single<AuthRepository> { AuthRepositoryImpl(get()) }
+    single<FirebaseAuth> { Firebase.auth }
+    single<AuthRepository> {
+        AuthRepositoryImpl(get())
+    }
 }
