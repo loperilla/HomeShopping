@@ -12,14 +12,13 @@ sealed class DomainResult<T> {
 }
 
 sealed class DomainError(
-    val code: Int? = null,
     val message: String? = null
 ) {
-    data class NetworkError(val apiCodeError: Int, val apiErrorMessage: String?) :
-        DomainError(apiCodeError, apiErrorMessage)
+    data class EmailAlreadyInUse(val throwable: Throwable? = null) :
+        DomainError(throwable?.message ?: "")
 
     data class UnknownError(val throwable: Throwable? = null) :
-        DomainError(null, throwable?.message ?: "")
+        DomainError(throwable?.message ?: "")
 }
 
 val <T> DomainResult<T>.isSuccess: Boolean

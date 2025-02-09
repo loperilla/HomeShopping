@@ -1,6 +1,8 @@
 package io.loperilla.homeshopping
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
@@ -13,8 +15,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import io.loperilla.designsystem.composables.TransparentScaffold
 import io.loperilla.presentation.LoginScreen
 import io.loperilla.presentation.LoginViewModel
+import io.loperilla.presentation.RegisterScreen
+import io.loperilla.presentation.RegisterViewModel
 import io.loperilla.splash.presentation.WelcomeScreen
 import io.loperilla.splash.presentation.WelcomeViewModel
 import io.loperilla.ui.navigator.Navigator
@@ -39,27 +44,62 @@ fun AppNavigation(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ) {
-    snackbarManager(snackbarController)
     navigatorManager(navigator, navController)
+    val snackbarHost = remember { SnackbarHostState() }
+    val coroutine = rememberCoroutineScope()
 
-    NavHost(
-        navController = navController,
-        startDestination = navigator.startDestination,
-        modifier = modifier
-    ) {
-        composable<Destination.Welcome> {
-            val viewModel = koinViewModel<WelcomeViewModel>()
-            WelcomeScreen(
-                onEvent = viewModel::onEvent
+    ObserveAsEvents(flow = snackbarController.events, snackbarHost) { event ->
+        coroutine.launch {
+            snackbarHost.currentSnackbarData?.dismiss()
+            val result = snackbarHost.showSnackbar(
+                message = event.message,
+                actionLabel = event.actionLabel?.name,
+                duration = SnackbarDuration.Long
+            )
+
+            if (result == SnackbarResult.ActionPerformed) {
+                event.actionLabel?.action?.invoke()
+            }
+        }
+    }
+    TransparentScaffold(
+        modifier = modifier,
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarHost
             )
         }
-        composable<Destination.Login> {
-            val viewModel = koinViewModel<LoginViewModel>()
-            val state by viewModel.stateFlow.collectAsStateWithLifecycle()
-            LoginScreen(
-                state = state,
-                onEvent = viewModel::onEvent
-            )
+    ) {
+
+        NavHost(
+            navController = navController,
+            startDestination = navigator.startDestination,
+            modifier = Modifier
+                .padding(it)
+        ) {
+            composable<Destination.Welcome> {
+                val viewModel = koinViewModel<WelcomeViewModel>()
+                WelcomeScreen(
+                    onEvent = viewModel::onEvent
+                )
+            }
+            composable<Destination.Login> {
+                val viewModel = koinViewModel<LoginViewModel>()
+                val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+                LoginScreen(
+                    state = state,
+                    onEvent = viewModel::onEvent
+                )
+            }
+
+            composable<Destination.Register> {
+                val viewModel = koinViewModel<RegisterViewModel>()
+                val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+                RegisterScreen(
+                    state = state,
+                    onEvent = viewModel::onEvent
+                )
+            }
         }
     }
 }
@@ -78,27 +118,6 @@ private fun navigatorManager(
             }
 
             NavigationAction.NavigateUp -> navController.navigateUp()
-        }
-    }
-}
-
-@Composable
-private fun snackbarManager(snackbarController: SnackbarController) {
-    val snackbarHost = remember { SnackbarHostState() }
-    val coroutine = rememberCoroutineScope()
-
-    ObserveAsEvents(flow = snackbarController.events) { event ->
-        coroutine.launch {
-            snackbarHost.currentSnackbarData?.dismiss()
-            val result = snackbarHost.showSnackbar(
-                message = event.message,
-                actionLabel = event.actionLabel?.name,
-                duration = SnackbarDuration.Long
-            )
-
-            if (result == SnackbarResult.ActionPerformed) {
-                event.actionLabel?.action?.invoke()
-            }
         }
     }
 }

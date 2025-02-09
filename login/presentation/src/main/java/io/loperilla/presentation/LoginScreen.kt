@@ -57,7 +57,7 @@ fun LoginScreen(
     ) {
         MediumSpacer()
         Image(
-            painter = painterResource(mipmap.home_shopping_logo_foreground),
+            painter = painterResource(mipmap.brand),
             contentDescription = "Application logo",
             modifier = modifier
                 .size(100.dp)

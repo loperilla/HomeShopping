@@ -40,8 +40,11 @@ dependencies {
     // project
     core()
     welcome()
+    register()
     login()
 }
+
+
 fun DependencyHandlerScope.welcome() {
     implementation(projects.welcome.presentation)
 }
@@ -50,6 +53,12 @@ fun DependencyHandlerScope.login() {
     implementation(projects.login.data)
     implementation(projects.login.domain)
     implementation(projects.login.presentation)
+}
+
+fun DependencyHandlerScope.register() {
+    implementation(projects.register.data)
+    implementation(projects.register.domain)
+    implementation(projects.register.presentation)
 }
 
 fun DependencyHandlerScope.core() {

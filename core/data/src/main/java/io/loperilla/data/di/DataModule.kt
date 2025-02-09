@@ -9,6 +9,8 @@ import io.loperilla.data.database.dao.QueryDao
 import io.loperilla.data.network.AuthRepositoryImpl
 import io.loperilla.domain.repository.AuthRepository
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 /*****
@@ -29,7 +31,5 @@ val dataModule = module {
     }
     factory<QueryDao> { get<HomeShoppingDatabase>().queryDao() }
     single<FirebaseAuth> { Firebase.auth }
-    single<AuthRepository> {
-        AuthRepositoryImpl(get())
-    }
+    singleOf(::AuthRepositoryImpl).bind(AuthRepository::class)
 }

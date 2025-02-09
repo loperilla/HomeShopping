@@ -1,6 +1,7 @@
 package io.loperilla.data.network
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
 import io.loperilla.domain.model.DomainError
 import io.loperilla.domain.model.DomainResult
 import io.loperilla.domain.repository.AuthRepository
@@ -37,6 +38,10 @@ class AuthRepositoryImpl(
             } else {
                 DomainResult.Error(DomainError.UnknownError())
             }
+        } catch (ex: FirebaseAuthException) {
+            ex.printStackTrace()
+            val domainError = getDomainErrorByFirebaseException(ex.errorCode)
+            DomainResult.Error(domainError)
         } catch (ex: Exception) {
             ex.printStackTrace()
             DomainResult.Error(DomainError.UnknownError(ex))
@@ -62,6 +67,13 @@ class AuthRepositoryImpl(
         } catch (ex: Exception) {
             ex.printStackTrace()
             DomainResult.Error(DomainError.UnknownError(ex))
+        }
+    }
+
+    private fun getDomainErrorByFirebaseException(errorCode: String): DomainError {
+        return when (errorCode) {
+            FIREBASE_AUTH_ERROR_EMAIL_ALREADY_IN_USE -> DomainError.EmailAlreadyInUse()
+            else -> DomainError.UnknownError()
         }
     }
 }

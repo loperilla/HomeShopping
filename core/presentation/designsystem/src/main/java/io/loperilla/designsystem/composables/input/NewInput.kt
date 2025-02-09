@@ -102,6 +102,7 @@ fun PasswordInput(
     placeholderText: String = "",
     labelText: String = "CONTRASEÑA",
     imeAction: ImeAction = ImeAction.Default,
+    onKeyBoardNextAction: () -> Unit = {},
     onKeyBoardDoneAction: () -> Unit = {}
 ) {
     var isPasswordVisible by rememberSaveable { mutableStateOf(false) }
@@ -115,6 +116,7 @@ fun PasswordInput(
         uiError = UiError("Ingresa una contraseña segura", !text.isValidPassword),
         imeAction = imeAction,
         modifier = modifier,
+        onKeyBoardNextAction = onKeyBoardNextAction,
         onKeyBoardDoneAction = onKeyBoardDoneAction,
         leadingIcon = {
             Icon(imageVector = Icons.Filled.Password, contentDescription = "passwordIcon")
