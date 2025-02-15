@@ -2,6 +2,8 @@ package io.loperilla.presentation
 
 import io.loperilla.designsystem.Email
 import io.loperilla.designsystem.Password
+import io.loperilla.designsystem.isValidEmail
+import io.loperilla.designsystem.isValidPassword
 
 /*****
  * Project: HomeShopping
@@ -12,5 +14,6 @@ import io.loperilla.designsystem.Password
 data class LoginState(
     val emailInputValue: Email = "",
     val passwordInputValue: Password = "",
-    val showSnackbarError: Boolean = false,
-)
+) {
+    val isValidForm = emailInputValue.isValidEmail && passwordInputValue.isValidPassword
+}

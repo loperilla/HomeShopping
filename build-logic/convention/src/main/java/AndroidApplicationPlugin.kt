@@ -27,6 +27,8 @@ class AndroidApplicationPlugin : Plugin<Project> {
                 apply("com.google.devtools.ksp")
                 apply("org.jetbrains.kotlin.android")
                 apply("org.jetbrains.kotlin.plugin.serialization")
+                apply("com.google.gms.google-services")
+                apply("com.google.firebase.crashlytics")
             }
             extensions.configure<ApplicationExtension> {
                 compileSdk = configCompileSdkVersion

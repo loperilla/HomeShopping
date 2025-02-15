@@ -27,7 +27,7 @@ fun Project.configureBuildTypes(
                 extensions.configure<ApplicationExtension> {
                     buildTypes {
                         debug {
-
+                            applicationIdSuffix = ".dev"
                         }
                         release {
                             configureReleaseBuildType(commonExtension)

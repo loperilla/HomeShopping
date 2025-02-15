@@ -30,7 +30,7 @@ interface Navigator {
 }
 
 class DefaultNavigator : Navigator {
-    override var startDestination: Destination = Destination.Home
+    override var startDestination: Destination = Destination.Welcome
     private val _navigationActions = Channel<NavigationAction>()
     override val navigationActions = _navigationActions.receiveAsFlow()
 

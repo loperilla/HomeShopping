@@ -2,6 +2,8 @@ package io.loperilla.data.di
 
 import io.loperilla.data.LoginRepositoryImpl
 import io.loperilla.domain.usecase.LoginRepository
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 /*****
@@ -12,5 +14,5 @@ import org.koin.dsl.module
  */
 
 val loginDataModule = module {
-    single <LoginRepository> { LoginRepositoryImpl(get()) }
+    singleOf(::LoginRepositoryImpl).bind(LoginRepository::class)
 }

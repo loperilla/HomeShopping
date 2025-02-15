@@ -4,10 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.loperilla.designsystem.composables.Screen
 import io.loperilla.ui.navigator.Navigator
+import io.loperilla.ui.snackbar.SnackbarController
 import org.koin.android.ext.android.inject
+import org.koin.androidx.compose.koinViewModel
 
 /*****
  * Project: HomeShopping
@@ -24,19 +28,24 @@ class MainActivity : ComponentActivity() {
         setContent {
             Screen {
                 val navigator : Navigator by inject()
+                val snackbarManager : SnackbarController by inject()
 
-//                val viewModel: MainActivityViewModel = koinViewModel()
-//                val uiState: SplashUIState by viewModel.splashUiState.collectAsStateWithLifecycle()
-//
-//                splashScreen.setKeepOnScreenCondition {
-//                    when (uiState) {
-//                        SplashUIState.Loading -> true
-//                        else -> false
-//                    }
-//                }
-//                AppNavigation(
-//                    navigator
-//                )
+                val viewModel: MainActivityViewModel = koinViewModel()
+                val uiState: SplashState by viewModel.stateFlow.collectAsStateWithLifecycle()
+
+                splashScreen.setKeepOnScreenCondition {
+                    when (uiState) {
+                        SplashState.Loading -> true
+                        else -> {
+
+                            false
+                        }
+                    }
+                }
+                AppNavigation(
+                    navigator,
+                    snackbarManager
+                )
             }
         }
     }

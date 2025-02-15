@@ -1,5 +1,6 @@
 package io.loperilla.designsystem.composables.spacers
 
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -33,5 +34,14 @@ fun MediumSpacer(
         modifier = modifier
             .fillMaxWidth()
             .height(16.dp)
+    )
+}
+
+@Composable
+fun ColumnScope.FullWeightSpacer(modifier: Modifier = Modifier) {
+    Spacer(
+        modifier = modifier
+            .fillMaxWidth()
+            .weight(1f)
     )
 }

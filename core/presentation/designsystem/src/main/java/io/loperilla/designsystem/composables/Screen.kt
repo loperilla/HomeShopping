@@ -38,8 +38,8 @@ fun Screen(
                 .fillMaxSize()
                 .background(
                     brush = Brush.verticalGradient(
-                        0.0f to MaterialTheme.colorScheme.background,
-                        1.0f to MaterialTheme.colorScheme.primary,
+                        0.0f to MaterialTheme.colorScheme.primary,
+                        1.0f to MaterialTheme.colorScheme.onPrimary,
                         startY = 0.0f,
                         endY = 1500.0f
                     )
