@@ -5,6 +5,7 @@ import com.google.firebase.FirebaseApp
 import io.loperilla.data.di.dataModule
 import io.loperilla.data.di.loginDataModule
 import io.loperilla.data.di.registerDataModule
+import io.loperilla.homeshopping.di.mainActivityModule
 import io.loperilla.presentation.di.loginViewModelModule
 import io.loperilla.presentation.di.registerViewModelModule
 import io.loperilla.splash.presentation.di.welcomeViewModelModule
@@ -25,6 +26,7 @@ class App : Application() {
         FirebaseApp.initializeApp(this)
         startKoin {
             androidContext(this@App)
+            modules(mainActivityModule)
             modules(
                 welcomeViewModelModule
             )

@@ -106,6 +106,17 @@ fun LoginScreen(
                 .fillMaxWidth()
                 .padding(8.dp)
         )
+
+        FormButton(
+            textButton = "No tengo cuenta",
+            enableButton = true,
+            onClickButton = {
+                onEvent(LoginEvent.RegisterButtonClicked)
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        )
     }
 }
 
