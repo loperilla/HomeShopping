@@ -1,23 +1,20 @@
 [versions]
 accompanist_version = "0.36.0"
-agp = "8.8.0"
+agp = "8.8.1"
 android-junit5 = "1.11.2.0"
-androidTools = "31.8.0"
+androidTools = "31.8.1"
 androidx-activity = "1.10.0"
 androidx-lifecycle = "2.8.7"
 androidx-test-espresso = "3.6.1"
 androidx-test-ext = "1.2.1"
-appcompat-version = "1.7.0"
 camerax_version = "1.4.1"
 coil = "2.7.0"
-core-ktx-version = "1.15.0"
 jupiter-junit = "5.11.4"
 koin = "4.0.2"
 kotlin = "2.1.10"
 kotlinxSerializationJsonVersion = "1.8.0"
 ksp = "2.1.10-1.0.29"
-material-version = "1.12.0"
-nav-version = "2.8.6"
+nav-version = "2.8.7"
 room-version = "2.6.1"
 
 [libraries]
@@ -41,10 +38,10 @@ camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = 
 camera-view = { module = "androidx.camera:camera-view", version.ref = "camerax_version" }
 camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camerax_version" }
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
-compose-bom = "androidx.compose:compose-bom:2025.01.01"
+compose-bom = "androidx.compose:compose-bom:2025.02.00"
 compose-constraint = "androidx.constraintlayout:constraintlayout-compose:1.1.0"
 compose-material3 = "androidx.compose.material3:material3:1.3.1"
-compose-material_icons_extends = "androidx.compose.material:material-icons-extended:1.7.7"
+compose-material_icons_extends = "androidx.compose.material:material-icons-extended:1.7.8"
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "nav-version" }
 compose-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 compose-ui = { module = "androidx.compose.ui:ui" }
