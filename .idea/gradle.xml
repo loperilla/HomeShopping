@@ -31,6 +31,10 @@
             <option value="$PROJECT_DIR$/core/presentation" />
             <option value="$PROJECT_DIR$/core/presentation/designsystem" />
             <option value="$PROJECT_DIR$/core/presentation/ui" />
+            <option value="$PROJECT_DIR$/home" />
+            <option value="$PROJECT_DIR$/home/data" />
+            <option value="$PROJECT_DIR$/home/domain" />
+            <option value="$PROJECT_DIR$/home/presentation" />
             <option value="$PROJECT_DIR$/login" />
             <option value="$PROJECT_DIR$/login/data" />
             <option value="$PROJECT_DIR$/login/domain" />

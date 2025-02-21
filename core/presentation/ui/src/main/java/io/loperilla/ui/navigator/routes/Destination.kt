@@ -11,6 +11,8 @@ import kotlinx.serialization.Serializable
 
 sealed interface Destination {
     @Serializable
+    data object AuthGraph : Destination
+    @Serializable
     data object Welcome : Destination
     @Serializable
     data object Login : Destination
