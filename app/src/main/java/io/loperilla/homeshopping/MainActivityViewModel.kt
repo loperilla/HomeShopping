@@ -43,7 +43,7 @@ class MainActivityViewModel(
         )
 
     private fun onErrorRefresh() = viewModelScope.launch {
-        navigator.navigate(Destination.Welcome)
+        navigator.navigate(Destination.AuthGraph)
         _stateFlow.update {
             SplashState.NavigateToRegister
         }

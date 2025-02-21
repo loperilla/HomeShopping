@@ -3,8 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "io.loperilla.login.data"
-
+    namespace = "io.loperilla.home.data"
 }
 
 dependencies {

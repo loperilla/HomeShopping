@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "io.loperilla.login.presentation"
+    namespace = "io.loperilla.home.presentation"
 }
 
 dependencies {

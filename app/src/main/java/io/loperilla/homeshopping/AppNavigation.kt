@@ -73,7 +73,6 @@ fun AppNavigation(
             )
         }
     ) {
-
         NavHost(
             navController = navController,
             startDestination = navigator.startDestination,
