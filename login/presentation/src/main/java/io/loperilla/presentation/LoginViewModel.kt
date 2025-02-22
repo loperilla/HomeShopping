@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.loperilla.domain.model.DomainError
 import io.loperilla.domain.model.fold
-import io.loperilla.domain.usecase.LoginRepository
+import io.loperilla.domain.usecase.DoLoginUseCase
 import io.loperilla.ui.navigator.Navigator
 import io.loperilla.ui.navigator.routes.Destination
 import io.loperilla.ui.snackbar.SnackbarAction
@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
  * All rights reserved 2025
  */
 class LoginViewModel(
-    private val repository: LoginRepository,
+    private val doLoginUseCase: DoLoginUseCase,
     private val navigator: Navigator,
     private val snackbarController: SnackbarController
 ) : ViewModel() {
@@ -58,7 +58,7 @@ class LoginViewModel(
     }
 
     private fun loginButtonClicked() = viewModelScope.launch(Dispatchers.IO) {
-        repository.doLogin(
+        doLoginUseCase(
             email = stateFlow.value.emailInputValue,
             password = stateFlow.value.passwordInputValue
         ).fold(

@@ -51,13 +51,11 @@ fun DependencyHandlerScope.welcome() {
 }
 
 fun DependencyHandlerScope.login() {
-    implementation(projects.login.data)
     implementation(projects.login.domain)
     implementation(projects.login.presentation)
 }
 
 fun DependencyHandlerScope.register() {
-    implementation(projects.register.data)
     implementation(projects.register.domain)
     implementation(projects.register.presentation)
 }

@@ -1,4 +1,4 @@
-package io.loperilla.data.database.entities
+package io.loperilla.data.local.database.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -1,9 +1,11 @@
-package io.loperilla.data.database
+package io.loperilla.data.local.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import io.loperilla.data.database.dao.QueryDao
-import io.loperilla.data.database.entities.QueryEntity
+import io.loperilla.data.local.database.dao.QueryDao
+import io.loperilla.data.local.database.dao.UserDao
+import io.loperilla.data.local.database.entities.QueryEntity
+import io.loperilla.data.local.database.entities.UserEntity
 
 /*****
  * Project: HomeShopping
@@ -13,10 +15,12 @@ import io.loperilla.data.database.entities.QueryEntity
  */
 @Database(
     entities = [
-        QueryEntity::class
+        QueryEntity::class,
+        UserEntity::class
     ],
     version = 1
 )
 abstract class HomeShoppingDatabase : RoomDatabase() {
     abstract fun queryDao(): QueryDao
+    abstract fun userDao(): UserDao
 }

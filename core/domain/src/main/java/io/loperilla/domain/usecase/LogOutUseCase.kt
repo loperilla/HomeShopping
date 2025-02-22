@@ -1,6 +1,7 @@
 package io.loperilla.domain.usecase
 
 import io.loperilla.domain.repository.AuthRepository
+import io.loperilla.domain.repository.LocalDataRepository
 
 /*****
  * Project: HomeShopping
@@ -9,7 +10,11 @@ import io.loperilla.domain.repository.AuthRepository
  * All rights reserved 2025
  */
 class LogOutUseCase(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val localDataRepository: LocalDataRepository
 ) {
-    suspend operator fun invoke() = authRepository.doLogout()
+    suspend operator fun invoke() {
+        authRepository.doLogout()
+        localDataRepository.clearUser()
+    }
 }

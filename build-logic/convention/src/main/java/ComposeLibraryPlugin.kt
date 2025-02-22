@@ -16,7 +16,6 @@ class ComposeLibraryPlugin : Plugin<Project> {
             pluginManager.run {
                 apply("homeshopping.android.library")
                 apply("org.jetbrains.kotlin.plugin.compose")
-                apply("org.jetbrains.kotlin.plugin.compose")
                 apply("org.jetbrains.kotlin.plugin.serialization")
             }
 

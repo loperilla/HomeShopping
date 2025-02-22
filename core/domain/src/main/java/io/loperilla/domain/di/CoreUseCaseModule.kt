@@ -1,5 +1,6 @@
 package io.loperilla.domain.di
 
+import io.loperilla.domain.usecase.GetCurrentUserUseCase
 import io.loperilla.domain.usecase.LogOutUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
@@ -13,4 +14,5 @@ import org.koin.dsl.module
 
 val coreUseCaseModule = module {
     factoryOf(::LogOutUseCase)
+    factoryOf(::GetCurrentUserUseCase)
 }

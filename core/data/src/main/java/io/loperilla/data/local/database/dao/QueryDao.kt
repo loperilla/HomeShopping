@@ -1,11 +1,11 @@
-package io.loperilla.data.database.dao
+package io.loperilla.data.local.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import io.loperilla.data.database.entities.QueryEntity
+import io.loperilla.data.local.database.entities.QueryEntity
 import kotlinx.coroutines.flow.Flow
 
 /*****

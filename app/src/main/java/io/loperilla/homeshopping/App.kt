@@ -3,9 +3,9 @@ package io.loperilla.homeshopping
 import android.app.Application
 import com.google.firebase.FirebaseApp
 import io.loperilla.data.di.dataModule
-import io.loperilla.data.di.loginDataModule
-import io.loperilla.data.di.registerDataModule
 import io.loperilla.domain.di.coreUseCaseModule
+import io.loperilla.domain.di.registerUseCaseModule
+import io.loperilla.domain.usecase.di.loginUseCaseModule
 import io.loperilla.homeshopping.di.mainActivityModule
 import io.loperilla.presentation.di.homeViewModelModule
 import io.loperilla.presentation.di.loginViewModelModule
@@ -40,9 +40,9 @@ class App : Application() {
     }
 
     private fun getCoreModules(): List<Module> = listOf(dataModule, coreUseCaseModule, uiModule)
-    private fun getLoginModules(): List<Module> = listOf(loginDataModule, loginViewModelModule)
+    private fun getLoginModules(): List<Module> = listOf(loginUseCaseModule, loginViewModelModule)
     private fun getRegisterModules(): List<Module> =
-        listOf(registerDataModule, registerViewModelModule)
+        listOf(registerUseCaseModule, registerViewModelModule)
 
     private fun getHomeModules(): List<Module> = listOf(homeViewModelModule)
 }

@@ -2,6 +2,7 @@ package io.loperilla.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import io.loperilla.domain.usecase.GetLastShoppingListUseCase
 import io.loperilla.domain.usecase.LogOutUseCase
 import io.loperilla.ui.navigator.Navigator
 import io.loperilla.ui.navigator.routes.Destination
@@ -22,12 +23,12 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     private val navigator: Navigator,
     private val logOutUseCase: LogOutUseCase,
-    //private val getLastHomeShoppingListUseCase: GetLastHomeShoppingListUseCase
+    private val getLastHomeShoppingListUseCase: GetLastShoppingListUseCase
 ): ViewModel() {
     private var _stateFlow: MutableStateFlow<HomeState> = MutableStateFlow(HomeState())
     val stateFlow: StateFlow<HomeState> = _stateFlow
         .onStart {
-
+            initState()
         }
         .stateIn(
             viewModelScope,
@@ -40,6 +41,10 @@ class HomeViewModel(
             HomeEvent.LogOut -> onLogOutClicked()
 
         }
+    }
+
+    private fun initState() = viewModelScope.launch {
+//        getLastHomeShoppingListUseCase()
     }
 
     private fun onLogOutClicked() = viewModelScope.launch(Dispatchers.IO) {
