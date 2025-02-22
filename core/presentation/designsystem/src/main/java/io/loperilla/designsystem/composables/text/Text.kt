@@ -13,9 +13,9 @@ import io.loperilla.designsystem.TextBodySize
 import io.loperilla.designsystem.TextSmallSize
 import io.loperilla.designsystem.TextTitleSize
 import io.loperilla.designsystem.composables.Screen
-import io.loperilla.designsystem.composables.previews.PIXEL_33_NIGHT
 import io.loperilla.designsystem.composables.spacers.LowSpacer
 import io.loperilla.designsystem.myFontFamily
+import io.loperilla.designsystem.previews.PIXEL_33_NIGHT
 
 /*****
  * Project: HomeShopping

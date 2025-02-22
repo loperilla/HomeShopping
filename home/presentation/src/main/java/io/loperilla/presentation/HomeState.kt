@@ -1,5 +1,8 @@
 package io.loperilla.presentation
 
+import io.loperilla.domain.model.ShoppingList
+import io.loperilla.domain.model.User
+
 /*****
  * Project: HomeShopping
  * From: io.loperilla.presentation
@@ -7,5 +10,12 @@ package io.loperilla.presentation
  * All rights reserved 2025
  */
 data class HomeState(
-    val isLoading: Boolean = true
-)
+    val isLoading: Boolean = true,
+    val lastShoppingList: ShoppingList? = null,
+    val currentUser: User? = null
+) {
+    val showNotExistLastShoppingList: Boolean = !isLoading && lastShoppingList == null
+    val showUserIncompleteUser: Boolean = !isLoading && currentUser?.photoUrl == null
+
+    val userName = currentUser?.name ?: ""
+}

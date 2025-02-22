@@ -35,11 +35,11 @@ import io.loperilla.designsystem.Email
 import io.loperilla.designsystem.Password
 import io.loperilla.designsystem.TextSmallSize
 import io.loperilla.designsystem.composables.Screen
-import io.loperilla.designsystem.composables.previews.PIXEL_33_NIGHT
 import io.loperilla.designsystem.composables.text.TextSemiBold
 import io.loperilla.designsystem.composables.text.TextThin
 import io.loperilla.designsystem.isValidEmail
 import io.loperilla.designsystem.isValidPassword
+import io.loperilla.designsystem.previews.PIXEL_33_NIGHT
 
 /*****
  * Project: HomeShopping

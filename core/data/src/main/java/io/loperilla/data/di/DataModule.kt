@@ -30,28 +30,6 @@ import org.koin.dsl.module
  */
 
 val dataModule = module {
-    includes(databaseModule)
-    includes(authModule)
-    includes(firestoreModule)
-    includes(repositoryModule)
-}
-
-private val repositoryModule = module {
-    singleOf(::LocalDataRepositoryImpl).bind(LocalDataRepository::class)
-}
-
-private val firestoreModule = module {
-    single<FirebaseFirestore> { Firebase.firestore }
-    single<ShoppingListCollection> { get<FirebaseFirestore>().collection(SHOPPING_LIST_COLLECTION_NAME) }
-    singleOf(::ShoppingListRepositoryImpl).bind(ShoppingListRepository::class)
-}
-
-private val authModule = module {
-    single<FirebaseAuth> { Firebase.auth }
-    singleOf(::AuthRepositoryImpl).bind(AuthRepository::class)
-}
-
-private val databaseModule = module {
     single<HomeShoppingDatabase> {
         Room
             .databaseBuilder(
@@ -62,4 +40,13 @@ private val databaseModule = module {
     }
     factory<QueryDao> { get<HomeShoppingDatabase>().queryDao() }
     factory<UserDao> { get<HomeShoppingDatabase>().userDao() }
+
+    singleOf(::LocalDataRepositoryImpl).bind(LocalDataRepository::class)
+
+    single<FirebaseFirestore> { Firebase.firestore }
+    single<ShoppingListCollection> { get<FirebaseFirestore>().collection(SHOPPING_LIST_COLLECTION_NAME) }
+    singleOf(::ShoppingListRepositoryImpl).bind(ShoppingListRepository::class)
+
+    single<FirebaseAuth> { Firebase.auth }
+    singleOf(::AuthRepositoryImpl).bind(AuthRepository::class)
 }

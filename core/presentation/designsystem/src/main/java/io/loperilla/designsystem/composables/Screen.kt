@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import io.loperilla.designsystem.HomeShoppingTheme
-import io.loperilla.designsystem.composables.previews.PIXEL_33_NIGHT
+import io.loperilla.designsystem.previews.PIXEL_33_NIGHT
 
 /*****
  * Project: HomeShopping

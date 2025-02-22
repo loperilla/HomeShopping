@@ -19,6 +19,6 @@ val Project.libs: VersionCatalog
 
 fun DependencyHandlerScope.tests(target: Project) {
     "testImplementation"(target.libs.findBundle("unit-tests").get())
-    "testImplementation"(target.libs.findBundle("jupiter").get())
-    "testRuntimeOnly"(target.libs.findLibrary("jupiter-engine").get())
+//    "testImplementation"(target.libs.findBundle("jupiter").get())
+//    "testRuntimeOnly"(target.libs.findLibrary("jupiter-engine").get())
 }

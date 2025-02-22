@@ -14,9 +14,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import io.loperilla.designsystem.composables.Screen
-import io.loperilla.designsystem.composables.button.FormButton
-import io.loperilla.designsystem.composables.previews.PIXEL_33_NIGHT
+import io.loperilla.designsystem.composables.button.ShoppingButton
 import io.loperilla.designsystem.composables.spacers.FullWeightSpacer
+import io.loperilla.designsystem.previews.PIXEL_33_NIGHT
 import io.loperilla.presentation.designsystem.R
 
 /*****
@@ -47,7 +47,7 @@ fun WelcomeScreen(
                 .clip(CircleShape)
         )
         FullWeightSpacer()
-        FormButton(
+        ShoppingButton(
             textButton = "Iniciar Sesión",
             onClickButton = {
                 onEvent(WelcomeEvent.NavigateToLogin)
@@ -55,7 +55,7 @@ fun WelcomeScreen(
             enableButton = true
         )
 
-        FormButton(
+        ShoppingButton(
             textButton = "Registrarse",
             onClickButton = {
                 onEvent(WelcomeEvent.NavigateToRegister)

@@ -2,6 +2,8 @@ package io.loperilla.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import io.loperilla.domain.model.getOrNull
+import io.loperilla.domain.usecase.GetCurrentUserUseCase
 import io.loperilla.domain.usecase.GetLastShoppingListUseCase
 import io.loperilla.domain.usecase.LogOutUseCase
 import io.loperilla.ui.navigator.Navigator
@@ -12,6 +14,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /*****
@@ -23,7 +26,8 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     private val navigator: Navigator,
     private val logOutUseCase: LogOutUseCase,
-    private val getLastHomeShoppingListUseCase: GetLastShoppingListUseCase
+    private val getLastHomeShoppingListUseCase: GetLastShoppingListUseCase,
+    private val getCurrentUserUseCase: GetCurrentUserUseCase
 ): ViewModel() {
     private var _stateFlow: MutableStateFlow<HomeState> = MutableStateFlow(HomeState())
     val stateFlow: StateFlow<HomeState> = _stateFlow
@@ -39,12 +43,18 @@ class HomeViewModel(
     fun onEvent(event: HomeEvent) = viewModelScope.launch {
         when (event) {
             HomeEvent.LogOut -> onLogOutClicked()
-
+            HomeEvent.OnClickCreateNewShoppingList -> TODO()
         }
     }
 
     private fun initState() = viewModelScope.launch {
-//        getLastHomeShoppingListUseCase()
+        _stateFlow.update {
+            it.copy(
+                isLoading = false,
+                currentUser = getCurrentUserUseCase().getOrNull(),
+                lastShoppingList = getLastHomeShoppingListUseCase().getOrNull()
+            )
+        }
     }
 
     private fun onLogOutClicked() = viewModelScope.launch(Dispatchers.IO) {

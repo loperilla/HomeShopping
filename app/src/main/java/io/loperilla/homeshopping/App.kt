@@ -5,6 +5,7 @@ import com.google.firebase.FirebaseApp
 import io.loperilla.data.di.dataModule
 import io.loperilla.domain.di.coreUseCaseModule
 import io.loperilla.domain.di.registerUseCaseModule
+import io.loperilla.domain.usecase.di.homeUseCaseModule
 import io.loperilla.domain.usecase.di.loginUseCaseModule
 import io.loperilla.homeshopping.di.mainActivityModule
 import io.loperilla.presentation.di.homeViewModelModule
@@ -44,5 +45,5 @@ class App : Application() {
     private fun getRegisterModules(): List<Module> =
         listOf(registerUseCaseModule, registerViewModelModule)
 
-    private fun getHomeModules(): List<Module> = listOf(homeViewModelModule)
+    private fun getHomeModules(): List<Module> = listOf(homeUseCaseModule, homeViewModelModule)
 }

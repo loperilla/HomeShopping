@@ -1,4 +1,4 @@
-package io.loperilla.designsystem.composables.previews
+package io.loperilla.designsystem.previews
 
 import android.content.res.Configuration
 import android.os.Build
