@@ -39,6 +39,7 @@ import io.loperilla.designsystem.composables.spacers.MediumSpacer
 import io.loperilla.designsystem.composables.text.TextTitle
 import io.loperilla.designsystem.composables.topbar.CommonTopBar
 import io.loperilla.designsystem.previews.PIXEL_33_NIGHT
+import io.loperilla.domain.model.ShoppingList
 import io.loperilla.domain.model.dummy.dummyUser
 import kotlinx.coroutines.launch
 
@@ -130,7 +131,7 @@ fun HomeScreen(
                             .fillMaxWidth()
                             .wrapContentHeight()
                             .clickable {
-                                onEvent(HomeEvent.OnClickCreateNewShoppingList)
+                                onEvent(HomeEvent.OnClickShoppingListDetail)
                             }
                             .padding(16.dp),
                         content = {
@@ -154,56 +155,124 @@ fun HomeScreen(
                         }
                     )
                 }
-
-                AnimatedVisibility(state.showNotExistLastShoppingList) {
-                    HomeShoppingCard(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .wrapContentHeight()
-                            .clickable {
-                                onEvent(HomeEvent.OnClickCreateNewShoppingList)
-                            }
-                            .padding(16.dp),
-                        content = {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .wrapContentHeight()
-                                    .padding(16.dp),
-                            ) {
-                                TextTitle(
-                                    text = "No tienes ninguna lista de compra",
-                                    textSize = 16.sp
-                                )
-                                Icon(
-                                    imageVector = Icons.Default.NoteAlt,
-                                    contentDescription = "Create new shopping list",
-                                    modifier = Modifier.padding(top = 16.dp)
-                                )
-                            }
-                        }
-                    )
+                AnimatedVisibility(!state.isLoading) {
+                    when (state.shoppingListBanner) {
+                        ShoppingListBanner.NOT_FOUND -> NotFoundShoppingBanner(onEvent)
+                        ShoppingListBanner.EMPTY -> EmptyProductShoppingBanner(onEvent)
+                        ShoppingListBanner.VALID -> ValidShoppingListBanner(state, onEvent)
+                    }
                 }
             }
         }
     }
 }
 
-data class NavigationItems(
-    val title: String,
-    val icon: ImageVector,
-    val onClick: HomeEvent
-)
-
-val navigationItems = listOf(
-    NavigationItems(
-        title = "Cerrar sesión",
-        icon = Icons.AutoMirrored.Filled.Logout,
-        onClick = HomeEvent.LogOut
+@Composable
+private fun NotFoundShoppingBanner(
+    onEvent: (HomeEvent) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    HomeShoppingCard(
+        modifier = modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .clickable {
+                onEvent(HomeEvent.OnClickShoppingListDetail)
+            }
+            .padding(16.dp),
+        content = {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(16.dp),
+            ) {
+                TextTitle(
+                    text = "No tienes ninguna lista de compra",
+                    textSize = 16.sp
+                )
+                Icon(
+                    imageVector = Icons.Default.NoteAlt,
+                    contentDescription = "Create new shopping list",
+                    modifier = Modifier.padding(top = 16.dp)
+                )
+            }
+        }
     )
-)
 
+}
+
+@Composable
+private fun EmptyProductShoppingBanner(
+    onEvent: (HomeEvent) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    HomeShoppingCard(
+        modifier = modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .clickable {
+                onEvent(HomeEvent.OnClickShoppingListDetail)
+            }
+            .padding(16.dp),
+        content = {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(16.dp),
+            ) {
+                TextTitle(
+                    text = "Lista de productos vacía",
+                    textSize = 16.sp
+                )
+                Icon(
+                    imageVector = Icons.Default.NoteAlt,
+                    contentDescription = "Create new shopping list",
+                    modifier = Modifier.padding(top = 16.dp)
+                )
+            }
+        }
+    )
+}
+
+@Composable
+private fun ValidShoppingListBanner(
+    state: HomeState,
+    onEvent: (HomeEvent) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    HomeShoppingCard(
+        modifier = modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .clickable {
+                onEvent(HomeEvent.OnClickShoppingListDetail)
+            }
+            .padding(16.dp),
+        content = {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(16.dp),
+            ) {
+                TextTitle(
+                    text = "Continua con tu lista de compra",
+                    textSize = 16.sp
+                )
+                Icon(
+                    imageVector = Icons.Default.NoteAlt,
+                    contentDescription = "Create new shopping list",
+                    modifier = Modifier.padding(top = 16.dp)
+                )
+            }
+        }
+    )
+}
 
 @PIXEL_33_NIGHT
 @Composable
@@ -234,3 +303,47 @@ private fun HomeScreenIncompleteUserPrev() {
         )
     }
 }
+
+@PIXEL_33_NIGHT
+@Composable
+private fun HomeScreeEmptyShoppingListPrev() {
+    Screen {
+        HomeScreen(
+            state = HomeState(
+                false,
+                ShoppingList("2133213234", emptyList()),
+                dummyUser
+            ),
+            onEvent = {}
+        )
+    }
+}
+
+@PIXEL_33_NIGHT
+@Composable
+private fun HomeScreeValidShoppingListPrev() {
+    Screen {
+        HomeScreen(
+            state = HomeState(
+                false,
+                ShoppingList("2133213234", listOf("672381678324678324")),
+                dummyUser
+            ),
+            onEvent = {}
+        )
+    }
+}
+
+data class NavigationItems(
+    val title: String,
+    val icon: ImageVector,
+    val onClick: HomeEvent
+)
+
+val navigationItems = listOf(
+    NavigationItems(
+        title = "Cerrar sesión",
+        icon = Icons.AutoMirrored.Filled.Logout,
+        onClick = HomeEvent.LogOut
+    )
+)

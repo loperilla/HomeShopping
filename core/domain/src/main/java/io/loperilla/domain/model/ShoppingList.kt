@@ -7,5 +7,6 @@ package io.loperilla.domain.model
  * All rights reserved 2025
  */
 data class ShoppingList(
-    val id: String
+    val id: String,
+    val productIdList: List<String>
 )
