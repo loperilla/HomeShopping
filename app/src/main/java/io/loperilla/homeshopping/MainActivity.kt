@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import io.loperilla.designsystem.composables.Screen
 import io.loperilla.ui.navigator.Navigator
 import io.loperilla.ui.snackbar.SnackbarController
@@ -19,7 +18,7 @@ import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        val splashScreen = installSplashScreen()
+//        val splashScreen = installSplashScreen()
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
@@ -30,7 +29,7 @@ class MainActivity : ComponentActivity() {
                     navigator,
                     snackbarController,
                     onFinishRefreshUser = {
-                        splashScreen.setKeepOnScreenCondition { it }
+//                        splashScreen.setKeepOnScreenCondition { it }
                     }
                 )
             }

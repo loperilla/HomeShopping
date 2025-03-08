@@ -15,7 +15,7 @@ data class HomeState(
     val currentUser: User? = null
 ) {
     val showNotExistLastShoppingList: Boolean = !isLoading && lastShoppingList == null
-    val showUserIncompleteUser: Boolean = !isLoading && currentUser?.photoUrl == null
+    val showUserIncompleteUser: Boolean = !isLoading && currentUser?.name == null
 
     val userName = currentUser?.name ?: ""
 }

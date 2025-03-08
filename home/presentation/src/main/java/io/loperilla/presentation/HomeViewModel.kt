@@ -60,9 +60,9 @@ class HomeViewModel(
     private fun onLogOutClicked() = viewModelScope.launch(Dispatchers.IO) {
         logOutUseCase().also {
             navigator.navigate(
-                Destination.Login,
+                Destination.AuthGraph,
                 navOptions = {
-                    popUpTo(Destination.Login) {
+                    popUpTo(Destination.Home) {
                         inclusive = true
                     }
                 }

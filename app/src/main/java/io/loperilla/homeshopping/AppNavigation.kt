@@ -44,8 +44,8 @@ import org.koin.androidx.compose.koinViewModel
 fun AppNavigation(
     navigator: Navigator,
     snackbarController: SnackbarController,
-    modifier: Modifier = Modifier,
     onFinishRefreshUser: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ) {
     navigatorManager(navigator, navController)
