@@ -45,6 +45,7 @@ fun AppNavigation(
     navigator: Navigator,
     snackbarController: SnackbarController,
     modifier: Modifier = Modifier,
+    onFinishRefreshUser: (Boolean) -> Unit,
     navController: NavHostController = rememberNavController()
 ) {
     navigatorManager(navigator, navController)
@@ -84,6 +85,8 @@ fun AppNavigation(
             ) {
                 composable<Destination.Welcome> {
                     val viewModel = koinViewModel<WelcomeViewModel>()
+                    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+                    onFinishRefreshUser(state == WelcomeViewModel.WelcomeState.Finish)
                     WelcomeScreen(
                         onEvent = viewModel::onEvent
                     )

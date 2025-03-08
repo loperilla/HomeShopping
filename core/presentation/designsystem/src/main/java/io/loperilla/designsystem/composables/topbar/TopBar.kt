@@ -31,8 +31,8 @@ import io.loperilla.designsystem.previews.PIXEL_33_NIGHT
 @Composable
 fun CommonTopBar(
     topBarText: String,
-    navActionClick: () -> Unit,
     modifier: Modifier = Modifier,
+    navActionClick: () -> Unit = {},
     actions: @Composable RowScope.() -> Unit = {},
     topBarTextColor: Color = Color.Unspecified,
     navIcon: ImageVector? = null

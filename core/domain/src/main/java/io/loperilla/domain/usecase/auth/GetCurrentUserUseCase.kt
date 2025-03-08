@@ -1,4 +1,4 @@
-package io.loperilla.domain.usecase
+package io.loperilla.domain.usecase.auth
 
 import io.loperilla.domain.repository.LocalDataRepository
 

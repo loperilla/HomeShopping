@@ -7,7 +7,6 @@ import io.loperilla.domain.di.coreUseCaseModule
 import io.loperilla.domain.di.registerUseCaseModule
 import io.loperilla.domain.usecase.di.homeUseCaseModule
 import io.loperilla.domain.usecase.di.loginUseCaseModule
-import io.loperilla.homeshopping.di.mainActivityModule
 import io.loperilla.presentation.di.homeViewModelModule
 import io.loperilla.presentation.di.loginViewModelModule
 import io.loperilla.presentation.di.registerViewModelModule
@@ -29,7 +28,6 @@ class App : Application() {
         FirebaseApp.initializeApp(this)
         startKoin {
             androidContext(this@App)
-            modules(mainActivityModule)
             modules(
                 welcomeViewModelModule
             )

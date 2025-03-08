@@ -3,9 +3,9 @@ package io.loperilla.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.loperilla.domain.model.getOrNull
-import io.loperilla.domain.usecase.GetCurrentUserUseCase
 import io.loperilla.domain.usecase.GetLastShoppingListUseCase
-import io.loperilla.domain.usecase.LogOutUseCase
+import io.loperilla.domain.usecase.auth.GetCurrentUserUseCase
+import io.loperilla.domain.usecase.auth.LogOutUseCase
 import io.loperilla.ui.navigator.Navigator
 import io.loperilla.ui.navigator.routes.Destination
 import kotlinx.coroutines.Dispatchers
