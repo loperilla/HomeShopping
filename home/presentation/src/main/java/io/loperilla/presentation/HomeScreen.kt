@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.NoteAlt
+import androidx.compose.material.icons.filled.VerifiedUser
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
@@ -123,6 +124,36 @@ fun HomeScreen(
                         CircularProgressIndicator()
                     }
                 }
+                AnimatedVisibility(state.showUserIncompleteUser) {
+                    HomeShoppingCard(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight()
+                            .clickable {
+                                onEvent(HomeEvent.OnClickCreateNewShoppingList)
+                            }
+                            .padding(16.dp),
+                        content = {
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .wrapContentHeight()
+                                    .padding(16.dp),
+                            ) {
+                                TextTitle(
+                                    text = "Usuario incompleto, por favor completa tu información",
+                                    textSize = 16.sp
+                                )
+                                Icon(
+                                    imageVector = Icons.Default.VerifiedUser,
+                                    contentDescription = "Create new shopping list",
+                                    modifier = Modifier.padding(top = 16.dp)
+                                )
+                            }
+                        }
+                    )
+                }
 
                 AnimatedVisibility(state.showNotExistLastShoppingList) {
                     HomeShoppingCard(
@@ -183,6 +214,21 @@ private fun HomeScreenPrev() {
                 false,
                 null,
                 dummyUser
+            ),
+            onEvent = {}
+        )
+    }
+}
+
+@PIXEL_33_NIGHT
+@Composable
+private fun HomeScreenIncompleteUserPrev() {
+    Screen {
+        HomeScreen(
+            state = HomeState(
+                false,
+                null,
+                null
             ),
             onEvent = {}
         )

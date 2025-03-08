@@ -9,4 +9,5 @@ package io.loperilla.presentation
 sealed interface HomeEvent {
     data object LogOut : HomeEvent
     data object OnClickCreateNewShoppingList : HomeEvent
+    data object OnClickCompleteUserInfo : HomeEvent
 }

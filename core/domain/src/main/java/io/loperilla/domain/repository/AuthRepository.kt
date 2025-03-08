@@ -12,6 +12,6 @@ import io.loperilla.domain.model.User
 interface AuthRepository {
     suspend fun doLogin(email: String, password: String): DomainResult<User>
     suspend fun doRegister(email: String, password: String): DomainResult<User>
-    suspend fun refreshUser(): DomainResult<Unit>
+    suspend fun refreshUser(): DomainResult<User>
     suspend fun doLogout(): DomainResult<Unit>
 }

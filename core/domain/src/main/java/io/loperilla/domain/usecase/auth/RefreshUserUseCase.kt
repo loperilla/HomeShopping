@@ -1,6 +1,8 @@
 package io.loperilla.domain.usecase.auth
 
+import io.loperilla.domain.model.DomainResult
 import io.loperilla.domain.repository.AuthRepository
+import io.loperilla.domain.repository.LocalDataRepository
 
 /*****
  * Project: HomeShopping
@@ -9,8 +11,16 @@ import io.loperilla.domain.repository.AuthRepository
  * All rights reserved 2025
  */
 class RefreshUserUseCase(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val localDataRepository: LocalDataRepository
 ) {
-    suspend operator fun invoke() = authRepository.refreshUser()
-
+    suspend operator fun invoke(): DomainResult<Unit> {
+        return when (val result = authRepository.refreshUser()){
+            is DomainResult.Error -> DomainResult.Error(result.error)
+            is DomainResult.Success -> {
+                localDataRepository.persistUser(result.data)
+                DomainResult.Success(Unit)
+            }
+        }
+    }
 }

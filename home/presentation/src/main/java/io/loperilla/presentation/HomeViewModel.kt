@@ -9,6 +9,7 @@ import io.loperilla.domain.usecase.auth.LogOutUseCase
 import io.loperilla.ui.navigator.Navigator
 import io.loperilla.ui.navigator.routes.Destination
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -44,15 +45,18 @@ class HomeViewModel(
         when (event) {
             HomeEvent.LogOut -> onLogOutClicked()
             HomeEvent.OnClickCreateNewShoppingList -> TODO()
+            HomeEvent.OnClickCompleteUserInfo -> TODO()
         }
     }
 
     private fun initState() = viewModelScope.launch {
+        val user = async { getCurrentUserUseCase().getOrNull() }
+        val lastShoppingList = async { getLastHomeShoppingListUseCase().getOrNull() }
         _stateFlow.update {
             it.copy(
                 isLoading = false,
-                currentUser = getCurrentUserUseCase().getOrNull(),
-                lastShoppingList = getLastHomeShoppingListUseCase().getOrNull()
+                currentUser = user.await(),
+                lastShoppingList = lastShoppingList.await()
             )
         }
     }

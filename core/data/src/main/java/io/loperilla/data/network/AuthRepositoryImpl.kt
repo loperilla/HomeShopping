@@ -57,11 +57,11 @@ class AuthRepositoryImpl(
         }
     }
 
-    override suspend fun refreshUser(): DomainResult<Unit> {
+    override suspend fun refreshUser(): DomainResult<User> {
         return try {
             firebaseAuth.currentUser?.let {
                 it.reload().await()
-                DomainResult.Success(Unit)
+                DomainResult.Success(parseFirebaseUser(it))
             } ?: return DomainResult.Error(DomainError.UnknownError())
         } catch (ex: Exception) {
             ex.printStackTrace()
