@@ -22,12 +22,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import io.loperilla.designsystem.composables.Screen
-import io.loperilla.designsystem.composables.button.FormButton
+import io.loperilla.designsystem.composables.button.ShoppingButton
 import io.loperilla.designsystem.composables.input.EmailInput
 import io.loperilla.designsystem.composables.input.PasswordInput
-import io.loperilla.designsystem.composables.previews.PIXEL_33_NIGHT
 import io.loperilla.designsystem.composables.spacers.FullWeightSpacer
 import io.loperilla.designsystem.composables.spacers.MediumSpacer
+import io.loperilla.designsystem.previews.PIXEL_33_NIGHT
 import io.loperilla.presentation.designsystem.R.mipmap
 
 
@@ -96,7 +96,7 @@ fun LoginScreen(
                 .focusRequester(focusRequester)
         )
         FullWeightSpacer()
-        FormButton(
+        ShoppingButton(
             textButton = "Iniciar Sesión",
             enableButton = state.isValidForm,
             onClickButton = {
@@ -107,7 +107,7 @@ fun LoginScreen(
                 .padding(8.dp)
         )
 
-        FormButton(
+        ShoppingButton(
             textButton = "No tengo cuenta",
             enableButton = true,
             onClickButton = {

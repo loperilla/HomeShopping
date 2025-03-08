@@ -14,11 +14,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.tooling.preview.Preview
 import io.loperilla.designsystem.TextTitleSize
 import io.loperilla.designsystem.composables.Screen
 import io.loperilla.designsystem.composables.TransparentScaffold
 import io.loperilla.designsystem.composables.text.TextTitle
+import io.loperilla.designsystem.previews.PIXEL_33_NIGHT
 
 /*****
  * Project: HomeShopping
@@ -31,11 +31,11 @@ import io.loperilla.designsystem.composables.text.TextTitle
 @Composable
 fun CommonTopBar(
     topBarText: String,
-    navActionClick: () -> Unit,
     modifier: Modifier = Modifier,
+    navActionClick: () -> Unit = {},
     actions: @Composable RowScope.() -> Unit = {},
     topBarTextColor: Color = Color.Unspecified,
-    navIcon: ImageVector? = Icons.AutoMirrored.Filled.ArrowBack
+    navIcon: ImageVector? = null
 ) {
     val colors = TopAppBarDefaults.centerAlignedTopAppBarColors().copy(
         containerColor = Color.Transparent
@@ -66,7 +66,32 @@ fun CommonTopBar(
     )
 }
 
-@Preview
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SimpleTopbar(
+    title: String,
+    topBarTextColor: Color = Color.Unspecified,
+    modifier: Modifier = Modifier
+) {
+    val colors = TopAppBarDefaults.centerAlignedTopAppBarColors().copy(
+        containerColor = Color.Transparent
+    )
+    TopAppBar(
+        title = {
+            TextTitle(
+                text = title,
+                textSize = TextTitleSize,
+                textColor = topBarTextColor
+            )
+
+        },
+        colors = colors,
+        modifier = modifier,
+    )
+}
+
+@PIXEL_33_NIGHT
 @Composable
 private fun CommonTopbarPrev() {
     Screen {
@@ -74,7 +99,29 @@ private fun CommonTopbarPrev() {
             topBar = {
                 CommonTopBar(
                     topBarText = "Comercios",
-                    navActionClick = {}
+                    navActionClick = {},
+                    navIcon = Icons.AutoMirrored.Filled.ArrowBack
+                )
+            }
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(it)
+            ) {
+                TextTitle(text = "hola hola")
+            }
+        }
+    }
+}
+
+@PIXEL_33_NIGHT
+@Composable
+private fun SimpleTopbarPrev() {
+    Screen {
+        TransparentScaffold(
+            topBar = {
+                SimpleTopbar(
+                    title = "Comercios",
                 )
             }
         ) {

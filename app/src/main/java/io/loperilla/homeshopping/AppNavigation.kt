@@ -5,7 +5,6 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -16,7 +15,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import io.loperilla.designsystem.composables.TransparentScaffold
+import io.loperilla.presentation.HomeScreen
+import io.loperilla.presentation.HomeViewModel
 import io.loperilla.presentation.LoginScreen
 import io.loperilla.presentation.LoginViewModel
 import io.loperilla.presentation.RegisterScreen
@@ -42,6 +44,7 @@ import org.koin.androidx.compose.koinViewModel
 fun AppNavigation(
     navigator: Navigator,
     snackbarController: SnackbarController,
+    onFinishRefreshUser: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ) {
@@ -71,39 +74,48 @@ fun AppNavigation(
             )
         }
     ) {
-
         NavHost(
             navController = navController,
             startDestination = navigator.startDestination,
             modifier = Modifier
                 .padding(it)
         ) {
-            composable<Destination.Welcome> {
-                val viewModel = koinViewModel<WelcomeViewModel>()
-                WelcomeScreen(
-                    onEvent = viewModel::onEvent
-                )
-            }
-            composable<Destination.Login> {
-                val viewModel = koinViewModel<LoginViewModel>()
-                val state by viewModel.stateFlow.collectAsStateWithLifecycle()
-                LoginScreen(
-                    state = state,
-                    onEvent = viewModel::onEvent
-                )
-            }
-
-            composable<Destination.Register> {
-                val viewModel = koinViewModel<RegisterViewModel>()
-                val state by viewModel.stateFlow.collectAsStateWithLifecycle()
-                RegisterScreen(
-                    state = state,
-                    onEvent = viewModel::onEvent
-                )
+            navigation<Destination.AuthGraph>(
+                startDestination = Destination.Welcome,
+            ) {
+                composable<Destination.Welcome> {
+                    val viewModel = koinViewModel<WelcomeViewModel>()
+                    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+                    onFinishRefreshUser(state == WelcomeViewModel.WelcomeState.Finish)
+                    WelcomeScreen(
+                        onEvent = viewModel::onEvent
+                    )
+                }
+                composable<Destination.Login> {
+                    val viewModel = koinViewModel<LoginViewModel>()
+                    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+                    LoginScreen(
+                        state = state,
+                        onEvent = viewModel::onEvent
+                    )
+                }
+                composable<Destination.Register> {
+                    val viewModel = koinViewModel<RegisterViewModel>()
+                    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+                    RegisterScreen(
+                        state = state,
+                        onEvent = viewModel::onEvent
+                    )
+                }
             }
 
             composable<Destination.Home> {
-                Text("Home")
+                val viewModel = koinViewModel<HomeViewModel>()
+                val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+                HomeScreen(
+                    state = state,
+                    onEvent = viewModel::onEvent
+                )
             }
         }
     }

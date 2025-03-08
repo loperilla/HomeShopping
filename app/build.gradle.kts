@@ -42,6 +42,7 @@ dependencies {
     welcome()
     register()
     login()
+    home()
 }
 
 
@@ -50,13 +51,11 @@ fun DependencyHandlerScope.welcome() {
 }
 
 fun DependencyHandlerScope.login() {
-    implementation(projects.login.data)
     implementation(projects.login.domain)
     implementation(projects.login.presentation)
 }
 
 fun DependencyHandlerScope.register() {
-    implementation(projects.register.data)
     implementation(projects.register.domain)
     implementation(projects.register.presentation)
 }
@@ -66,4 +65,10 @@ fun DependencyHandlerScope.core() {
     implementation(projects.core.domain)
     implementation(projects.core.presentation.ui)
     implementation(projects.core.presentation.designsystem)
+}
+
+fun DependencyHandlerScope.home() {
+    implementation(projects.home.data)
+    implementation(projects.home.domain)
+    implementation(projects.home.presentation)
 }

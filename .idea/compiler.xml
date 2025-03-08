@@ -5,7 +5,9 @@
       <module name="HomeShopping.core-ui" target="21" />
       <module name="HomeShopping.data" target="21" />
       <module name="HomeShopping.domain" target="21" />
+      <module name="HomeShopping.login.data" target="21" />
       <module name="HomeShopping.presentation" target="21" />
+      <module name="HomeShopping.register.data" target="21" />
       <module name="HomeShopping.splash.presentation" target="21" />
     </bytecodeTargetLevel>
   </component>

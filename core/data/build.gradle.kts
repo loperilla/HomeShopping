@@ -4,6 +4,9 @@ plugins {
 
 android {
     namespace = "io.loperilla.core.data"
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
+    }
 }
 
 dependencies {

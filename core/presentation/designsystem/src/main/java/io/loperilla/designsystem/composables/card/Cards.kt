@@ -12,6 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import io.loperilla.designsystem.composables.Screen
+import io.loperilla.designsystem.previews.PIXEL_33_NIGHT
 
 /*****
  * Project: HomeShopping
@@ -36,10 +38,10 @@ fun HomeShoppingCard(
     }
 }
 
-@io.loperilla.designsystem.composables.previews.PIXEL_33_NIGHT
+@PIXEL_33_NIGHT
 @Composable
 private fun HomeShoppingCardPrev() {
-    io.loperilla.designsystem.composables.Screen {
+    Screen {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,

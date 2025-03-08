@@ -1,6 +1,8 @@
 import io.loperilla.convention.utils.configureKotlinJvm
+import io.loperilla.convention.utils.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.dependencies
 
 /*****
  * Project: HomeShopping
@@ -14,6 +16,10 @@ class JvmLibraryPlugin : Plugin<Project> {
         target.run {
             pluginManager.apply("org.jetbrains.kotlin.jvm")
             configureKotlinJvm()
+
+            dependencies {
+                "implementation"(target.libs.findLibrary("koin-core").get())
+            }
         }
     }
 }

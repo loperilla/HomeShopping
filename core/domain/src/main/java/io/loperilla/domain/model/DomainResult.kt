@@ -19,6 +19,8 @@ sealed class DomainError(
 
     data class UnknownError(val throwable: Throwable? = null) :
         DomainError(throwable?.message ?: "")
+
+    data object EmptyUser : DomainError()
 }
 
 val <T> DomainResult<T>.isSuccess: Boolean

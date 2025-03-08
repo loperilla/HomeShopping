@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import io.loperilla.designsystem.TextSmallSize
+import io.loperilla.designsystem.previews.PIXEL_33_NIGHT
 import io.loperilla.presentation.designsystem.R
 
 /*****
@@ -71,7 +72,7 @@ fun FormAlertDialog(
     AlertDialog(onDismissRequest = { /*TODO*/ }, confirmButton = { /*TODO*/ })
 }
 
-@io.loperilla.designsystem.composables.previews.PIXEL_33_NIGHT
+@PIXEL_33_NIGHT
 @Composable
 private fun CommonAlertDialogPreview() {
     io.loperilla.designsystem.composables.Screen {

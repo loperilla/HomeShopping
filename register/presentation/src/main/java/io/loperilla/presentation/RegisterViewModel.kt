@@ -2,7 +2,7 @@ package io.loperilla.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.loperilla.domain.RegisterRepository
+import io.loperilla.domain.DoRegisterUseCase
 import io.loperilla.domain.model.DomainError
 import io.loperilla.domain.model.fold
 import io.loperilla.ui.navigator.Navigator
@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
  * All rights reserved 2025
  */
 class RegisterViewModel(
-    private val repository: RegisterRepository,
+    private val doRegisterUseCase: DoRegisterUseCase,
     private val navigator: Navigator,
     private val snackbarController: SnackbarController
 ) : ViewModel() {
@@ -62,7 +62,7 @@ class RegisterViewModel(
         val email = stateFlow.value.email
         val password = stateFlow.value.password
 
-        repository.doRegister(email, password).fold(
+        doRegisterUseCase(email, password).fold(
             onSuccess = {
                 navigateToHome()
             },

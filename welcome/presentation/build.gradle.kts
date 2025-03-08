@@ -5,3 +5,7 @@ plugins {
 android {
     namespace = "io.loperilla.welcome.presentation"
 }
+
+dependencies {
+    implementation(projects.core.domain)
+}
