@@ -1,11 +1,15 @@
 package io.loperilla.data.di
 
+import androidx.credentials.CredentialManager
 import androidx.room.Room
+import com.google.android.gms.auth.api.identity.Identity
+import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import io.loperilla.data.local.account.AccountManagerImpl
 import io.loperilla.data.local.database.HomeShoppingDatabase
 import io.loperilla.data.local.database.dao.QueryDao
 import io.loperilla.data.local.database.dao.UserDao
@@ -14,9 +18,11 @@ import io.loperilla.data.network.SHOPPING_LIST_COLLECTION_NAME
 import io.loperilla.data.network.ShoppingListCollection
 import io.loperilla.data.network.ShoppingListRepositoryImpl
 import io.loperilla.data.repository.LocalDataRepositoryImpl
-import io.loperilla.domain.repository.AuthRepository
-import io.loperilla.domain.repository.LocalDataRepository
-import io.loperilla.domain.repository.ShoppingListRepository
+import io.loperilla.domain.model.repository.AccountManager
+import io.loperilla.domain.model.repository.AuthRepository
+import io.loperilla.domain.model.repository.LocalDataRepository
+import io.loperilla.domain.model.repository.ShoppingListRepository
+import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
@@ -47,6 +53,11 @@ val dataModule = module {
     single<ShoppingListCollection> { get<FirebaseFirestore>().collection(SHOPPING_LIST_COLLECTION_NAME) }
     singleOf(::ShoppingListRepositoryImpl).bind(ShoppingListRepository::class)
 
+    // Auth
+    single<SignInClient> { Identity.getSignInClient(androidApplication()) }
+    single<CredentialManager> { CredentialManager.create(androidContext()) }
+    singleOf(::AccountManagerImpl).bind(AccountManager::class)
+    
     single<FirebaseAuth> { Firebase.auth }
     singleOf(::AuthRepositoryImpl).bind(AuthRepository::class)
 }

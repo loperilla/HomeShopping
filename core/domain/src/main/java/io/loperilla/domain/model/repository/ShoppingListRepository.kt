@@ -1,4 +1,4 @@
-package io.loperilla.domain.repository
+package io.loperilla.domain.model.repository
 
 import io.loperilla.domain.model.DomainResult
 import io.loperilla.domain.model.ShoppingList

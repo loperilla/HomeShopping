@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.loperilla.domain.DoRegisterUseCase
 import io.loperilla.domain.model.DomainError
+import io.loperilla.domain.model.auth.RegisterProvider
 import io.loperilla.domain.model.fold
 import io.loperilla.ui.navigator.Navigator
 import io.loperilla.ui.navigator.routes.Destination
@@ -54,6 +55,7 @@ class RegisterViewModel(
             }
 
             RegisterEvent.DoRegister -> doRegister()
+            RegisterEvent.DoGoogleRegister -> doGoogleRegister()
             RegisterEvent.OnBackPressed -> navigator.navigateUp()
         }
     }
@@ -62,7 +64,18 @@ class RegisterViewModel(
         val email = stateFlow.value.email
         val password = stateFlow.value.password
 
-        doRegisterUseCase(email, password).fold(
+        doRegisterUseCase(RegisterProvider.MailPassword(email, password)).fold(
+            onSuccess = {
+                navigateToHome()
+            },
+            onError = { error ->
+                performDomainError(error)
+            }
+        )
+    }
+
+    private suspend fun doGoogleRegister() {
+        doRegisterUseCase(RegisterProvider.Google).fold(
             onSuccess = {
                 navigateToHome()
             },

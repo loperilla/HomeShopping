@@ -1,11 +1,25 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.loperilla.library)
 }
 
 android {
     namespace = "io.loperilla.core.data"
+    buildTypes {
+        debug {
+            val keystoreFile = project.rootProject.file("local.properties")
+            val properties = Properties().apply {
+                load(keystoreFile.inputStream())
+            }
+            buildConfigField("String", "GOOGLE_CLIENT_ID", properties.getProperty("GoogleWebClientId"))
+        }
+    }
     ksp {
         arg("room.schemaLocation", "$projectDir/schemas")
+    }
+    buildFeatures {
+        buildConfig = true
     }
 }
 
@@ -20,5 +34,9 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.bundles.firebase)
 
+    implementation(libs.google.auth)
+    implementation(libs.google.identity)
+    implementation(libs.androidx.credentials.core)
+    implementation(libs.androidx.credentials.compat)
     implementation(projects.core.domain)
 }

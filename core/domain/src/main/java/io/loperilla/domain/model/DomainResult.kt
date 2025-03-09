@@ -20,7 +20,20 @@ sealed class DomainError(
     data class UnknownError(val throwable: Throwable? = null) :
         DomainError(throwable?.message ?: "")
 
+    data class CreateCredentialsError(val throwable: Throwable? = null) :
+        DomainError(throwable?.message ?: "")
+
+    data class CredentialCancellationError(val throwable: Throwable? = null) :
+        DomainError(throwable?.message ?: "")
+
+    data class NoCredentialError(val throwable: Throwable? = null) :
+        DomainError(throwable?.message ?: "")
+
+    data class GetCredentialError(val throwable: Throwable? = null) :
+        DomainError(throwable?.message ?: "")
+
     data object EmptyUser : DomainError()
+    data object EmptyCredential : DomainError()
 }
 
 val <T> DomainResult<T>.isSuccess: Boolean

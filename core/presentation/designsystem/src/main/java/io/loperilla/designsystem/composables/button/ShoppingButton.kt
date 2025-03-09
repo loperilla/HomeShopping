@@ -2,6 +2,7 @@ package io.loperilla.designsystem.composables.button
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
@@ -28,7 +29,67 @@ import io.loperilla.designsystem.previews.PIXEL_33_NIGHT
  * All rights reserved 2023
  */
 
+@Composable
+fun SimpleButton(
+    textButton: String,
+    modifier: Modifier = Modifier,
+    enableButton: Boolean = true,
+    onClickButton: () -> Unit
+) {
+    ShoppingButton(
+        enableButton = enableButton,
+        modifier = modifier,
+        onClickButton = onClickButton
+    ) {
+        TextSemiBold(
+            text = textButton
+        )
+    }
+}
 
+@Composable
+fun CustomButton(
+    contentButton: @Composable RowScope.() -> Unit,
+    modifier: Modifier = Modifier,
+    enableButton: Boolean = true,
+    onClickButton: () -> Unit
+) {
+    ShoppingButton(
+        modifier = modifier,
+        enableButton = enableButton,
+        onClickButton = onClickButton,
+        buttonContent = contentButton
+    )
+}
+
+@Composable
+private fun ShoppingButton(
+    modifier: Modifier = Modifier,
+    enableButton: Boolean = true,
+    onClickButton: () -> Unit,
+    buttonContent: @Composable RowScope.() -> Unit
+) {
+    val buttonColors = ButtonDefaults.buttonColors(
+        containerColor = MaterialTheme.colorScheme.secondary,
+        contentColor = Color.White,
+        disabledContainerColor = MaterialTheme.colorScheme.secondary.copy(
+            alpha = 0.5f
+        ),
+        disabledContentColor = Color.White
+    )
+    Button(
+        onClick = { onClickButton() },
+        enabled = enableButton,
+        modifier = modifier
+            .fillMaxWidth(),
+        colors = buttonColors
+    ) {
+        buttonContent()
+    }
+}
+
+
+@Deprecated("Use SimpleButton")
 @Composable
 fun ShoppingButton(
     textButton: String,
@@ -102,13 +163,13 @@ fun FormButtonPrev() {
                 8.dp
             )
         ) {
-            ShoppingButton(
+            SimpleButton (
                 "Prueba",
             ) {
 
             }
 
-            ShoppingButton(
+            SimpleButton(
                 "Prueba",
             ) {
 
@@ -119,6 +180,21 @@ fun FormButtonPrev() {
             ) {
 
             }
+
+            CustomButton(
+                contentButton = {
+                    Icon(
+                        imageVector = Icons.Default.PlusOne,
+                        contentDescription = null
+                    )
+                    TextSemiBold(
+                        text = "Prueba"
+                    )
+                },
+                onClickButton = {
+
+                }
+            )
 
         }
     }

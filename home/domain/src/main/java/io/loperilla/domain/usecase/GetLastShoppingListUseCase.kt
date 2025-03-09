@@ -1,6 +1,6 @@
 package io.loperilla.domain.usecase
 
-import io.loperilla.domain.repository.ShoppingListRepository
+import io.loperilla.domain.model.repository.ShoppingListRepository
 
 /*****
  * Project: HomeShopping

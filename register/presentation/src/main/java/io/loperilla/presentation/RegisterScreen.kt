@@ -4,12 +4,16 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Mail
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -26,11 +30,13 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import io.loperilla.designsystem.composables.Screen
 import io.loperilla.designsystem.composables.TransparentScaffold
-import io.loperilla.designsystem.composables.button.ShoppingButton
+import io.loperilla.designsystem.composables.button.CustomButton
+import io.loperilla.designsystem.composables.button.SimpleButton
 import io.loperilla.designsystem.composables.input.EmailInput
 import io.loperilla.designsystem.composables.input.PasswordInput
 import io.loperilla.designsystem.composables.spacers.FullWeightSpacer
 import io.loperilla.designsystem.composables.spacers.MediumSpacer
+import io.loperilla.designsystem.composables.text.TextSemiBold
 import io.loperilla.designsystem.composables.text.TextTitle
 import io.loperilla.designsystem.composables.topbar.CommonTopBar
 import io.loperilla.designsystem.previews.PIXEL_33_NIGHT
@@ -139,7 +145,7 @@ fun RegisterScreen(
                     .fillMaxWidth()
             )
             FullWeightSpacer()
-            ShoppingButton(
+            SimpleButton(
                 textButton = "Registro",
                 modifier = Modifier,
                 onClickButton = {
@@ -147,6 +153,24 @@ fun RegisterScreen(
                     onEvent(RegisterEvent.DoRegister)
                 },
                 enableButton = state.isFormValid
+            )
+
+            CustomButton (
+                onClickButton = {
+                    keyboardController?.hide()
+                    onEvent(RegisterEvent.DoGoogleRegister)
+                },
+                contentButton = {
+                    Icon(
+                        imageVector = Icons.Default.Mail,
+                        contentDescription = null
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    TextSemiBold(
+                        text = "Con Google",
+                        textColor = Color.White
+                    )
+                }
             )
         }
     }
