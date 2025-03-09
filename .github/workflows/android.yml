@@ -15,6 +15,10 @@ jobs:
         with:
           distribution: zulu
           java-version: 17
+      - name: Load API Token from secrets
+        env:
+          API_TOKEN: ${{ secrets.GOOGLEWEBCLIENTID }}
+        run: echo GoogleWebClientId=\"$API_TOKEN\" > ./local.properties
 
       - name: Cache Gradle and wrapper
         uses: actions/cache@v4
