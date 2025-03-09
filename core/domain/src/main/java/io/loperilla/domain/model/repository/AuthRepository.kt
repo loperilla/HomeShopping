@@ -1,7 +1,8 @@
-package io.loperilla.domain.repository
+package io.loperilla.domain.model.repository
 
 import io.loperilla.domain.model.DomainResult
 import io.loperilla.domain.model.User
+import io.loperilla.domain.model.auth.RegisterProvider
 
 /*****
  * Project: HomeShopping`
@@ -11,7 +12,7 @@ import io.loperilla.domain.model.User
  */
 interface AuthRepository {
     suspend fun doLogin(email: String, password: String): DomainResult<User>
-    suspend fun doRegister(email: String, password: String): DomainResult<User>
+    suspend fun doRegister(provider: RegisterProvider): DomainResult<User>
     suspend fun refreshUser(): DomainResult<User>
     suspend fun doLogout(): DomainResult<Unit>
 }

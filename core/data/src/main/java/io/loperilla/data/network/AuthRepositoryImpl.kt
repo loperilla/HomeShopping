@@ -4,10 +4,14 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import io.loperilla.domain.model.DomainError
 import io.loperilla.domain.model.DomainResult
 import io.loperilla.domain.model.User
-import io.loperilla.domain.repository.AuthRepository
+import io.loperilla.domain.model.auth.RegisterProvider
+import io.loperilla.domain.model.getOrNull
+import io.loperilla.domain.model.repository.AccountManager
+import io.loperilla.domain.model.repository.AuthRepository
 import kotlinx.coroutines.tasks.await
 
 /*****
@@ -17,6 +21,7 @@ import kotlinx.coroutines.tasks.await
  * All rights reserved 2025
  */
 class AuthRepositoryImpl(
+    private val accountManager: AccountManager,
     private val firebaseAuth: FirebaseAuth
 ) : AuthRepository {
     override suspend fun doLogin(email: String, password: String): DomainResult<User> {
@@ -28,9 +33,42 @@ class AuthRepositoryImpl(
         }
     }
 
-    override suspend fun doRegister(email: String, password: String): DomainResult<User> {
+    override suspend fun doRegister(provider: RegisterProvider): DomainResult<User> {
+        return when (provider) {
+            RegisterProvider.Google -> doRegisterWitGoogle()
+            is RegisterProvider.MailPassword -> doEmailPasswordRegister(
+                provider.email,
+                provider.password
+            )
+        }
+    }
+
+    private suspend fun doEmailPasswordRegister(
+        email: String,
+        password: String
+    ): DomainResult<User> {
         return try {
             manageAuthResult(firebaseAuth.createUserWithEmailAndPassword(email, password).await())
+        } catch (ex: FirebaseAuthException) {
+            ex.printStackTrace()
+            val domainError = getDomainErrorByFirebaseException(ex.errorCode)
+            DomainResult.Error(domainError)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            DomainResult.Error(DomainError.UnknownError(ex))
+        }
+    }
+
+    private suspend fun doRegisterWitGoogle(): DomainResult<User> {
+        return try {
+            val googleIdToken =
+                accountManager.signInWithGoogle().getOrNull() ?: return DomainResult.Error(
+                    DomainError.UnknownError()
+                )
+            val googleAuthCredential =
+                GoogleAuthProvider.getCredential(googleIdToken.googleIdToken, null)
+
+            manageAuthResult(firebaseAuth.signInWithCredential(googleAuthCredential).await())
         } catch (ex: FirebaseAuthException) {
             ex.printStackTrace()
             val domainError = getDomainErrorByFirebaseException(ex.errorCode)

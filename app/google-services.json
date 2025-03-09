@@ -12,7 +12,20 @@
           "package_name": "io.loperilla.homeshopping"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1075937424293-vr665ka11irivr07r08qcrk4v3d0lnh8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.loperilla.homeshopping",
+            "certificate_hash": "2ae14fa4fb424e54bff9b78022d90f75120db8e0"
+          }
+        },
+        {
+          "client_id": "1075937424293-fu1vb5i25bd8cah73vfcjk0ni6krmgfg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBY61mh4sgkgJ239COenpwy3xvLQp0O0aI"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1075937424293-fu1vb5i25bd8cah73vfcjk0ni6krmgfg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     },
@@ -31,7 +49,20 @@
           "package_name": "io.loperilla.homeshopping.dev"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1075937424293-nlfb621b28nb89iqgmpk3kb4pl014efe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.loperilla.homeshopping.dev",
+            "certificate_hash": "2ae14fa4fb424e54bff9b78022d90f75120db8e0"
+          }
+        },
+        {
+          "client_id": "1075937424293-fu1vb5i25bd8cah73vfcjk0ni6krmgfg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBY61mh4sgkgJ239COenpwy3xvLQp0O0aI"
@@ -39,7 +70,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1075937424293-fu1vb5i25bd8cah73vfcjk0ni6krmgfg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

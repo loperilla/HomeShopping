@@ -4,7 +4,7 @@ import io.loperilla.data.network.model.ShoppingListModel
 import io.loperilla.domain.model.DomainError
 import io.loperilla.domain.model.DomainResult
 import io.loperilla.domain.model.ShoppingList
-import io.loperilla.domain.repository.ShoppingListRepository
+import io.loperilla.domain.model.repository.ShoppingListRepository
 import kotlinx.coroutines.tasks.await
 
 /*****

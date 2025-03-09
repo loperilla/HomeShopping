@@ -14,5 +14,6 @@ sealed interface RegisterEvent {
     data class PasswordValueChange(val passwordValue: Password) : RegisterEvent
     data class RepeatPasswordValueChange(val repeatPasswordValue: Password) : RegisterEvent
     data object DoRegister : RegisterEvent
+    data object DoGoogleRegister : RegisterEvent
     data object OnBackPressed : RegisterEvent
 }
