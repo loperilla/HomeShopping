@@ -10,6 +10,7 @@ import io.loperilla.domain.usecase.di.loginUseCaseModule
 import io.loperilla.presentation.di.homeViewModelModule
 import io.loperilla.presentation.di.loginViewModelModule
 import io.loperilla.presentation.di.registerViewModelModule
+import io.loperilla.presentation.di.userDetailViewModelModule
 import io.loperilla.splash.presentation.di.welcomeViewModelModule
 import io.loperilla.ui.di.uiModule
 import org.koin.android.ext.koin.androidContext
@@ -35,6 +36,7 @@ class App : Application() {
             modules(getLoginModules())
             modules(getRegisterModules())
             modules(getHomeModules())
+            modules(getUserModules())
         }
     }
 
@@ -44,4 +46,5 @@ class App : Application() {
         listOf(registerUseCaseModule, registerViewModelModule)
 
     private fun getHomeModules(): List<Module> = listOf(homeUseCaseModule, homeViewModelModule)
+    private fun getUserModules(): List<Module> = listOf(userDetailViewModelModule)
 }
