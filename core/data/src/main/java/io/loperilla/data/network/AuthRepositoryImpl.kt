@@ -5,10 +5,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.UserProfileChangeRequest
 import io.loperilla.domain.model.DomainError
 import io.loperilla.domain.model.DomainResult
-import io.loperilla.domain.model.User
 import io.loperilla.domain.model.auth.RegisterProvider
+import io.loperilla.domain.model.auth.User
+import io.loperilla.domain.model.auth.UserUpdateRequest
 import io.loperilla.domain.model.getOrNull
 import io.loperilla.domain.model.repository.AccountManager
 import io.loperilla.domain.model.repository.AuthRepository
@@ -21,8 +23,9 @@ import kotlinx.coroutines.tasks.await
  * All rights reserved 2025
  */
 class AuthRepositoryImpl(
+    private val firebaseAuth: FirebaseAuth,
     private val accountManager: AccountManager,
-    private val firebaseAuth: FirebaseAuth
+
 ) : AuthRepository {
     override suspend fun doLogin(email: String, password: String): DomainResult<User> {
         return try {
@@ -53,6 +56,20 @@ class AuthRepositoryImpl(
             ex.printStackTrace()
             val domainError = getDomainErrorByFirebaseException(ex.errorCode)
             DomainResult.Error(domainError)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            DomainResult.Error(DomainError.UnknownError(ex))
+        }
+    }
+
+    override suspend fun updateUser(user: UserUpdateRequest): DomainResult<Unit> {
+        return try {
+            firebaseAuth.currentUser?.updateProfile(
+                UserProfileChangeRequest.Builder()
+                    .setDisplayName(user.displayName)
+                    .build()
+            )
+            return DomainResult.Success(Unit)
         } catch (ex: Exception) {
             ex.printStackTrace()
             DomainResult.Error(DomainError.UnknownError(ex))

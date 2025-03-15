@@ -1,7 +1,7 @@
 package io.loperilla.domain.model.repository
 
 import io.loperilla.domain.model.DomainResult
-import io.loperilla.domain.model.User
+import io.loperilla.domain.model.auth.User
 
 /*****
  * Project: HomeShopping

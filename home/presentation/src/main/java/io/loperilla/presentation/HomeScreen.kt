@@ -1,13 +1,16 @@
 package io.loperilla.presentation
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.Menu
@@ -16,6 +19,7 @@ import androidx.compose.material.icons.filled.VerifiedUser
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
@@ -35,6 +39,7 @@ import androidx.compose.ui.unit.sp
 import io.loperilla.designsystem.composables.Screen
 import io.loperilla.designsystem.composables.TransparentScaffold
 import io.loperilla.designsystem.composables.card.HomeShoppingCard
+import io.loperilla.designsystem.composables.image.UrlImage
 import io.loperilla.designsystem.composables.spacers.MediumSpacer
 import io.loperilla.designsystem.composables.text.TextTitle
 import io.loperilla.designsystem.composables.topbar.CommonTopBar
@@ -67,8 +72,23 @@ fun HomeScreen(
         drawerContent = {
             ModalDrawerSheet {
                 Column(
-                    modifier = Modifier.padding(16.dp)
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .padding(16.dp)
                 ) {
+                    UrlImage(
+                        imageUrl = state.currentUser?.photoUrl.orEmpty(),
+                        imageName = "user_image",
+                        modifier = Modifier
+                            .background(
+                                shape = CircleShape,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                            .size(100.dp)
+                            .clickable {
+                                onEvent(HomeEvent.OnUserInfoClicked)
+                            }
+                    )
                     MediumSpacer()
                     navigationItems.forEachIndexed { index, item ->
                         NavigationDrawerItem(
@@ -131,7 +151,7 @@ fun HomeScreen(
                             .fillMaxWidth()
                             .wrapContentHeight()
                             .clickable {
-                                onEvent(HomeEvent.OnClickShoppingListDetail)
+                                onEvent(HomeEvent.OnUserInfoClicked)
                             }
                             .padding(16.dp),
                         content = {

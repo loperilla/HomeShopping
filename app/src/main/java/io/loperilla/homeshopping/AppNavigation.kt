@@ -23,6 +23,8 @@ import io.loperilla.presentation.LoginScreen
 import io.loperilla.presentation.LoginViewModel
 import io.loperilla.presentation.RegisterScreen
 import io.loperilla.presentation.RegisterViewModel
+import io.loperilla.presentation.UserDetailScreen
+import io.loperilla.presentation.UserDetailViewModel
 import io.loperilla.splash.presentation.WelcomeScreen
 import io.loperilla.splash.presentation.WelcomeViewModel
 import io.loperilla.ui.navigator.Navigator
@@ -113,6 +115,15 @@ fun AppNavigation(
                 val viewModel = koinViewModel<HomeViewModel>()
                 val state by viewModel.stateFlow.collectAsStateWithLifecycle()
                 HomeScreen(
+                    state = state,
+                    onEvent = viewModel::onEvent
+                )
+            }
+
+            composable<Destination.UserDetail> {
+                val viewModel = koinViewModel<UserDetailViewModel>()
+                val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+                UserDetailScreen(
                     state = state,
                     onEvent = viewModel::onEvent
                 )

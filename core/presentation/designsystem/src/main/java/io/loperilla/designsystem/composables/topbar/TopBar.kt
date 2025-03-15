@@ -71,8 +71,8 @@ fun CommonTopBar(
 @Composable
 fun SimpleTopbar(
     title: String,
-    topBarTextColor: Color = Color.Unspecified,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    topBarTextColor: Color = Color.Unspecified
 ) {
     val colors = TopAppBarDefaults.centerAlignedTopAppBarColors().copy(
         containerColor = Color.Transparent

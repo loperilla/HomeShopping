@@ -4,7 +4,7 @@ import io.loperilla.data.local.database.dao.UserDao
 import io.loperilla.data.local.database.entities.UserEntity
 import io.loperilla.domain.model.DomainError
 import io.loperilla.domain.model.DomainResult
-import io.loperilla.domain.model.User
+import io.loperilla.domain.model.auth.User
 import io.loperilla.domain.model.repository.LocalDataRepository
 
 /*****

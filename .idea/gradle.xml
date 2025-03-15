@@ -41,6 +41,9 @@
             <option value="$PROJECT_DIR$/register" />
             <option value="$PROJECT_DIR$/register/domain" />
             <option value="$PROJECT_DIR$/register/presentation" />
+            <option value="$PROJECT_DIR$/user" />
+            <option value="$PROJECT_DIR$/user/domain" />
+            <option value="$PROJECT_DIR$/user/presentation" />
             <option value="$PROJECT_DIR$/welcome" />
             <option value="$PROJECT_DIR$/welcome/presentation" />
           </set>

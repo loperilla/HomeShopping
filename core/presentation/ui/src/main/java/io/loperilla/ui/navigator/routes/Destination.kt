@@ -20,4 +20,6 @@ sealed interface Destination {
     data object Register : Destination
     @Serializable
     data object Home : Destination
+    @Serializable
+    data object UserDetail : Destination
 }
