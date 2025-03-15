@@ -1,5 +1,6 @@
 package io.loperilla.designsystem.composables.image
 
+import android.net.Uri
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material3.Icon
@@ -29,6 +30,38 @@ fun UrlImage(
         model = ImageRequest
             .Builder(LocalContext.current)
             .data(imageUrl)
+            .crossfade(true)
+            .memoryCacheKey("${imageName}_image")
+            .networkCachePolicy(CachePolicy.ENABLED)
+            .diskCachePolicy(CachePolicy.DISABLED)
+            .memoryCachePolicy(CachePolicy.ENABLED)
+            .scale(Scale.FILL)
+            .build(),
+        loading = {
+            LoadingAnimation()
+        },
+        error = {
+            Icon(
+                imageVector = Icons.Default.Image,
+                contentDescription = "${imageName}_image",
+                modifier = modifier
+            )
+        },
+        contentDescription = "${imageName}_image",
+        modifier = modifier
+    )
+}
+
+@Composable
+fun UriImage(
+    uriImage: Uri?,
+    imageName: String,
+    modifier: Modifier = Modifier
+) {
+    SubcomposeAsyncImage(
+        model = ImageRequest
+            .Builder(LocalContext.current)
+            .data(uriImage)
             .crossfade(true)
             .memoryCacheKey("${imageName}_image")
             .networkCachePolicy(CachePolicy.ENABLED)

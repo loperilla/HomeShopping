@@ -2,8 +2,10 @@ package io.loperilla.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import io.loperilla.domain.model.auth.UserUpdateRequest
 import io.loperilla.domain.model.fold
 import io.loperilla.domain.usecase.auth.GetCurrentUserUseCase
+import io.loperilla.domain.usecase.auth.UpdateUserUseCase
 import io.loperilla.ui.navigator.Navigator
 import io.loperilla.ui.snackbar.SnackbarAction
 import io.loperilla.ui.snackbar.SnackbarController
@@ -24,6 +26,7 @@ import kotlinx.coroutines.launch
  */
 class UserDetailViewModel(
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
+    private val updateUserUseCase: UpdateUserUseCase,
     private val navigator: Navigator,
     private val snackbarController: SnackbarController
 ): ViewModel() {
@@ -40,8 +43,11 @@ class UserDetailViewModel(
 
     fun onEvent(event: UserDetailEvent) = viewModelScope.launch {
         when (event) {
-            is UserDetailEvent.OnNameChanged -> TODO()
+            is UserDetailEvent.OnNameChanged -> _stateFlow.update {
+                it.copy(newUserName = event.newName)
+            }
             UserDetailEvent.OnBackPressed -> onBackPressed()
+            UserDetailEvent.SaveButtonClick -> onSaveButtonClick()
         }
     }
 
@@ -63,6 +69,39 @@ class UserDetailViewModel(
                                 name = "Volver",
                                 action = ::onBackPressed
                             )
+                        )
+                    )
+                }
+            }
+        ).also {
+            _stateFlow.update {
+                it.copy(
+                    isLoading = false
+                )
+            }
+        }
+    }
+
+    private fun onSaveButtonClick() = viewModelScope.launch {
+        updateUserUseCase.invoke(
+            UserUpdateRequest(
+                displayName = stateFlow.value.newUserName
+            )
+        ).fold(
+            onSuccess = {
+                launch {
+                    snackbarController.sendEvent(
+                        SnackbarEvent(
+                            message = "Usuario actualizado"
+                        )
+                    )
+                }
+            },
+            onError = {
+                launch {
+                    snackbarController.sendEvent(
+                        SnackbarEvent(
+                            message = "Hubo un error al actualizar el usuario"
                         )
                     )
                 }

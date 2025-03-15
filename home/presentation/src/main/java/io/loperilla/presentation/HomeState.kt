@@ -1,7 +1,7 @@
 package io.loperilla.presentation
 
 import io.loperilla.domain.model.ShoppingList
-import io.loperilla.domain.model.User
+import io.loperilla.domain.model.auth.User
 
 /*****
  * Project: HomeShopping
@@ -21,7 +21,7 @@ data class HomeState(
 ) {
     val shoppingListBanner: ShoppingListBanner = when {
         lastShoppingList == null -> ShoppingListBanner.NOT_FOUND
-        lastShoppingList.productIdList.isNullOrEmpty() -> ShoppingListBanner.EMPTY
+        lastShoppingList.productIdList.isEmpty() -> ShoppingListBanner.EMPTY
         else -> ShoppingListBanner.VALID
     }
     val showUserIncompleteUser: Boolean = !isLoading && currentUser?.name.isNullOrBlank()

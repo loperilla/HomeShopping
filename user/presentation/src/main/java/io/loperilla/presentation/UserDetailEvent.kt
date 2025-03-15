@@ -9,4 +9,5 @@ package io.loperilla.presentation
 sealed interface UserDetailEvent {
     data class OnNameChanged(val newName: String) : UserDetailEvent
     data object OnBackPressed: UserDetailEvent
+    data object SaveButtonClick: UserDetailEvent
 }

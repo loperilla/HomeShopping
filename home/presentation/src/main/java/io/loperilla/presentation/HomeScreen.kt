@@ -151,7 +151,7 @@ fun HomeScreen(
                             .fillMaxWidth()
                             .wrapContentHeight()
                             .clickable {
-                                onEvent(HomeEvent.OnClickShoppingListDetail)
+                                onEvent(HomeEvent.OnUserInfoClicked)
                             }
                             .padding(16.dp),
                         content = {

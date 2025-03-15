@@ -1,6 +1,8 @@
 package io.loperilla.presentation
 
-import io.loperilla.domain.model.User
+import android.net.Uri
+import androidx.core.net.toUri
+import io.loperilla.domain.model.auth.User
 
 /*****
  * Project: HomeShopping
@@ -11,4 +13,10 @@ import io.loperilla.domain.model.User
 data class UserDetailState(
     val isLoading: Boolean = false,
     val user: User? = null,
-)
+    val newUserName: String = "",
+) {
+    val validForm: Boolean
+        get() = newUserName.isNotBlank() && user?.name != newUserName
+
+    var userImageUrlUri: Uri? = user?.photoUrl?.toUri()
+}

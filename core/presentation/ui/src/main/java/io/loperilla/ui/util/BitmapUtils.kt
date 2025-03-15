@@ -3,8 +3,8 @@ package io.loperilla.ui.util
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Matrix
 import android.net.Uri
+import io.loperilla.ui.bitmap.BitmapProvider
 import java.io.ByteArrayOutputStream
 import java.io.FileDescriptor
 import java.io.IOException
@@ -15,35 +15,37 @@ import java.io.IOException
  * Created By Manuel Lopera on 3/9/23 at 09:41
  * All rights reserved 2023
  */
-object BitmapUtils {
-    /**
-     * The rotationDegrees parameter is the rotation in degrees clockwise from the original orientation.
-     */
-    fun Bitmap.rotateBitmap(rotationDegrees: Int): Bitmap {
-        val matrix = Matrix().apply {
-            postRotate(-rotationDegrees.toFloat())
-            postScale(-1f, -1f)
-        }
-
-        return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
+class BitmapUtilsImpl(
+    private val context: Context
+) : BitmapProvider {
+    override fun uriToBitmap(selectedUri: Uri?): Bitmap? = try {
+        val parcelFileDescriptor = context
+            .contentResolver.openFileDescriptor(selectedUri!!, "r")
+        val fileDescriptor: FileDescriptor = parcelFileDescriptor!!.fileDescriptor
+        val image = BitmapFactory.decodeFileDescriptor(fileDescriptor)
+        parcelFileDescriptor.close()
+        image
+    } catch (e: IOException) {
+        e.printStackTrace()
+        null
     }
 
-    fun uriToBitmap(context: Context, selectedFileUri: Uri): Bitmap? {
-        try {
-            val parcelFileDescriptor = context.contentResolver.openFileDescriptor(selectedFileUri, "r")
-            val fileDescriptor: FileDescriptor = parcelFileDescriptor!!.fileDescriptor
-            val image = BitmapFactory.decodeFileDescriptor(fileDescriptor)
-            parcelFileDescriptor.close()
-            return image
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return null
-    }
-
-    fun Bitmap.toByteArray(): ByteArray {
+    override fun bitmapToByteArray(bitmap: Bitmap?): ByteArray? = try {
         val baos = ByteArrayOutputStream()
-        this.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        return baos.toByteArray()
+        bitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        baos.toByteArray()
+    } catch (ex: IOException) {
+        ex.printStackTrace()
+        null
+    }
+
+    override fun uriToByteArray(selectedUri: Uri?): ByteArray? = try {
+        val bitmap = uriToBitmap(selectedUri)
+        val outputStream = ByteArrayOutputStream()
+        bitmap?.compress(Bitmap.CompressFormat.JPEG, 80, outputStream)
+        outputStream.toByteArray()
+    } catch (ex: IOException) {
+        ex.printStackTrace()
+        null
     }
 }

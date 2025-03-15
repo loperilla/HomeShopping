@@ -3,6 +3,7 @@ package io.loperilla.domain.di
 import io.loperilla.domain.usecase.auth.GetCurrentUserUseCase
 import io.loperilla.domain.usecase.auth.LogOutUseCase
 import io.loperilla.domain.usecase.auth.RefreshUserUseCase
+import io.loperilla.domain.usecase.auth.UpdateUserUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
@@ -17,4 +18,5 @@ val coreUseCaseModule = module {
     factoryOf(::LogOutUseCase)
     factoryOf(::GetCurrentUserUseCase)
     factoryOf(::RefreshUserUseCase)
+    factoryOf(::UpdateUserUseCase)
 }

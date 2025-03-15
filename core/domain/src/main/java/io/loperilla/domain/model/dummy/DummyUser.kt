@@ -1,6 +1,6 @@
 package io.loperilla.domain.model.dummy
 
-import io.loperilla.domain.model.User
+import io.loperilla.domain.model.auth.User
 
 /*****
  * Project: HomeShopping

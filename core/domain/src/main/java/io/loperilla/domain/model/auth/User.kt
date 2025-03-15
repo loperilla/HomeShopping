@@ -1,4 +1,4 @@
-package io.loperilla.domain.model
+package io.loperilla.domain.model.auth
 
 /*****
  * Project: HomeShopping

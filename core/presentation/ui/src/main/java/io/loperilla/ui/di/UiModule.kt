@@ -1,9 +1,12 @@
 package io.loperilla.ui.di
 
+import io.loperilla.ui.bitmap.BitmapProvider
 import io.loperilla.ui.navigator.DefaultNavigator
 import io.loperilla.ui.navigator.Navigator
 import io.loperilla.ui.snackbar.SnackbarController
 import io.loperilla.ui.snackbar.SnackbarControllerImpl
+import io.loperilla.ui.util.BitmapUtilsImpl
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 /*****
@@ -16,4 +19,5 @@ import org.koin.dsl.module
 val uiModule = module {
     single<Navigator> { DefaultNavigator() }
     single<SnackbarController> { SnackbarControllerImpl() }
+    single<BitmapProvider> { BitmapUtilsImpl(androidContext()) }
 }
