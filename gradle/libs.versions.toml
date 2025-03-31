@@ -166,4 +166,4 @@ loperilla-feature-ui = "homeshopping.feature.ui:unspecified"
 loperilla-jvm-library = { id = "homeshopping.jvm.library" }
 loperilla-library = { id = "homeshopping.android.library" }
 loperilla-library-compose = { id = "homeshopping.library.compose" }
-version-catalog-update = "nl.littlerobots.version-catalog-update:0.8.5"
+version-catalog-update = "nl.littlerobots.version-catalog-update:1.0.0"
