@@ -1,23 +1,23 @@
 [versions]
 accompanist_version = "0.36.0"
-agp = "8.9.0"
+agp = "8.9.1"
 android-junit5 = "1.12.0.0"
-androidTools = "31.9.0"
+androidTools = "31.9.1"
 androidx-activity = "1.10.1"
 androidx-lifecycle = "2.8.7"
 androidx-test-espresso = "3.6.1"
 androidx-test-ext = "1.2.1"
-camerax_version = "1.4.1"
+camerax_version = "1.4.2"
 coil = "2.7.0"
 jupiter-junit = "5.12.1"
 koin = "4.0.2"
-kotlin = "2.1.10"
-kotlinxSerializationJsonVersion = "1.8.0"
-ksp = "2.1.10-1.0.31"
+kotlin = "2.1.20"
+kotlinxSerializationJsonVersion = "1.8.1"
+ksp = "2.1.20-2.0.0"
 nav-version = "2.8.9"
-room-version = "2.6.1"
+room-version = "2.7.0"
 credentials = "1.5.0"
-coreKtxVersion = "1.15.0"
+coreKtxVersion = "1.16.0"
 appcompatVersion = "1.7.0"
 materialVersion = "1.12.0"
 
@@ -42,8 +42,8 @@ camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = 
 camera-view = { module = "androidx.camera:camera-view", version.ref = "camerax_version" }
 camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camerax_version" }
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
-compose-bom = "androidx.compose:compose-bom:2025.03.00"
-compose-material3 = "androidx.compose.material3:material3:1.3.1"
+compose-bom = "androidx.compose:compose-bom:2025.04.00"
+compose-material3 = "androidx.compose.material3:material3:1.3.2"
 compose-material_icons_extends = "androidx.compose.material:material-icons-extended:1.7.8"
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "nav-version" }
 compose-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
@@ -53,14 +53,14 @@ compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 coroutine-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.1"
-datastore = "androidx.datastore:datastore-preferences:1.1.3"
+datastore = "androidx.datastore:datastore-preferences:1.1.4"
 firebase-auth = { module = "com.google.firebase:firebase-auth-ktx" }
 google-auth = "com.google.android.gms:play-services-auth:21.3.0"
 google-identity = "com.google.android.libraries.identity.googleid:googleid:1.1.1"
 androidx-credentials-core = { group = "androidx.credentials", name = "credentials", version.ref = "credentials" }
 androidx-credentials-compat = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "credentials" }
 #Firebase
-firebase-bom = "com.google.firebase:firebase-bom:33.10.0"
+firebase-bom = "com.google.firebase:firebase-bom:33.12.0"
 #crashlytics
 #login
 #firestore
