@@ -2,6 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="17">
+      <module name="HomeShopping.commerce.presentation" target="21" />
       <module name="HomeShopping.core-ui" target="21" />
       <module name="HomeShopping.data" target="21" />
       <module name="HomeShopping.domain" target="21" />
