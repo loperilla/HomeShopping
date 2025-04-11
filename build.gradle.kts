@@ -31,8 +31,6 @@ fun isNonStable(version: String): Boolean {
 versionCatalogUpdate {
     keep {
         keepUnusedVersions = true
-        keepUnusedLibraries = true
-        keepUnusedPlugins = true
     }
 }
 
