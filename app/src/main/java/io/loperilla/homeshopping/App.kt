@@ -7,6 +7,7 @@ import io.loperilla.domain.di.coreUseCaseModule
 import io.loperilla.domain.di.registerUseCaseModule
 import io.loperilla.domain.usecase.di.homeUseCaseModule
 import io.loperilla.domain.usecase.di.loginUseCaseModule
+import io.loperilla.presentation.di.commercePresentationModule
 import io.loperilla.presentation.di.homeViewModelModule
 import io.loperilla.presentation.di.loginViewModelModule
 import io.loperilla.presentation.di.registerViewModelModule
@@ -37,6 +38,7 @@ class App : Application() {
             modules(getRegisterModules())
             modules(getHomeModules())
             modules(getUserModules())
+            modules(getCommerceModules())
         }
     }
 
@@ -47,4 +49,5 @@ class App : Application() {
 
     private fun getHomeModules(): List<Module> = listOf(homeUseCaseModule, homeViewModelModule)
     private fun getUserModules(): List<Module> = listOf(userDetailViewModelModule)
+    private fun getCommerceModules(): List<Module> = listOf(commercePresentationModule)
 }
