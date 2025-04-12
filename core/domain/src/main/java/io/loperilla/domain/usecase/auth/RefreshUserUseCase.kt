@@ -1,8 +1,8 @@
 package io.loperilla.domain.usecase.auth
 
 import io.loperilla.domain.model.DomainResult
-import io.loperilla.domain.model.repository.AuthRepository
-import io.loperilla.domain.model.repository.LocalDataRepository
+import io.loperilla.domain.repository.AuthRepository
+import io.loperilla.domain.repository.LocalDataRepository
 
 /*****
  * Project: HomeShopping

@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
  */
 
 @Composable
-fun LoadingAnimation() {
+fun ImageLoadingAnimation() {
     val animation = rememberInfiniteTransition(label = "")
     val progress by animation.animateFloat(
         initialValue = 0f,

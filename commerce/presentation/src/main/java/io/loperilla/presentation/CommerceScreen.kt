@@ -1,9 +1,30 @@
 package io.loperilla.presentation
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.NoteAlt
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import io.loperilla.designsystem.composables.Screen
+import io.loperilla.designsystem.composables.TransparentScaffold
+import io.loperilla.designsystem.composables.card.HomeShoppingCard
+import io.loperilla.designsystem.composables.loading.AnimatedFullScreenLoading
+import io.loperilla.designsystem.composables.swipe.SwipeBox
+import io.loperilla.designsystem.composables.text.TextTitle
+import io.loperilla.designsystem.composables.topbar.CommonTopBar
 import io.loperilla.designsystem.previews.PIXEL_33_NIGHT
+import io.loperilla.domain.model.commerce.Commerce
 
 /*****
  * Project: HomeShopping
@@ -18,7 +39,113 @@ fun CommerceScreen(
     onEvent: (CommerceEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    TransparentScaffold(
+        topBar = {
+            if (!state.isLoading) {
+                CommonTopBar(
+                    topBarText = "Comercios",
+                    navIcon = Icons.AutoMirrored.Filled.ArrowBack,
+                    navActionClick = {
+                        onEvent(CommerceEvent.GoBack)
+                    }
+                )
+            }
+        },
+        modifier = modifier
+    ) {
+        AnimatedFullScreenLoading(state.isLoading, Modifier.padding(it))
+        EmptyCommerceListScreen(state, onEvent, Modifier.padding(it))
+        CommerceListScreen(state, onEvent, Modifier.padding(it))
+    }
+}
 
+@Composable
+private fun CommerceListScreen(
+    state: CommerceState,
+    onEvent: (CommerceEvent) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    AnimatedVisibility(!state.isLoading && state.commerceList.isNotEmpty()) {
+        LazyColumn(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(16.dp),
+        ) {
+            items(state.commerceList.size, key = { index -> state.commerceList[index] }) { index ->
+                CommerceItem(
+                    commerce = state.commerceList[index],
+                    onEvent = onEvent
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun CommerceItem(
+    commerce: Commerce,
+    onEvent: (CommerceEvent) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    SwipeBox(
+        endToStartSwipe = {
+            onEvent(CommerceEvent.RemoveCommerce(commerce.id))
+        },
+        modifier = modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+    ) {
+        HomeShoppingCard(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+        ) {
+            TextTitle(
+                commerce.name,
+                modifier = Modifier
+                    .padding(16.dp)
+            )
+        }
+    }
+}
+
+@Composable
+private fun EmptyCommerceListScreen(
+    state: CommerceState,
+    onEvent: (CommerceEvent) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    AnimatedVisibility(!state.isLoading && state.commerceList.isEmpty()) {
+        HomeShoppingCard(
+            modifier = modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .clickable {
+                    onEvent(CommerceEvent.AddNewCommerce)
+                }
+                .padding(16.dp)
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+            ) {
+                TextTitle(
+                    "No hay comercios disponibles",
+                    modifier = Modifier
+                        .padding(16.dp)
+                )
+
+                Icon(
+                    imageVector = Icons.Default.NoteAlt,
+                    contentDescription = "Create new shopping list",
+                    modifier = Modifier.padding(vertical = 16.dp)
+                )
+            }
+
+        }
+    }
 }
 
 @PIXEL_33_NIGHT
@@ -26,7 +153,36 @@ fun CommerceScreen(
 private fun CommerceScreenPrev() {
     Screen {
         CommerceScreen(
-            state = CommerceState(),
+            state = CommerceState(
+                isLoading = false,
+                commerceList = listOf(
+                    Commerce(
+                        id = "1",
+                        name = "Comercio 1"
+                    ),
+                    Commerce(
+                        id = "2",
+                        name = "Comercio 2"
+                    ),
+                    Commerce(
+                        id = "3",
+                        name = "Comercio 3"
+                    )
+                )
+            ),
+            onEvent = {}
+        )
+    }
+}
+
+@PIXEL_33_NIGHT
+@Composable
+private fun CommerceScreenPreviewEmptyList() {
+    Screen {
+        CommerceScreen(
+            state = CommerceState(
+                isLoading = false
+            ),
             onEvent = {}
         )
     }

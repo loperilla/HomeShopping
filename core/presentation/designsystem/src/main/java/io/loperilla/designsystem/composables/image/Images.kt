@@ -11,7 +11,7 @@ import coil.compose.SubcomposeAsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import coil.size.Scale
-import io.loperilla.designsystem.composables.loading.LoadingAnimation
+import io.loperilla.designsystem.composables.loading.ImageLoadingAnimation
 
 /*****
  * Project: HomeShopping
@@ -38,7 +38,7 @@ fun UrlImage(
             .scale(Scale.FILL)
             .build(),
         loading = {
-            LoadingAnimation()
+            ImageLoadingAnimation()
         },
         error = {
             Icon(
@@ -70,7 +70,7 @@ fun UriImage(
             .scale(Scale.FILL)
             .build(),
         loading = {
-            LoadingAnimation()
+            ImageLoadingAnimation()
         },
         error = {
             Icon(

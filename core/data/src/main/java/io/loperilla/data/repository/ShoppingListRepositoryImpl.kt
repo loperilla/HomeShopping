@@ -1,10 +1,11 @@
-package io.loperilla.data.network
+package io.loperilla.data.repository
 
+import io.loperilla.data.network.ShoppingListCollection
 import io.loperilla.data.network.model.ShoppingListModel
 import io.loperilla.domain.model.DomainError
 import io.loperilla.domain.model.DomainResult
 import io.loperilla.domain.model.ShoppingList
-import io.loperilla.domain.model.repository.ShoppingListRepository
+import io.loperilla.domain.repository.ShoppingListRepository
 import kotlinx.coroutines.tasks.await
 
 /*****
@@ -16,7 +17,7 @@ import kotlinx.coroutines.tasks.await
 class ShoppingListRepositoryImpl(
     private val shoppingListCollection: ShoppingListCollection
 ): ShoppingListRepository {
-    override suspend fun getLasShoppingList(): DomainResult<ShoppingList> {
+    override suspend fun getLastShoppingList(): DomainResult<ShoppingList> {
         return try {
             val querySnapshot = shoppingListCollection.get().await()
             val shoppingList = querySnapshot.documents.mapNotNull {

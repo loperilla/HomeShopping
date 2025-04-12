@@ -12,8 +12,8 @@ import io.loperilla.domain.model.auth.RegisterProvider
 import io.loperilla.domain.model.auth.User
 import io.loperilla.domain.model.auth.UserUpdateRequest
 import io.loperilla.domain.model.getOrNull
-import io.loperilla.domain.model.repository.AccountManager
-import io.loperilla.domain.model.repository.AuthRepository
+import io.loperilla.domain.repository.AccountManager
+import io.loperilla.domain.repository.AuthRepository
 import kotlinx.coroutines.tasks.await
 
 /*****
@@ -26,7 +26,7 @@ class AuthRepositoryImpl(
     private val firebaseAuth: FirebaseAuth,
     private val accountManager: AccountManager,
 
-) : AuthRepository {
+    ) : AuthRepository {
     override suspend fun doLogin(email: String, password: String): DomainResult<User> {
         return try {
             manageAuthResult(firebaseAuth.signInWithEmailAndPassword(email, password).await())

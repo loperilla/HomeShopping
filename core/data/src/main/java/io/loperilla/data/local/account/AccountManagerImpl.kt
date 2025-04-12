@@ -18,7 +18,7 @@ import io.loperilla.core.data.BuildConfig
 import io.loperilla.domain.model.DomainError
 import io.loperilla.domain.model.DomainResult
 import io.loperilla.domain.model.auth.Credential
-import io.loperilla.domain.model.repository.AccountManager
+import io.loperilla.domain.repository.AccountManager
 import java.security.MessageDigest
 import java.util.UUID
 

@@ -46,6 +46,7 @@ class HomeViewModel(
             HomeEvent.LogOut -> onLogOutClicked()
             HomeEvent.OnClickShoppingListDetail -> TODO()
             HomeEvent.OnUserInfoClicked -> navigator.navigate(Destination.UserDetail)
+            HomeEvent.NavigateToCommerce -> navigator.navigate(Destination.Commerce)
         }
     }
 

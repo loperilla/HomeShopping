@@ -8,4 +8,6 @@ package io.loperilla.presentation
  */
 sealed interface CommerceEvent {
     data object GoBack : CommerceEvent
+    data object AddNewCommerce : CommerceEvent
+    data class RemoveCommerce(val id: String) : CommerceEvent
 }

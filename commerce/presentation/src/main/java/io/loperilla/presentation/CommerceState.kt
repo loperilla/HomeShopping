@@ -1,5 +1,7 @@
 package io.loperilla.presentation
 
+import io.loperilla.domain.model.commerce.Commerce
+
 /*****
  * Project: HomeShopping
  * From: io.loperilla.presentation
@@ -7,5 +9,6 @@ package io.loperilla.presentation
  * All rights reserved 2025
  */
 data class CommerceState(
-    val isLoading: Boolean = false
+    val isLoading: Boolean = true,
+    val commerceList: List<Commerce> = emptyList()
 )

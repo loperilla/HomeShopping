@@ -1,4 +1,4 @@
-package io.loperilla.domain.model.repository
+package io.loperilla.domain.repository
 
 import io.loperilla.domain.model.DomainResult
 import io.loperilla.domain.model.auth.User
