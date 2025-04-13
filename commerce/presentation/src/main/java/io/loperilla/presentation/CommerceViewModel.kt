@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.loperilla.domain.GetCommercesUseCase
 import io.loperilla.domain.NewCommerceUseCase
+import io.loperilla.domain.RemoveCommerceUseCase
 import io.loperilla.domain.model.DomainError
 import io.loperilla.domain.model.fold
 import io.loperilla.ui.navigator.Navigator
@@ -27,6 +28,7 @@ class CommerceViewModel(
     private val navigator: Navigator,
     private val getCommercesUseCase: GetCommercesUseCase,
     private val newCommerceUseCase: NewCommerceUseCase,
+    private val deleteCommerceUseCase: RemoveCommerceUseCase,
     private val snackbarController: SnackbarController
 ): ViewModel() {
     private var _stateFlow: MutableStateFlow<CommerceState> = MutableStateFlow(CommerceState())
@@ -68,13 +70,32 @@ class CommerceViewModel(
                     showNewCommerceInput = true
                 )
             }
-            is CommerceEvent.RemoveCommerce -> TODO()
+            is CommerceEvent.RemoveCommerce -> {
+                _stateFlow.update {
+                    it.copy(
+                        showNewCommerceInput = false,
+                    )
+                }
+
+                deleteCommerceUseCase(newEvent.id).fold(
+                    onSuccess = {
+                        getCommerceList()
+                    },
+                    onError = {
+                        _stateFlow.update { state ->
+                            state.copy(
+                                isLoading = false
+                            )
+                        }
+                        showSnackBarError(it)
+                    }
+                )
+            }
             is CommerceEvent.NewCommerceNameChanged -> _stateFlow.update {
                 it.copy(
                     newCommerceName = newEvent.name
                 )
             }
-
             CommerceEvent.SendNewCommerce -> {
                 _stateFlow.update {
                     it.copy(
@@ -88,6 +109,11 @@ class CommerceViewModel(
                         getCommerceList()
                     },
                     onError = {
+                        _stateFlow.update { state ->
+                            state.copy(
+                                isLoading = false
+                            )
+                        }
                         showSnackBarError(it)
                     }
                 )

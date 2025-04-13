@@ -2,6 +2,7 @@ package io.loperilla.domain.di
 
 import io.loperilla.domain.GetCommercesUseCase
 import io.loperilla.domain.NewCommerceUseCase
+import io.loperilla.domain.RemoveCommerceUseCase
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
@@ -15,4 +16,5 @@ import org.koin.dsl.module
 val commerceDomainModule = module {
     singleOf(::GetCommercesUseCase)
     singleOf(::NewCommerceUseCase)
+    singleOf(::RemoveCommerceUseCase)
 }
