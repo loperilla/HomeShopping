@@ -13,8 +13,8 @@ import androidx.compose.ui.tooling.preview.Preview
  */
 
 @Preview(
-    name = "PIXEL_XL API 33 NIGHT",
-    apiLevel = Build.VERSION_CODES.TIRAMISU,
+    name = "PIXEL_XL API 35 NIGHT",
+    apiLevel = Build.VERSION_CODES.VANILLA_ICE_CREAM,
     locale = "es",
     showSystemUi = true,
     showBackground = true,
@@ -23,8 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 )
 
 @Preview(
-    name = "PIXEL_XL API 33 LIGHT",
-    apiLevel = Build.VERSION_CODES.TIRAMISU,
+    name = "PIXEL_XL API 35 LIGHT",
+    apiLevel = Build.VERSION_CODES.VANILLA_ICE_CREAM,
     locale = "es",
     showSystemUi = true,
     showBackground = true,

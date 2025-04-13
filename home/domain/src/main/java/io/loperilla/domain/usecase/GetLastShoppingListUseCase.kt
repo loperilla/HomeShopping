@@ -1,6 +1,6 @@
 package io.loperilla.domain.usecase
 
-import io.loperilla.domain.model.repository.ShoppingListRepository
+import io.loperilla.domain.repository.ShoppingListRepository
 
 /*****
  * Project: HomeShopping
@@ -11,5 +11,5 @@ import io.loperilla.domain.model.repository.ShoppingListRepository
 class GetLastShoppingListUseCase(
     private val repository: ShoppingListRepository
 ) {
-    suspend operator fun invoke() = repository.getLasShoppingList()
+    suspend operator fun invoke() = repository.getLastShoppingList()
 }

@@ -44,6 +44,7 @@ dependencies {
     login()
     home()
     user()
+    commerce()
 }
 
 
@@ -77,4 +78,9 @@ fun DependencyHandlerScope.home() {
 fun DependencyHandlerScope.user() {
     implementation(projects.user.domain)
     implementation(projects.user.presentation)
+}
+
+fun DependencyHandlerScope.commerce() {
+    implementation(projects.commerce.domain)
+    implementation(projects.commerce.presentation)
 }

@@ -80,7 +80,10 @@ fun TextInput(
     onTextChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     placeholderValue: String = "",
-    labelText: String = ""
+    labelText: String = "",
+    imeAction: ImeAction = ImeAction.Default,
+    onKeyBoardNextAction: () -> Unit = {},
+    onKeyBoardDoneAction: () -> Unit = {}
 ) {
     CommonInput(
         text = text,
@@ -89,8 +92,10 @@ fun TextInput(
         placeholderText = placeholderValue,
         keyboardType = KeyboardType.Text,
         uiError = UiError("Ingresa un valor", text.isEmpty()),
-        imeAction = ImeAction.Next,
-        modifier = modifier
+        imeAction = imeAction,
+        modifier = modifier,
+        onKeyBoardNextAction = onKeyBoardNextAction,
+        onKeyBoardDoneAction = onKeyBoardDoneAction
     )
 }
 

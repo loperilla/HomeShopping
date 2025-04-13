@@ -14,14 +14,18 @@ import io.loperilla.data.local.database.HomeShoppingDatabase
 import io.loperilla.data.local.database.dao.QueryDao
 import io.loperilla.data.local.database.dao.UserDao
 import io.loperilla.data.network.AuthRepositoryImpl
+import io.loperilla.data.network.COMMERCE_COLLECTION_NAME
+import io.loperilla.data.network.CommerceCollection
 import io.loperilla.data.network.SHOPPING_LIST_COLLECTION_NAME
 import io.loperilla.data.network.ShoppingListCollection
-import io.loperilla.data.network.ShoppingListRepositoryImpl
+import io.loperilla.data.repository.CommerceRepositoryImpl
 import io.loperilla.data.repository.LocalDataRepositoryImpl
-import io.loperilla.domain.model.repository.AccountManager
-import io.loperilla.domain.model.repository.AuthRepository
-import io.loperilla.domain.model.repository.LocalDataRepository
-import io.loperilla.domain.model.repository.ShoppingListRepository
+import io.loperilla.data.repository.ShoppingListRepositoryImpl
+import io.loperilla.domain.repository.AccountManager
+import io.loperilla.domain.repository.AuthRepository
+import io.loperilla.domain.repository.CommerceRepository
+import io.loperilla.domain.repository.LocalDataRepository
+import io.loperilla.domain.repository.ShoppingListRepository
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.singleOf
@@ -52,6 +56,9 @@ val dataModule = module {
     single<FirebaseFirestore> { Firebase.firestore }
     single<ShoppingListCollection> { get<FirebaseFirestore>().collection(SHOPPING_LIST_COLLECTION_NAME) }
     singleOf(::ShoppingListRepositoryImpl).bind(ShoppingListRepository::class)
+
+    single<CommerceCollection> { get<FirebaseFirestore>().collection(COMMERCE_COLLECTION_NAME) }
+    singleOf(::CommerceRepositoryImpl).bind(CommerceRepository::class)
 
     // Auth
     single<SignInClient> { Identity.getSignInClient(androidApplication()) }

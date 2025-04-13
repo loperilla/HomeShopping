@@ -5,7 +5,7 @@ import io.loperilla.data.local.database.entities.UserEntity
 import io.loperilla.domain.model.DomainError
 import io.loperilla.domain.model.DomainResult
 import io.loperilla.domain.model.auth.User
-import io.loperilla.domain.model.repository.LocalDataRepository
+import io.loperilla.domain.repository.LocalDataRepository
 
 /*****
  * Project: HomeShopping
