@@ -88,7 +88,9 @@ fun CommerceScreen(
                     onKeyBoardDoneAction = {
                         onEvent(CommerceEvent.SendNewCommerce)
                     },
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 8.dp)
                 )
             }
             CommerceListScreen(state, onEvent)
