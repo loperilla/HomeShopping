@@ -3,8 +3,12 @@ package io.loperilla.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.loperilla.domain.GetCommercesUseCase
+import io.loperilla.domain.NewCommerceUseCase
+import io.loperilla.domain.model.DomainError
 import io.loperilla.domain.model.fold
 import io.loperilla.ui.navigator.Navigator
+import io.loperilla.ui.snackbar.SnackbarController
+import io.loperilla.ui.snackbar.SnackbarEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -21,28 +25,14 @@ import kotlinx.coroutines.launch
  */
 class CommerceViewModel(
     private val navigator: Navigator,
-    private val getCommercesUseCase: GetCommercesUseCase
+    private val getCommercesUseCase: GetCommercesUseCase,
+    private val newCommerceUseCase: NewCommerceUseCase,
+    private val snackbarController: SnackbarController
 ): ViewModel() {
     private var _stateFlow: MutableStateFlow<CommerceState> = MutableStateFlow(CommerceState())
     val stateFlow: StateFlow<CommerceState> = _stateFlow
         .onStart {
-            getCommercesUseCase().fold(
-                onSuccess = { commerceList ->
-                    _stateFlow.update {
-                        it.copy(
-                            commerceList = commerceList,
-                            isLoading = false
-                        )
-                    }
-                },
-                onError = {
-                    _stateFlow.update {
-                        it.copy(
-                            isLoading = false
-                        )
-                    }
-                }
-            )
+            getCommerceList()
         }
         .stateIn(
             viewModelScope,
@@ -50,11 +40,66 @@ class CommerceViewModel(
             CommerceState()
         )
 
+    private fun getCommerceList() = viewModelScope.launch {
+        getCommercesUseCase().fold(
+            onSuccess = { commerceList ->
+                _stateFlow.update {
+                    it.copy(
+                        commerceList = commerceList,
+                        isLoading = false
+                    )
+                }
+            },
+            onError = {
+                _stateFlow.update {
+                    it.copy(
+                        isLoading = false
+                    )
+                }
+            }
+        )
+    }
+
     fun onEvent(newEvent: CommerceEvent) = viewModelScope.launch {
         when(newEvent) {
             CommerceEvent.GoBack -> navigator.navigateUp()
-            CommerceEvent.AddNewCommerce -> TODO()
+            CommerceEvent.AddNewCommerce -> _stateFlow.update {
+                it.copy(
+                    showNewCommerceInput = true
+                )
+            }
             is CommerceEvent.RemoveCommerce -> TODO()
+            is CommerceEvent.NewCommerceNameChanged -> _stateFlow.update {
+                it.copy(
+                    newCommerceName = newEvent.name
+                )
+            }
+
+            CommerceEvent.SendNewCommerce -> {
+                _stateFlow.update {
+                    it.copy(
+                        showNewCommerceInput = false,
+                        isLoading = true
+                    )
+                }
+
+                newCommerceUseCase(stateFlow.value.newCommerceName).fold(
+                    onSuccess = {
+                        getCommerceList()
+                    },
+                    onError = {
+                        showSnackBarError(it)
+                    }
+                )
+            }
         }
+    }
+
+    private fun showSnackBarError(error: DomainError) = viewModelScope.launch {
+        snackbarController.sendEvent(
+            SnackbarEvent(
+                error.message ?: "Error desconocido"
+            )
+        )
     }
 }

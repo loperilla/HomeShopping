@@ -10,5 +10,7 @@ import io.loperilla.domain.model.commerce.Commerce
  */
 data class CommerceState(
     val isLoading: Boolean = true,
+    val showNewCommerceInput: Boolean = false,
+    val newCommerceName: String = "",
     val commerceList: List<Commerce> = emptyList()
 )

@@ -1,6 +1,7 @@
 package io.loperilla.data.repository
 
 import io.loperilla.data.network.CommerceCollection
+import io.loperilla.data.network.model.CommerceModel
 import io.loperilla.domain.model.DomainError
 import io.loperilla.domain.model.DomainResult
 import io.loperilla.domain.model.commerce.Commerce
@@ -22,7 +23,7 @@ class CommerceRepositoryImpl(
             val querySnapshot = collection.get().await()
             val commerces = querySnapshot.documents.mapNotNull {
                 val id = it.id
-                it.toObject(Commerce::class.java)?.copy(id = id)
+                it.toObject(CommerceModel::class.java)?.copy(id = id)?.toDomain()
             }
             DomainResult.Success(commerces)
         } catch (ex: Exception) {

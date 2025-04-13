@@ -10,15 +10,19 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.NoteAlt
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import io.loperilla.designsystem.composables.Screen
 import io.loperilla.designsystem.composables.TransparentScaffold
 import io.loperilla.designsystem.composables.card.HomeShoppingCard
+import io.loperilla.designsystem.composables.input.TextInput
 import io.loperilla.designsystem.composables.loading.AnimatedFullScreenLoading
 import io.loperilla.designsystem.composables.swipe.SwipeBox
 import io.loperilla.designsystem.composables.text.TextTitle
@@ -51,11 +55,45 @@ fun CommerceScreen(
                 )
             }
         },
+        floatingActionButton = {
+            if (!state.isLoading) {
+                FloatingActionButton(
+                    onClick = {
+                        onEvent(CommerceEvent.AddNewCommerce)
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = "Add new commerce"
+                    )
+                }
+            }
+        },
         modifier = modifier
     ) {
         AnimatedFullScreenLoading(state.isLoading, Modifier.padding(it))
-        EmptyCommerceListScreen(state, onEvent, Modifier.padding(it))
-        CommerceListScreen(state, onEvent, Modifier.padding(it))
+        Column(
+            modifier = Modifier
+                .padding(it)
+                .fillMaxSize(),
+        ) {
+            AnimatedVisibility(state.showNewCommerceInput) {
+                TextInput(
+                    text = state.newCommerceName,
+                    onTextChange = { newValue ->
+                        onEvent(CommerceEvent.NewCommerceNameChanged(newValue))
+                    },
+                    labelText = "Nuevo comercio",
+                    imeAction = ImeAction.Done,
+                    onKeyBoardDoneAction = {
+                        onEvent(CommerceEvent.SendNewCommerce)
+                    },
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+            CommerceListScreen(state, onEvent)
+            EmptyCommerceListScreen(state, onEvent)
+        }
     }
 }
 
@@ -71,10 +109,12 @@ private fun CommerceListScreen(
                 .fillMaxSize()
                 .padding(16.dp),
         ) {
-            items(state.commerceList.size, key = { index -> state.commerceList[index] }) { index ->
+            items(state.commerceList.size) { index ->
                 CommerceItem(
                     commerce = state.commerceList[index],
-                    onEvent = onEvent
+                    onEvent = onEvent,
+                    modifier = Modifier
+                        .padding(vertical = 8.dp)
                 )
             }
         }
@@ -181,7 +221,8 @@ private fun CommerceScreenPreviewEmptyList() {
     Screen {
         CommerceScreen(
             state = CommerceState(
-                isLoading = false
+                isLoading = false,
+                showNewCommerceInput = true
             ),
             onEvent = {}
         )
