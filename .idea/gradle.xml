@@ -41,6 +41,9 @@
             <option value="$PROJECT_DIR$/login" />
             <option value="$PROJECT_DIR$/login/domain" />
             <option value="$PROJECT_DIR$/login/presentation" />
+            <option value="$PROJECT_DIR$/products" />
+            <option value="$PROJECT_DIR$/products/domain" />
+            <option value="$PROJECT_DIR$/products/presentation" />
             <option value="$PROJECT_DIR$/register" />
             <option value="$PROJECT_DIR$/register/domain" />
             <option value="$PROJECT_DIR$/register/presentation" />

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
+import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.LocalPrintshop
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.NoteAlt
@@ -362,5 +363,9 @@ val navigationItems = listOf(
         title = "Comercios",
         icon = Icons.Default.LocalPrintshop,
         onClick = HomeEvent.NavigateToCommerce
+    ), NavigationItems(
+        title = "Productos",
+        icon = Icons.AutoMirrored.Default.MenuBook,
+        onClick = HomeEvent.NavigateToProducts
     )
 )
