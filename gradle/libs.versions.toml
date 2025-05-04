@@ -53,7 +53,7 @@ compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 coroutine-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2"
-datastore = "androidx.datastore:datastore-preferences:1.1.4"
+datastore = "androidx.datastore:datastore-preferences:1.1.5"
 firebase-auth = { module = "com.google.firebase:firebase-auth-ktx" }
 google-auth = "com.google.android.gms:play-services-auth:21.3.0"
 google-identity = "com.google.android.libraries.identity.googleid:googleid:1.1.1"
