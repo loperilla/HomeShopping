@@ -10,7 +10,7 @@ androidx-test-ext = "1.2.1"
 camerax_version = "1.4.2"
 coil = "2.7.0"
 jupiter-junit = "5.13.1"
-koin = "4.0.4"
+koin = "4.1.0"
 kotlin = "2.1.21"
 kotlinxSerializationJsonVersion = "1.8.1"
 ksp = "2.1.21-2.0.1"
@@ -64,7 +64,7 @@ firebase-bom = "com.google.firebase:firebase-bom:33.14.0"
 #crashlytics
 #login
 #firestore
-crashlytics-gradle = "com.google.firebase:firebase-crashlytics-gradle:3.0.3"
+crashlytics-gradle = "com.google.firebase:firebase-crashlytics-gradle:3.0.4"
 
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 firebase-database = { module = "com.google.firebase:firebase-database-ktx" }
