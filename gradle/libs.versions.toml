@@ -60,7 +60,7 @@ google-identity = "com.google.android.libraries.identity.googleid:googleid:1.1.1
 androidx-credentials-core = { group = "androidx.credentials", name = "credentials", version.ref = "credentials" }
 androidx-credentials-compat = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "credentials" }
 #Firebase
-firebase-bom = "com.google.firebase:firebase-bom:33.14.0"
+firebase-bom = "com.google.firebase:firebase-bom:33.16.0"
 #crashlytics
 #login
 #firestore
