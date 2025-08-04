@@ -70,7 +70,7 @@ firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 firebase-database = { module = "com.google.firebase:firebase-database-ktx" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore-ktx" }
 firebase-storage = { module = "com.google.firebase:firebase-storage-ktx" }
-google-services = "com.google.gms:google-services:4.4.2"
+google-services = "com.google.gms:google-services:4.4.3"
 junit = "junit:junit:4.13.2"
 jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "jupiter-junit" }
 jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jupiter-junit" }
