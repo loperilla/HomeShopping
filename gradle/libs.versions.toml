@@ -1,6 +1,6 @@
 [versions]
 accompanist_version = "0.36.0"
-agp = "8.10.1"
+agp = "8.12.0"
 android-junit5 = "1.13.1.0"
 androidTools = "31.10.1"
 androidx-activity = "1.10.1"
@@ -154,7 +154,6 @@ unit-tests = [
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidJUnit5 = { id = "de.mannodermaus.android-junit5", version.ref = "android-junit5" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
-ben-manes-versions = "com.github.ben-manes.versions:0.52.0"
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
