@@ -42,7 +42,7 @@ camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = 
 camera-view = { module = "androidx.camera:camera-view", version.ref = "camerax_version" }
 camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camerax_version" }
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
-compose-bom = "androidx.compose:compose-bom:2025.05.01"
+compose-bom = "androidx.compose:compose-bom:2025.06.00"
 compose-material3 = "androidx.compose.material3:material3:1.3.2"
 compose-material_icons_extends = "androidx.compose.material:material-icons-extended:1.7.8"
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "nav-version" }
@@ -53,18 +53,18 @@ compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 coroutine-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2"
-datastore = "androidx.datastore:datastore-preferences:1.1.6"
+datastore = "androidx.datastore:datastore-preferences:1.1.7"
 firebase-auth = { module = "com.google.firebase:firebase-auth-ktx" }
 google-auth = "com.google.android.gms:play-services-auth:21.3.0"
 google-identity = "com.google.android.libraries.identity.googleid:googleid:1.1.1"
 androidx-credentials-core = { group = "androidx.credentials", name = "credentials", version.ref = "credentials" }
 androidx-credentials-compat = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "credentials" }
 #Firebase
-firebase-bom = "com.google.firebase:firebase-bom:33.14.0"
+firebase-bom = "com.google.firebase:firebase-bom:33.15.0"
 #crashlytics
 #login
 #firestore
-crashlytics-gradle = "com.google.firebase:firebase-crashlytics-gradle:3.0.3"
+crashlytics-gradle = "com.google.firebase:firebase-crashlytics-gradle:3.0.4"
 
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 firebase-database = { module = "com.google.firebase:firebase-database-ktx" }
