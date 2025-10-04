@@ -6,11 +6,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import io.loperilla.designsystem.composables.Screen
 import io.loperilla.designsystem.composables.TransparentScaffold
 import io.loperilla.designsystem.composables.loading.AnimatedFullScreenLoading
+import io.loperilla.designsystem.composables.text.TextTitle
 import io.loperilla.designsystem.composables.topbar.CommonTopBar
 import io.loperilla.designsystem.previews.PIXEL_33_NIGHT
 
@@ -40,7 +42,13 @@ fun ProductsScreen(
                 .padding(it)
                 .fillMaxSize(),
         ) {
-
+            if (state.isLoading) {
+                CircularProgressIndicator()
+            } else {
+                state.productList.forEach { product ->
+                    TextTitle(text = product.name)
+                }
+            }
         }
     }
 }

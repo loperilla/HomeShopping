@@ -10,11 +10,11 @@ import io.loperilla.domain.model.commerce.Commerce
  */
 data class CommerceModel(
     val id: String? = null,
-    val name: String? = null
+    val commerceName: String? = null
 ) {
     fun toDomain() = Commerce(
         id.orEmpty(),
-        name.orEmpty()
+        commerceName.orEmpty()
     )
 
 }

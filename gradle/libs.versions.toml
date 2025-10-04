@@ -1,5 +1,4 @@
 [versions]
-accompanist_version = "0.37.3"
 agp = "8.13.0"
 android-junit5 = "1.13.4.0"
 androidTools = "31.13.0"
@@ -22,9 +21,6 @@ appcompatVersion = "1.7.1"
 materialVersion = "1.13.0"
 
 [libraries]
-accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist_version" }
-accompanist-pager-indicator = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanist_version" }
-accompanist-permission = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist_version" }
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 android-tools-common = { module = "com.android.tools:common", version.ref = "androidTools" }
 androidx-activity = { module = "androidx.activity:activity", version.ref = "androidx-activity" }
@@ -99,11 +95,6 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
 
 [bundles]
-accompanist = [
-    "accompanist-pager",
-    "accompanist-pager-indicator",
-    "accompanist-permission",
-]
 camera = [
     "camera-extension",
     "camera-lifecycle",
