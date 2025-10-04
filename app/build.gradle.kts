@@ -7,8 +7,6 @@ android {
 }
 
 composeCompiler {
-    enableStrongSkippingMode = true
-
     reportsDestination = layout.buildDirectory.dir("compose_compiler")
     //stabilityConfigurationFile = rootProject.layout.projectDirectory.file("stability_config.conf")
 }
