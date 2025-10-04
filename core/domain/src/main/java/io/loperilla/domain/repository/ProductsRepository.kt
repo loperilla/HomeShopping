@@ -11,4 +11,6 @@ import io.loperilla.domain.model.product.Product
  */
 interface ProductsRepository {
     suspend fun getAllProducts(): DomainResult<List<Product>>
+    suspend fun removeProduct(id: String): DomainResult<Unit>
+    suspend fun addProduct(name: String): DomainResult<Unit>
 }

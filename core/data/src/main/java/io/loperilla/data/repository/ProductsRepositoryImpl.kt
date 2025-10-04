@@ -5,6 +5,7 @@ import io.loperilla.data.network.model.ProductModel
 import io.loperilla.domain.model.DomainError
 import io.loperilla.domain.model.DomainResult
 import io.loperilla.domain.model.product.Product
+import io.loperilla.domain.model.product.ProductDto
 import io.loperilla.domain.repository.ProductsRepository
 import kotlinx.coroutines.tasks.await
 
@@ -25,6 +26,26 @@ class ProductsRepositoryImpl(
                 it.toObject(ProductModel::class.java)?.copy(id = id)?.toDomain()
             }
             DomainResult.Success(productList)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            DomainResult.Error(DomainError.UnknownError(ex))
+        }
+    }
+
+    override suspend fun removeProduct(id: String): DomainResult<Unit> {
+        return try {
+            productCollection.document(id).delete().await()
+            DomainResult.Success(Unit)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            DomainResult.Error(DomainError.UnknownError(ex))
+        }
+    }
+
+    override suspend fun addProduct(name: String): DomainResult<Unit> {
+        return try {
+            productCollection.add(ProductDto(name)).await()
+            DomainResult.Success(Unit)
         } catch (ex: Exception) {
             ex.printStackTrace()
             DomainResult.Error(DomainError.UnknownError(ex))
