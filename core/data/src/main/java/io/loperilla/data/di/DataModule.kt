@@ -4,11 +4,11 @@ import androidx.credentials.CredentialManager
 import androidx.room.Room
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
+import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.firestore
 import io.loperilla.data.local.account.AccountManagerImpl
 import io.loperilla.data.local.database.HomeShoppingDatabase
 import io.loperilla.data.local.database.dao.QueryDao
