@@ -17,7 +17,7 @@ ksp = "2.2.10-2.0.2"
 nav-version = "2.9.4"
 room-version = "2.8.0"
 credentials = "1.5.0"
-coreKtxVersion = "1.16.0"
+coreKtxVersion = "1.17.0"
 appcompatVersion = "1.7.1"
 materialVersion = "1.13.0"
 
