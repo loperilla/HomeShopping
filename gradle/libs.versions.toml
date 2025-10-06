@@ -29,7 +29,7 @@ activity-compose = { module = "androidx.activity:activity-compose", version.ref 
 android-tools-common = { module = "com.android.tools:common", version.ref = "androidTools" }
 androidx-activity = { module = "androidx.activity:activity", version.ref = "androidx-activity" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
-androidx-core-ktx = "androidx.test:core-ktx:1.6.1"
+androidx-core-ktx = "androidx.test:core-ktx:1.7.0"
 #Compose
 androidx-ui = { module = "androidx.compose.ui:ui" }
 androidx-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
