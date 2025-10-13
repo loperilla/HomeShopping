@@ -55,7 +55,7 @@ compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 coroutine-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2"
 datastore = "androidx.datastore:datastore-preferences:1.1.7"
 firebase-auth = { module = "com.google.firebase:firebase-auth-ktx" }
-google-auth = "com.google.android.gms:play-services-auth:21.3.0"
+google-auth = "com.google.android.gms:play-services-auth:21.4.0"
 google-identity = "com.google.android.libraries.identity.googleid:googleid:1.1.1"
 androidx-credentials-core = { group = "androidx.credentials", name = "credentials", version.ref = "credentials" }
 androidx-credentials-compat = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "credentials" }
