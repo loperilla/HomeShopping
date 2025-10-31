@@ -7,5 +7,5 @@ package io.loperilla.domain.model.commerce
  * All rights reserved 2025
  */
 data class CommerceDto(
-    val name: String
+    val commerceName: String
 )

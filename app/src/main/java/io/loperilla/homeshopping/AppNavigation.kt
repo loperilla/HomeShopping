@@ -17,6 +17,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import io.loperilla.designsystem.composables.TransparentScaffold
+import io.loperilla.presentation.AddProductScreen
+import io.loperilla.presentation.AddProductViewModel
 import io.loperilla.presentation.CommerceScreen
 import io.loperilla.presentation.CommerceViewModel
 import io.loperilla.presentation.HomeScreen
@@ -146,6 +148,15 @@ fun AppNavigation(
                 val viewModel = koinViewModel<ProductsViewModel>()
                 val state by viewModel.stateFlow.collectAsStateWithLifecycle()
                 ProductsScreen(
+                    state = state,
+                    onEvent = viewModel::onEvent
+                )
+            }
+
+            composable<Destination.AddProducts> {
+                val viewModel = koinViewModel<AddProductViewModel>()
+                val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+                AddProductScreen(
                     state = state,
                     onEvent = viewModel::onEvent
                 )

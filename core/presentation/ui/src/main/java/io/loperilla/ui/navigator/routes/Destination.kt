@@ -26,4 +26,6 @@ sealed interface Destination {
     data object Commerce : Destination
     @Serializable
     data object Products : Destination
+    @Serializable
+    data object AddProducts : Destination
 }

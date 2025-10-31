@@ -7,6 +7,7 @@ import io.loperilla.domain.GetAllProductsUseCase
 import io.loperilla.domain.RemoveProductUseCase
 import io.loperilla.domain.model.fold
 import io.loperilla.ui.navigator.Navigator
+import io.loperilla.ui.navigator.routes.Destination
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
@@ -50,7 +51,7 @@ class ProductsViewModel(
     fun onEvent(action: ProductsEvent) = viewModelScope.launch {
         when (action) {
             ProductsEvent.GoBack -> navigator.navigateUp()
-            ProductsEvent.AddNewProduct -> TODO()
+            ProductsEvent.AddNewProduct -> navigator.navigate(Destination.AddProducts)
             is ProductsEvent.RemoveProduct -> removeProduct(action.id)
         }
     }
