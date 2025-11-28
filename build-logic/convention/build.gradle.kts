@@ -13,27 +13,27 @@ dependencies {
 gradlePlugin {
     plugins {
         register("androidApplication") {
-            id = "homeshopping.android.application"
+            id = libs.plugins.loperilla.application.asProvider().get().pluginId
             implementationClass = "AndroidApplicationPlugin"
         }
         register("androidApplicationCompose") {
-            id = "homeshopping.application.compose"
+            id = libs.plugins.loperilla.application.compose.get().pluginId
             implementationClass = "ComposeApplicationPlugin"
         }
         register("androidFeatureUi") {
-            id = "homeshopping.feature.ui"
+            id = libs.plugins.loperilla.feature.ui.get().pluginId
             implementationClass = "UiFeaturePlugin"
         }
         register("androidLibrary") {
-            id = "homeshopping.android.library"
+            id = libs.plugins.loperilla.library.asProvider().get().pluginId
             implementationClass = "LibraryPlugin"
         }
         register("androidLibraryCompose") {
-            id = "homeshopping.library.compose"
+            id = libs.plugins.loperilla.library.compose.get().pluginId
             implementationClass = "ComposeLibraryPlugin"
         }
         register("jvmLibrary") {
-            id = "homeshopping.jvm.library"
+            id = libs.plugins.loperilla.jvm.library.get().pluginId
             implementationClass = "JvmLibraryPlugin"
         }
     }
