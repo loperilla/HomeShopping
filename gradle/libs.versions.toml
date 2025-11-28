@@ -7,12 +7,12 @@ androidx-test-espresso = "3.7.0"
 androidx-test-ext = "1.3.0"
 camerax_version = "1.5.1"
 coil = "2.7.0"
-jupiter-junit = "6.0.0"
+jupiter-junit = "6.0.1"
 koin = "4.1.1"
-kotlin = "2.2.20"
+kotlin = "2.2.21"
 kotlinxSerializationJsonVersion = "1.9.0"
 ksp = "2.3.0"
-nav-version = "2.9.4"
+nav-version = "2.9.6"
 room-version = "2.8.0"
 credentials = "1.5.0"
 
@@ -29,7 +29,7 @@ androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview
 # Gradle
 build-gradle = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
-compose-bom = "androidx.compose:compose-bom:2025.09.01"
+compose-bom = "androidx.compose:compose-bom:2025.11.01"
 compose-material3 = "androidx.compose.material3:material3:1.4.0"
 compose-material_icons_extends = "androidx.compose.material:material-icons-extended:1.7.8"
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "nav-version" }
@@ -45,7 +45,7 @@ google-identity = "com.google.android.libraries.identity.googleid:googleid:1.1.1
 androidx-credentials-core = { group = "androidx.credentials", name = "credentials", version.ref = "credentials" }
 androidx-credentials-compat = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "credentials" }
 #Firebase
-firebase-bom = "com.google.firebase:firebase-bom:34.3.0"
+firebase-bom = "com.google.firebase:firebase-bom:34.5.0"
 #crashlytics
 #login
 #firestore
