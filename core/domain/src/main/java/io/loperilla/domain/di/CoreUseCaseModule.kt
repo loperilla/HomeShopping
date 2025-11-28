@@ -4,6 +4,8 @@ import io.loperilla.domain.usecase.auth.GetCurrentUserUseCase
 import io.loperilla.domain.usecase.auth.LogOutUseCase
 import io.loperilla.domain.usecase.auth.RefreshUserUseCase
 import io.loperilla.domain.usecase.auth.UpdateUserUseCase
+import io.loperilla.domain.usecase.commerce.GetCommercesUseCase
+import io.loperilla.domain.usecase.products.GetAllProductsUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
@@ -19,4 +21,6 @@ val coreUseCaseModule = module {
     factoryOf(::GetCurrentUserUseCase)
     factoryOf(::RefreshUserUseCase)
     factoryOf(::UpdateUserUseCase)
+    factoryOf(::GetCommercesUseCase)
+    factoryOf(::GetAllProductsUseCase)
 }

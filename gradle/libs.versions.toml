@@ -1,6 +1,5 @@
 [versions]
-agp = "8.13.0"
-android-junit5 = "1.13.4.0"
+agp = "8.13.1"
 androidTools = "31.13.0"
 androidx-activity = "1.11.0"
 androidx-lifecycle = "2.9.4"
@@ -16,9 +15,6 @@ ksp = "2.3.0"
 nav-version = "2.9.4"
 room-version = "2.8.0"
 credentials = "1.5.0"
-coreKtxVersion = "1.17.0"
-appcompatVersion = "1.7.1"
-materialVersion = "1.13.0"
 
 [libraries]
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
@@ -30,13 +26,8 @@ androidx-core-ktx = "androidx.test:core-ktx:1.7.0"
 androidx-ui = { module = "androidx.compose.ui:ui" }
 androidx-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
 androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
-assertk = "com.willowtreeapps.assertk:assertk:0.28.1"
 # Gradle
 build-gradle = { module = "com.android.tools.build:gradle", version.ref = "agp" }
-camera-extension = { module = "androidx.camera:camera-extensions", version.ref = "camerax_version" }
-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "camerax_version" }
-camera-view = { module = "androidx.camera:camera-view", version.ref = "camerax_version" }
-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camerax_version" }
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 compose-bom = "androidx.compose:compose-bom:2025.09.01"
 compose-material3 = "androidx.compose.material3:material3:1.4.0"
@@ -48,8 +39,6 @@ compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
 compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
-coroutine-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2"
-datastore = "androidx.datastore:datastore-preferences:1.1.7"
 firebase-auth = { module = "com.google.firebase:firebase-auth" }
 google-auth = "com.google.android.gms:play-services-auth:21.4.0"
 google-identity = "com.google.android.libraries.identity.googleid:googleid:1.1.1"
@@ -68,9 +57,6 @@ firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
 firebase-storage = { module = "com.google.firebase:firebase-storage" }
 google-services = "com.google.gms:google-services:4.4.3"
 junit = "junit:junit:4.13.2"
-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "jupiter-junit" }
-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jupiter-junit" }
-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "jupiter-junit" }
 # Koin (DI)
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
@@ -82,25 +68,14 @@ ksp-gradlePlugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.g
 lifecycle-compose-runtime = { module = "androidx.lifecycle:lifecycle-runtime-compose" }
 lifecycle-compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose" }
 lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
-mockk = "io.mockk:mockk:1.14.6"
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room-version" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room-version" }
 splashscreen = "androidx.core:core-splashscreen:1.0.1"
 test-espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx-test-espresso" }
 test-ext-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-test-ext" }
 timber = "com.jakewharton.timber:timber:5.0.1"
-turbine = "app.cash.turbine:turbine:1.2.1"
-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtxVersion" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompatVersion" }
-material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
 
 [bundles]
-camera = [
-    "camera-extension",
-    "camera-lifecycle",
-    "camera-view",
-    "camera2",
-]
 compose = [
     "activity-compose",
     "coil",
@@ -120,10 +95,6 @@ firebase = [
     "firebase-firestore",
     "firebase-storage",
 ]
-jupiter = [
-    "jupiter-api",
-    "jupiter-params",
-]
 koin = [
     "koin-android",
     "koin-core",
@@ -133,17 +104,9 @@ koin-compose = [
     "koin-androidx-compose",
     "koin-core",
 ]
-unit-tests = [
-    "assertk",
-    "coroutine-test",
-    "junit",
-    "mockk",
-    "turbine",
-]
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
-androidJUnit5 = { id = "de.mannodermaus.android-junit5", version.ref = "android-junit5" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

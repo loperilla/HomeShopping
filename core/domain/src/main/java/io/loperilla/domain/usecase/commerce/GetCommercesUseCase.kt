@@ -1,4 +1,4 @@
-package io.loperilla.domain
+package io.loperilla.domain.usecase.commerce
 
 import io.loperilla.domain.repository.CommerceRepository
 

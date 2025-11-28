@@ -2,10 +2,9 @@ package io.loperilla.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.loperilla.domain.AddProductUseCase
-import io.loperilla.domain.GetAllProductsUseCase
 import io.loperilla.domain.RemoveProductUseCase
 import io.loperilla.domain.model.fold
+import io.loperilla.domain.usecase.products.GetAllProductsUseCase
 import io.loperilla.ui.navigator.Navigator
 import io.loperilla.ui.navigator.routes.Destination
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +17,6 @@ import kotlinx.coroutines.launch
 class ProductsViewModel(
     private val navigator: Navigator,
     private val getAllProductsUseCase: GetAllProductsUseCase,
-    private val addProductUseCase: AddProductUseCase,
     private val removeProductUseCase: RemoveProductUseCase
 ) : ViewModel() {
 
