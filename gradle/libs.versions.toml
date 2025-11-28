@@ -115,7 +115,7 @@ jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serializati
 kspPlugin = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 # Own Plugins
 loperilla-application-compose = "homeshopping.application.compose:unspecified"
-loperilla-feature-ui = { id = "homeshopping.feature.ui:unspecified" }
+loperilla-feature-ui = { id = "homeshopping.feature.ui" }
 loperilla-jvm-library = { id = "homeshopping.jvm.library" }
 loperilla-library = { id = "homeshopping.android.library" }
 loperilla-library-compose = { id = "homeshopping.library.compose" }
