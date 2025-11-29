@@ -1,30 +1,21 @@
 [versions]
-accompanist_version = "0.36.0"
 agp = "8.13.1"
-android-junit5 = "1.13.1.0"
-androidTools = "31.13.0"
-androidx-activity = "1.11.0"
-androidx-lifecycle = "2.9.2"
+androidTools = "31.13.1"
+androidx-activity = "1.12.0"
+androidx-lifecycle = "2.10.0"
 androidx-test-espresso = "3.7.0"
 androidx-test-ext = "1.3.0"
 camerax_version = "1.5.1"
 coil = "2.7.0"
-jupiter-junit = "6.0.1"
 koin = "4.1.1"
 kotlin = "2.2.21"
 kotlinxSerializationJsonVersion = "1.9.0"
 ksp = "2.3.0"
 nav-version = "2.9.6"
-room-version = "2.8.0"
+room-version = "2.8.4"
 credentials = "1.5.0"
-coreKtxVersion = "1.17.0"
-appcompatVersion = "1.7.1"
-materialVersion = "1.13.0"
 
 [libraries]
-accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist_version" }
-accompanist-pager-indicator = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanist_version" }
-accompanist-permission = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist_version" }
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 android-tools-common = { module = "com.android.tools:common", version.ref = "androidTools" }
 androidx-activity = { module = "androidx.activity:activity", version.ref = "androidx-activity" }
@@ -34,13 +25,8 @@ androidx-core-ktx = "androidx.test:core-ktx:1.7.0"
 androidx-ui = { module = "androidx.compose.ui:ui" }
 androidx-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
 androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
-assertk = "com.willowtreeapps.assertk:assertk:0.28.1"
 # Gradle
 build-gradle = { module = "com.android.tools.build:gradle", version.ref = "agp" }
-camera-extension = { module = "androidx.camera:camera-extensions", version.ref = "camerax_version" }
-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "camerax_version" }
-camera-view = { module = "androidx.camera:camera-view", version.ref = "camerax_version" }
-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camerax_version" }
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 compose-bom = "androidx.compose:compose-bom:2025.11.01"
 compose-material3 = "androidx.compose.material3:material3:1.4.0"
@@ -52,29 +38,24 @@ compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
 compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
-coroutine-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2"
-datastore = "androidx.datastore:datastore-preferences:1.1.7"
-firebase-auth = { module = "com.google.firebase:firebase-auth-ktx" }
+firebase-auth = { module = "com.google.firebase:firebase-auth" }
 google-auth = "com.google.android.gms:play-services-auth:21.4.0"
 google-identity = "com.google.android.libraries.identity.googleid:googleid:1.1.1"
 androidx-credentials-core = { group = "androidx.credentials", name = "credentials", version.ref = "credentials" }
 androidx-credentials-compat = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "credentials" }
 #Firebase
-firebase-bom = "com.google.firebase:firebase-bom:34.5.0"
+firebase-bom = "com.google.firebase:firebase-bom:34.6.0"
 #crashlytics
 #login
 #firestore
-crashlytics-gradle = "com.google.firebase:firebase-crashlytics-gradle:3.0.4"
+crashlytics-gradle = "com.google.firebase:firebase-crashlytics-gradle:3.0.6"
 
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
-firebase-database = { module = "com.google.firebase:firebase-database-ktx" }
-firebase-firestore = { module = "com.google.firebase:firebase-firestore-ktx" }
-firebase-storage = { module = "com.google.firebase:firebase-storage-ktx" }
-google-services = "com.google.gms:google-services:4.4.3"
+firebase-database = { module = "com.google.firebase:firebase-database" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
+firebase-storage = { module = "com.google.firebase:firebase-storage" }
+google-services = "com.google.gms:google-services:4.4.4"
 junit = "junit:junit:4.13.2"
-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "jupiter-junit" }
-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jupiter-junit" }
-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "jupiter-junit" }
 # Koin (DI)
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
@@ -86,30 +67,14 @@ ksp-gradlePlugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.g
 lifecycle-compose-runtime = { module = "androidx.lifecycle:lifecycle-runtime-compose" }
 lifecycle-compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose" }
 lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
-mockk = "io.mockk:mockk:1.14.6"
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room-version" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room-version" }
-splashscreen = "androidx.core:core-splashscreen:1.0.1"
+splashscreen = "androidx.core:core-splashscreen:1.2.0"
 test-espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx-test-espresso" }
 test-ext-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-test-ext" }
 timber = "com.jakewharton.timber:timber:5.0.1"
-turbine = "app.cash.turbine:turbine:1.2.1"
-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtxVersion" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompatVersion" }
-material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
 
 [bundles]
-accompanist = [
-    "accompanist-pager",
-    "accompanist-pager-indicator",
-    "accompanist-permission",
-]
-camera = [
-    "camera-extension",
-    "camera-lifecycle",
-    "camera-view",
-    "camera2",
-]
 compose = [
     "activity-compose",
     "coil",
@@ -129,10 +94,6 @@ firebase = [
     "firebase-firestore",
     "firebase-storage",
 ]
-jupiter = [
-    "jupiter-api",
-    "jupiter-params",
-]
 koin = [
     "koin-android",
     "koin-core",
@@ -142,17 +103,9 @@ koin-compose = [
     "koin-androidx-compose",
     "koin-core",
 ]
-unit-tests = [
-    "assertk",
-    "coroutine-test",
-    "junit",
-    "mockk",
-    "turbine",
-]
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
-androidJUnit5 = { id = "de.mannodermaus.android-junit5", version.ref = "android-junit5" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
@@ -160,9 +113,10 @@ jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin"
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kspPlugin = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 # Own Plugins
-loperilla-application-compose = "homeshopping.application.compose:unspecified"
-loperilla-feature-ui = "homeshopping.feature.ui:unspecified"
+loperilla-application-compose = { id = "homeshopping.application.compose" }
+loperilla-application = { id = "homeshopping.android.application" }
+loperilla-feature-ui = { id = "homeshopping.feature.ui" }
 loperilla-jvm-library = { id = "homeshopping.jvm.library" }
 loperilla-library = { id = "homeshopping.android.library" }
 loperilla-library-compose = { id = "homeshopping.library.compose" }
-version-catalog-update = "nl.littlerobots.version-catalog-update:1.0.0"
+version-catalog-update = "nl.littlerobots.version-catalog-update:1.0.1"

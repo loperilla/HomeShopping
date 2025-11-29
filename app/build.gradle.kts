@@ -43,6 +43,8 @@ dependencies {
     home()
     user()
     commerce()
+    products()
+    addProducts()
 }
 
 
@@ -81,4 +83,13 @@ fun DependencyHandlerScope.user() {
 fun DependencyHandlerScope.commerce() {
     implementation(projects.commerce.domain)
     implementation(projects.commerce.presentation)
+}
+fun DependencyHandlerScope.products() {
+    implementation(projects.products.domain)
+    implementation(projects.products.presentation)
+}
+
+fun DependencyHandlerScope.addProducts() {
+    implementation(projects.addProduct.domain)
+    implementation(projects.addProduct.presentation)
 }

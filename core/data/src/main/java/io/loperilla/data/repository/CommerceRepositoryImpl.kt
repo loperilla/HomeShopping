@@ -1,6 +1,6 @@
 package io.loperilla.data.repository
 
-import io.loperilla.data.network.CommerceCollection
+import com.google.firebase.firestore.CollectionReference
 import io.loperilla.data.network.model.CommerceModel
 import io.loperilla.domain.model.DomainError
 import io.loperilla.domain.model.DomainResult
@@ -16,7 +16,7 @@ import kotlinx.coroutines.tasks.await
  * All rights reserved 2025
  */
 class CommerceRepositoryImpl(
-    private val collection: CommerceCollection
+    private val collection: CollectionReference
 ): CommerceRepository {
     override suspend fun getCommerces(): DomainResult<List<Commerce>> {
         return try {

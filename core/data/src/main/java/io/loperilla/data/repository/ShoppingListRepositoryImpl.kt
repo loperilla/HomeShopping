@@ -1,6 +1,6 @@
 package io.loperilla.data.repository
 
-import io.loperilla.data.network.ShoppingListCollection
+import com.google.firebase.firestore.CollectionReference
 import io.loperilla.data.network.model.ShoppingListModel
 import io.loperilla.domain.model.DomainError
 import io.loperilla.domain.model.DomainResult
@@ -15,7 +15,7 @@ import kotlinx.coroutines.tasks.await
  * All rights reserved 2025
  */
 class ShoppingListRepositoryImpl(
-    private val shoppingListCollection: ShoppingListCollection
+    private val shoppingListCollection: CollectionReference
 ): ShoppingListRepository {
     override suspend fun getLastShoppingList(): DomainResult<ShoppingList> {
         return try {

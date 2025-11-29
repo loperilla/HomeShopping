@@ -2,11 +2,11 @@ package io.loperilla.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.loperilla.domain.GetCommercesUseCase
 import io.loperilla.domain.NewCommerceUseCase
 import io.loperilla.domain.RemoveCommerceUseCase
 import io.loperilla.domain.model.DomainError
 import io.loperilla.domain.model.fold
+import io.loperilla.domain.usecase.commerce.GetCommercesUseCase
 import io.loperilla.ui.navigator.Navigator
 import io.loperilla.ui.snackbar.SnackbarController
 import io.loperilla.ui.snackbar.SnackbarEvent

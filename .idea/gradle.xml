@@ -22,6 +22,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/add-product" />
+            <option value="$PROJECT_DIR$/add-product/domain" />
+            <option value="$PROJECT_DIR$/add-product/presentation" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/build-logic" />
             <option value="$PROJECT_DIR$/build-logic/convention" />
@@ -41,6 +44,9 @@
             <option value="$PROJECT_DIR$/login" />
             <option value="$PROJECT_DIR$/login/domain" />
             <option value="$PROJECT_DIR$/login/presentation" />
+            <option value="$PROJECT_DIR$/products" />
+            <option value="$PROJECT_DIR$/products/domain" />
+            <option value="$PROJECT_DIR$/products/presentation" />
             <option value="$PROJECT_DIR$/register" />
             <option value="$PROJECT_DIR$/register/domain" />
             <option value="$PROJECT_DIR$/register/presentation" />

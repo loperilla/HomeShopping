@@ -10,5 +10,6 @@ sealed interface HomeEvent {
     data object LogOut : HomeEvent
     data object OnClickShoppingListDetail : HomeEvent
     data object NavigateToCommerce : HomeEvent
+    data object NavigateToProducts : HomeEvent
     data object OnUserInfoClicked : HomeEvent
 }

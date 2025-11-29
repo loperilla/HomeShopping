@@ -4,27 +4,28 @@ import androidx.credentials.CredentialManager
 import androidx.room.Room
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
+import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.firestore
 import io.loperilla.data.local.account.AccountManagerImpl
 import io.loperilla.data.local.database.HomeShoppingDatabase
 import io.loperilla.data.local.database.dao.QueryDao
 import io.loperilla.data.local.database.dao.UserDao
 import io.loperilla.data.network.AuthRepositoryImpl
 import io.loperilla.data.network.COMMERCE_COLLECTION_NAME
-import io.loperilla.data.network.CommerceCollection
+import io.loperilla.data.network.PRODUCTS_COLLECTION_NAME
 import io.loperilla.data.network.SHOPPING_LIST_COLLECTION_NAME
-import io.loperilla.data.network.ShoppingListCollection
 import io.loperilla.data.repository.CommerceRepositoryImpl
 import io.loperilla.data.repository.LocalDataRepositoryImpl
+import io.loperilla.data.repository.ProductsRepositoryImpl
 import io.loperilla.data.repository.ShoppingListRepositoryImpl
 import io.loperilla.domain.repository.AccountManager
 import io.loperilla.domain.repository.AuthRepository
 import io.loperilla.domain.repository.CommerceRepository
 import io.loperilla.domain.repository.LocalDataRepository
+import io.loperilla.domain.repository.ProductsRepository
 import io.loperilla.domain.repository.ShoppingListRepository
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
@@ -54,11 +55,21 @@ val dataModule = module {
     singleOf(::LocalDataRepositoryImpl).bind(LocalDataRepository::class)
 
     single<FirebaseFirestore> { Firebase.firestore }
-    single<ShoppingListCollection> { get<FirebaseFirestore>().collection(SHOPPING_LIST_COLLECTION_NAME) }
-    singleOf(::ShoppingListRepositoryImpl).bind(ShoppingListRepository::class)
+    single<ShoppingListRepository> {
+        val collection = get<FirebaseFirestore>().collection(SHOPPING_LIST_COLLECTION_NAME)
+        ShoppingListRepositoryImpl(collection)
+    }
 
-    single<CommerceCollection> { get<FirebaseFirestore>().collection(COMMERCE_COLLECTION_NAME) }
-    singleOf(::CommerceRepositoryImpl).bind(CommerceRepository::class)
+
+    single<CommerceRepository> {
+        val commerceCollection = get<FirebaseFirestore>().collection(COMMERCE_COLLECTION_NAME)
+        CommerceRepositoryImpl(commerceCollection)
+    }
+
+    single<ProductsRepository> {
+        val productCollection = get<FirebaseFirestore>().collection(PRODUCTS_COLLECTION_NAME)
+        ProductsRepositoryImpl(productCollection)
+    }
 
     // Auth
     single<SignInClient> { Identity.getSignInClient(androidApplication()) }

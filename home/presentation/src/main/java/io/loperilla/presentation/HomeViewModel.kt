@@ -44,9 +44,10 @@ class HomeViewModel(
     fun onEvent(event: HomeEvent) = viewModelScope.launch {
         when (event) {
             HomeEvent.LogOut -> onLogOutClicked()
-            HomeEvent.OnClickShoppingListDetail -> TODO()
+            HomeEvent.OnClickShoppingListDetail -> navigator.navigate(Destination.Products)
             HomeEvent.OnUserInfoClicked -> navigator.navigate(Destination.UserDetail)
             HomeEvent.NavigateToCommerce -> navigator.navigate(Destination.Commerce)
+            HomeEvent.NavigateToProducts -> navigator.navigate(Destination.Products)
         }
     }
 
