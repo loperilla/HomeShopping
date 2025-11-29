@@ -113,25 +113,29 @@ jobs:
           target: default
           arch: x86_64
           profile: Nexus 6
+          # Usamos un script más directo y robusto
           script: |
             echo "Installing APKs..."
-            # Instalamos con -t (permitir test packages) y -g (conceder permisos)
             adb install -t -g app/build/outputs/apk/debug/app-debug.apk
             adb install -t -g app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
-
-            echo "Finding Test Runner..."
-            # Buscamos dinámicamente el nombre del runner instalado
-            # Esto evita errores si el package name no es exactamente ".test"
-            RUNNER=$(adb shell pm list instrumentation | grep io.loperilla.homeshopping | awk -F: '{print $2}' | tr -d '\r')
-
-            echo "Runner found: $RUNNER"
-
-            if [ -z "$RUNNER" ]; then
-                echo "Error: No instrumentation runner found!"
-                exit 1
-            fi
-
+            
+            echo "Verifying instrumentation..."
+            adb shell pm list instrumentation
+            
             echo "Running Instrumentation..."
-            # Ejecutamos usando el runner detectado
-            adb shell am instrument -w "$RUNNER"
-          
+            # Ejecutamos directamente asumiendo el nombre estándar.
+            # Si falla, miraremos el log del 'pm list instrumentation' de arriba para ver el nombre real.
+            adb shell am instrument -w io.loperilla.homeshopping.test/androidx.test.runner.AndroidJUnitRunner
+
+  # ------------------------------------------------------------
+  # JOB 4: CLEANUP (Borra los APKs al terminar)
+  # ------------------------------------------------------------
+  cleanup:
+    runs-on: ubuntu-latest
+    if: always() # Se ejecuta aunque fallen los tests
+    needs: [unit-tests, instrumented-tests] # Espera a que terminen los tests
+    steps:
+      - name: Delete Artifacts
+        uses: geekyeggo/delete-artifact@v5
+        with:
+          name: app-apks
