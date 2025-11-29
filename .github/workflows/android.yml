@@ -15,23 +15,19 @@ jobs:
         with:
           distribution: zulu
           java-version: 17
+
       - name: Load API Token from secrets
         env:
           API_TOKEN: ${{ secrets.GOOGLEWEBCLIENTID }}
         run: echo GoogleWebClientId=\"$API_TOKEN\" > ./local.properties
 
-      - name: Cache Gradle and wrapper
-        uses: actions/cache@v4
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
         with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+          gradle-version: wrapper
 
       - name: Make Gradle executable
         run: chmod +x ./gradlew
 
       - name: Build with Gradle
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleDebug --no-daemon --parallel --build-cache
