@@ -15,6 +15,9 @@ nav-version = "2.9.6"
 room-version = "2.8.4"
 credentials = "1.5.0"
 uiTestJunit4 = "1.9.5"
+mockk = "1.14.6"
+turbine = "1.2.1"
+coroutines = "1.8.1"
 
 [libraries]
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
@@ -44,25 +47,21 @@ google-auth = "com.google.android.gms:play-services-auth:21.4.0"
 google-identity = "com.google.android.libraries.identity.googleid:googleid:1.1.1"
 androidx-credentials-core = { group = "androidx.credentials", name = "credentials", version.ref = "credentials" }
 androidx-credentials-compat = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "credentials" }
-#Firebase
 firebase-bom = "com.google.firebase:firebase-bom:34.6.0"
-#crashlytics
-#login
-#firestore
 crashlytics-gradle = "com.google.firebase:firebase-crashlytics-gradle:3.0.6"
-
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 firebase-database = { module = "com.google.firebase:firebase-database" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
 firebase-storage = { module = "com.google.firebase:firebase-storage" }
 google-services = "com.google.gms:google-services:4.4.4"
 junit = "junit:junit:4.13.2"
-# Koin (DI)
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
-
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJsonVersion" }
 ksp-gradlePlugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 lifecycle-compose-runtime = { module = "androidx.lifecycle:lifecycle-runtime-compose" }
@@ -74,6 +73,7 @@ splashscreen = "androidx.core:core-splashscreen:1.2.0"
 test-espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx-test-espresso" }
 test-ext-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-test-ext" }
 timber = "com.jakewharton.timber:timber:5.0.1"
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "uiTestJunit4" }
 
 [bundles]

@@ -12,9 +12,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import io.loperilla.designsystem.composables.Screen
-import io.loperilla.designsystem.composables.button.ShoppingButton
+import io.loperilla.designsystem.composables.button.SimpleButton
 import io.loperilla.designsystem.composables.spacers.FullWeightSpacer
 import io.loperilla.designsystem.previews.PIXEL_33_NIGHT
 import io.loperilla.presentation.designsystem.R
@@ -37,6 +39,9 @@ fun WelcomeScreen(
         modifier = modifier
             .fillMaxSize()
             .padding(8.dp)
+            .semantics {
+                contentDescription = "Welcome Screen"
+            }
     ) {
         FullWeightSpacer()
         Image(
@@ -47,7 +52,7 @@ fun WelcomeScreen(
                 .clip(CircleShape)
         )
         FullWeightSpacer()
-        ShoppingButton(
+        SimpleButton(
             textButton = "Iniciar Sesión",
             onClickButton = {
                 onEvent(WelcomeEvent.NavigateToLogin)
@@ -55,7 +60,7 @@ fun WelcomeScreen(
             enableButton = true
         )
 
-        ShoppingButton(
+        SimpleButton(
             textButton = "Registrarse",
             onClickButton = {
                 onEvent(WelcomeEvent.NavigateToRegister)

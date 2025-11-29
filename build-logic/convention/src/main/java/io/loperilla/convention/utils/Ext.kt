@@ -5,6 +5,7 @@ import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.DependencyHandlerScope
 import org.gradle.kotlin.dsl.getByType
+import org.gradle.kotlin.dsl.project
 
 
 /*****
@@ -19,6 +20,8 @@ val Project.libs: VersionCatalog
 
 fun DependencyHandlerScope.tests(target: Project) {
     "testImplementation"(target.libs.findLibrary("junit").get())
+    "testImplementation"(project(":core:testing"))
+    "androidTestImplementation"(project(":core:testing"))
     "androidTestImplementation"(target.libs.findLibrary("androidx.compose.ui.test.junit4").get())
     "androidTestImplementation"(target.libs.findLibrary("test.ext.junit").get())
     "androidTestImplementation"(target.libs.findLibrary("test.espresso").get())

@@ -27,17 +27,14 @@ class WelcomeScreenTest {
             WelcomeScreen(onEvent = {})
         }
 
-        // Verificamos que la imagen del logo exista
         composeTestRule
             .onNodeWithContentDescription("Application logo")
             .assertIsDisplayed()
 
-        // Verificamos el botón de Iniciar Sesión
         composeTestRule
             .onNodeWithText("Iniciar Sesión")
             .assertIsDisplayed()
 
-        // Verificamos el botón de Registrarse
         composeTestRule
             .onNodeWithText("Registrarse")
             .assertIsDisplayed()
@@ -71,7 +68,6 @@ class WelcomeScreenTest {
             WelcomeScreen(onEvent = {})
         }
 
-        // Buscamos por content description y verificamos que sea correcto (accesibilidad)
         composeTestRule
             .onNodeWithContentDescription("Application logo")
             .assertContentDescriptionEquals("Application logo")
@@ -82,18 +78,15 @@ class WelcomeScreenTest {
         var capturedEvent: WelcomeEvent? = null
 
         composeTestRule.setContent {
-            // Capturamos el evento en la lambda
             WelcomeScreen(onEvent = { event ->
                 capturedEvent = event
             })
         }
 
-        // Hacemos click en el botón
         composeTestRule
             .onNodeWithText("Iniciar Sesión")
             .performClick()
 
-        // Verificamos que el evento capturado sea el correcto
         assertEquals(WelcomeEvent.NavigateToLogin, capturedEvent)
     }
 
@@ -107,12 +100,10 @@ class WelcomeScreenTest {
             })
         }
 
-        // Hacemos click en el botón
         composeTestRule
             .onNodeWithText("Registrarse")
             .performClick()
 
-        // Verificamos que el evento capturado sea el correcto
         assertEquals(WelcomeEvent.NavigateToRegister, capturedEvent)
     }
 
@@ -122,7 +113,6 @@ class WelcomeScreenTest {
             WelcomeScreen(onEvent = {})
         }
 
-        // Verificamos que ambos botones tengan la acción de click y estén habilitados
         composeTestRule
             .onNodeWithText("Iniciar Sesión")
             .assertHasClickAction()
