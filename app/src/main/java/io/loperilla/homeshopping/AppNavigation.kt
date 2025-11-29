@@ -52,7 +52,6 @@ import org.koin.androidx.compose.koinViewModel
 fun AppNavigation(
     navigator: Navigator,
     snackbarController: SnackbarController,
-    onFinishRefreshUser: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ) {
@@ -93,8 +92,6 @@ fun AppNavigation(
             ) {
                 composable<Destination.Welcome> {
                     val viewModel = koinViewModel<WelcomeViewModel>()
-                    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
-                    onFinishRefreshUser(state == WelcomeViewModel.WelcomeState.Finish)
                     WelcomeScreen(
                         onEvent = viewModel::onEvent
                     )
