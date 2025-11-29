@@ -24,26 +24,34 @@ jobs:
           API_TOKEN: ${{ secrets.GOOGLEWEBCLIENTID }}
         run: echo GoogleWebClientId=\"$API_TOKEN\" > ./local.properties
 
+      # OPTIMIZACIÓN 1: Configuración avanzada de Gradle Cache
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: wrapper
+          # Habilita caché estricto para dependencias y wrapper
+          cache-read-only: ${{ github.ref != 'refs/heads/main' }}
 
       - name: Make Gradle executable
         run: chmod +x ./gradlew
 
-      # Compilamos tanto la App como los Tests de Android para no recompilar después
+      # OPTIMIZACIÓN 2: Memoria JVM y configuración de Gradle
+      # -Dorg.gradle.jvmargs=-Xmx4g: Da 4GB de RAM a Gradle (el runner tiene 7GB)
+      # --parallel: Compila módulos en paralelo
+      # --max-workers=2: Limita workers para no saturar la CPU del runner (2 cores)
       - name: Build Debug APK and Test APK
-        run: ./gradlew assembleDebug assembleAndroidTest --no-daemon --build-cache
+        run: ./gradlew assembleDebug assembleAndroidTest --no-daemon --parallel --build-cache --max-workers=2 -Dorg.gradle.jvmargs="-Xmx4g -XX:+UseParallelGC"
 
-      # Guardamos la carpeta 'app/build' completa para que los otros jobs la usen
-      - name: Upload Build Artifacts
+      # OPTIMIZACIÓN 3: Subir SOLO los APKs, no toda la carpeta build
+      # Esto es mucho más rápido de subir y descargar
+      - name: Upload APK Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: app-build
-          path: app/build
+          name: app-apks
+          path: |
+            app/build/outputs/apk/debug/*.apk
+            app/build/outputs/apk/androidTest/debug/*.apk
           retention-days: 1
-
   # ------------------------------------------------------------
   # JOB 2: UNIT TESTS (Usa lo compilado anteriormente)
   # ------------------------------------------------------------

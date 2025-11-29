@@ -22,11 +22,21 @@ internal fun Project.configureAndroidCompose(
             compose = true
             buildConfig = true
         }
+        packaging {
+            resources {
+                pickFirsts.add("META-INF/LICENSE.md")
+                pickFirsts.add("META-INF/LICENSE-notice.md")
+                pickFirsts.add("META-INF/AL2.0")
+                pickFirsts.add("META-INF/LGPL2.1")
+            }
+        }
         dependencies {
             val bom = libs.findLibrary("compose-bom").get()
             "implementation"(platform(bom))
             "implementation"(libs.findBundle("compose").get())
+            "implementation"(libs.findLibrary("androidx.junit.ktx").get())
             "androidTestImplementation"(platform(bom))
+
 //            "debugImplementation"(libs.findLibrary("androidx.ui.tooling.preview").get())
         }
     }
