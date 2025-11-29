@@ -10,6 +10,7 @@ import io.loperilla.domain.di.productsDomainModule
 import io.loperilla.domain.di.registerUseCaseModule
 import io.loperilla.domain.usecase.di.homeUseCaseModule
 import io.loperilla.domain.usecase.di.loginUseCaseModule
+import io.loperilla.homeshopping.di.mainActivityPresentationModule
 import io.loperilla.presentation.di.addProductPresentationModule
 import io.loperilla.presentation.di.commercePresentationModule
 import io.loperilla.presentation.di.homeViewModelModule
@@ -36,7 +37,7 @@ class App : Application() {
         startKoin {
             androidContext(this@App)
             modules(
-                welcomeViewModelModule
+                mainActivityPresentationModule, welcomeViewModelModule
             )
             modules(getCoreModules())
             modules(getLoginModules())
@@ -56,7 +57,12 @@ class App : Application() {
 
     private fun getHomeModules(): List<Module> = listOf(homeUseCaseModule, homeViewModelModule)
     private fun getUserModules(): List<Module> = listOf(userDetailViewModelModule)
-    private fun getCommerceModules(): List<Module> = listOf(commercePresentationModule, commerceDomainModule)
-    private fun getProductsModules(): List<Module> = listOf(productsPresentationModule, productsDomainModule)
-    private fun getAddProductsModules(): List<Module> = listOf(addProductPresentationModule, addProductDomainModule)
+    private fun getCommerceModules(): List<Module> =
+        listOf(commercePresentationModule, commerceDomainModule)
+
+    private fun getProductsModules(): List<Module> =
+        listOf(productsPresentationModule, productsDomainModule)
+
+    private fun getAddProductsModules(): List<Module> =
+        listOf(addProductPresentationModule, addProductDomainModule)
 }
