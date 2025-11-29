@@ -115,8 +115,23 @@ jobs:
           profile: Nexus 6
           script: |
             echo "Installing APKs..."
-            find app/build/outputs/apk -name "*.apk"
-            adb install -r app/build/outputs/apk/debug/app-debug.apk
-            adb install -r app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+            # Instalamos con -t (permitir test packages) y -g (conceder permisos)
+            adb install -t -g app/build/outputs/apk/debug/app-debug.apk
+            adb install -t -g app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+
+            echo "Finding Test Runner..."
+            # Buscamos dinámicamente el nombre del runner instalado
+            # Esto evita errores si el package name no es exactamente ".test"
+            RUNNER=$(adb shell pm list instrumentation | grep io.loperilla.homeshopping | awk -F: '{print $2}' | tr -d '\r')
+
+            echo "Runner found: $RUNNER"
+
+            if [ -z "$RUNNER" ]; then
+                echo "Error: No instrumentation runner found!"
+                exit 1
+            fi
+
             echo "Running Instrumentation..."
-            adb shell am instrument -w io.loperilla.homeshopping.test/androidx.test.runner.AndroidJUnitRunner
+            # Ejecutamos usando el runner detectado
+            adb shell am instrument -w "$RUNNER"
+          
