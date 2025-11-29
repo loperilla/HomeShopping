@@ -24,26 +24,19 @@ jobs:
           API_TOKEN: ${{ secrets.GOOGLEWEBCLIENTID }}
         run: echo GoogleWebClientId=\"$API_TOKEN\" > ./local.properties
 
-      # OPTIMIZACIÓN 1: Configuración avanzada de Gradle Cache
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: wrapper
-          # Habilita caché estricto para dependencias y wrapper
           cache-read-only: ${{ github.ref != 'refs/heads/main' }}
 
       - name: Make Gradle executable
         run: chmod +x ./gradlew
 
-      # OPTIMIZACIÓN 2: Memoria JVM y configuración de Gradle
-      # -Dorg.gradle.jvmargs=-Xmx4g: Da 4GB de RAM a Gradle (el runner tiene 7GB)
-      # --parallel: Compila módulos en paralelo
-      # --max-workers=2: Limita workers para no saturar la CPU del runner (2 cores)
       - name: Build Debug APK and Test APK
         run: ./gradlew assembleDebug assembleAndroidTest --no-daemon --parallel --build-cache --max-workers=2 -Dorg.gradle.jvmargs="-Xmx4g -XX:+UseParallelGC"
 
-      # OPTIMIZACIÓN 3: Subir SOLO los APKs, no toda la carpeta build
-      # Esto es mucho más rápido de subir y descargar
+      # Subimos los APKs con el nombre "app-apks"
       - name: Upload APK Artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -52,8 +45,9 @@ jobs:
             app/build/outputs/apk/debug/*.apk
             app/build/outputs/apk/androidTest/debug/*.apk
           retention-days: 1
+
   # ------------------------------------------------------------
-  # JOB 2: UNIT TESTS (Usa lo compilado anteriormente)
+  # JOB 2: UNIT TESTS (Compila sus propios tests, usa caché)
   # ------------------------------------------------------------
   unit-tests:
     runs-on: ubuntu-latest
@@ -67,18 +61,16 @@ jobs:
           distribution: zulu
           java-version: 17
 
-      # Restauramos el local.properties (necesario a veces para configuración básica)
       - name: Load API Token from secrets
         env:
           API_TOKEN: ${{ secrets.GOOGLEWEBCLIENTID }}
         run: echo GoogleWebClientId=\"$API_TOKEN\" > ./local.properties
 
-      # Recuperamos lo que compiló el job anterior
-      - name: Download Build Artifacts
-        uses: actions/download-artifact@v4
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
         with:
-          name: app-build
-          path: app/build
+          gradle-version: wrapper
+          cache-read-only: true # En PRs solo leemos caché
 
       - name: Make Gradle executable
         run: chmod +x ./gradlew
@@ -87,7 +79,7 @@ jobs:
         run: ./gradlew testDebugUnitTest
 
   # ------------------------------------------------------------
-  # JOB 3: INSTRUMENTED TESTS (Usa lo compilado anteriormente)
+  # JOB 3: INSTRUMENTED TESTS (Usa los APKs del Job 1)
   # ------------------------------------------------------------
   instrumented-tests:
     runs-on: ubuntu-latest
@@ -101,20 +93,12 @@ jobs:
           distribution: zulu
           java-version: 17
 
-      - name: Load API Token from secrets
-        env:
-          API_TOKEN: ${{ secrets.GOOGLEWEBCLIENTID }}
-        run: echo GoogleWebClientId=\"$API_TOKEN\" > ./local.properties
-
-      # Recuperamos lo que compiló el job anterior
-      - name: Download Build Artifacts
+      # Descargamos el artefacto correcto: "app-apks"
+      - name: Download APK Artifacts
         uses: actions/download-artifact@v4
         with:
-          name: app-build
-          path: app/build
-
-      - name: Make Gradle executable
-        run: chmod +x ./gradlew
+          name: app-apks
+          path: app/build/outputs/apk
 
       - name: Enable KVM group perms
         run: |
@@ -129,4 +113,10 @@ jobs:
           target: default
           arch: x86_64
           profile: Nexus 6
-          script: ./gradlew connectedDebugAndroidTest
+          script: |
+            echo "Installing APKs..."
+            find app/build/outputs/apk -name "*.apk"
+            adb install -r app/build/outputs/apk/debug/app-debug.apk
+            adb install -r app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+            echo "Running Instrumentation..."
+            adb shell am instrument -w io.loperilla.homeshopping.test/androidx.test.runner.AndroidJUnitRunner
