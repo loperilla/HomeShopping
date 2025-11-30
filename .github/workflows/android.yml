@@ -122,6 +122,7 @@ jobs:
           target: default
           arch: x86_64
           profile: Nexus 6
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -no-metrics
           # MEJORA: Usamos 'find' para detectar los APKs sin importar el nombre exacto del archivo
           script: |
             echo "Installing APKs..."
@@ -139,8 +140,8 @@ jobs:
   # ------------------------------------------------------------
   cleanup:
     runs-on: ubuntu-latest
-    if: always() # Se ejecuta aunque fallen los tests
-    needs: [unit-tests, instrumented-tests] # Espera a que terminen los tests
+    if: always()
+    needs: [unit-tests, instrumented-tests]
     steps:
       - name: Delete Artifacts
         uses: geekyeggo/delete-artifact@v5

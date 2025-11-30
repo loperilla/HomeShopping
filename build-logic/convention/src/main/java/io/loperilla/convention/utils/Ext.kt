@@ -20,6 +20,7 @@ val Project.libs: VersionCatalog
 
 fun DependencyHandlerScope.tests(target: Project) {
     "testImplementation"(target.libs.findLibrary("junit").get())
+    "implementation"(project(":core:testing"))
     "testImplementation"(project(":core:testing"))
     "androidTestImplementation"(project(":core:testing"))
     "androidTestImplementation"(target.libs.findLibrary("androidx.compose.ui.test.junit4").get())
