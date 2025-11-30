@@ -19,6 +19,7 @@ class JvmLibraryPlugin : Plugin<Project> {
 
             dependencies {
                 "implementation"(target.libs.findLibrary("koin-core").get())
+                "testImplementation"(target.libs.findBundle("unit-test").get())
             }
         }
     }
