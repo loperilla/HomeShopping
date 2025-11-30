@@ -60,6 +60,8 @@ junit = "junit:junit:4.13.2"
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin"}
+koin-junit4 = { module = "io.insert-koin:koin-test-junit4", version.ref = "koin"}
 kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
@@ -106,6 +108,14 @@ koin-compose = [
     "koin-android",
     "koin-androidx-compose",
     "koin-core",
+]
+
+unit-test = [
+    "junit",
+    "kotlinx-coroutines-test",
+    "mockk",
+    "koin-test",
+    "koin-junit4"
 ]
 
 [plugins]
