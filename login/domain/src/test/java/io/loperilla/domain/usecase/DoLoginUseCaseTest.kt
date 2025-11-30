@@ -24,7 +24,7 @@ import kotlin.test.assertEquals
  * All rights reserved 2025
  */
 
-class LoginUseCaseModuleTest : KoinTest {
+class LoginUseCaseTest : KoinTest {
 
     private val authRepository: AuthRepository = mockk()
     private val localDataRepository: LocalDataRepository = mockk()
