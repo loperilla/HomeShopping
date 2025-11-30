@@ -17,6 +17,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import io.loperilla.designsystem.composables.Screen
@@ -29,6 +30,14 @@ import io.loperilla.designsystem.composables.text.TextTitle
 import io.loperilla.designsystem.composables.topbar.CommonTopBar
 import io.loperilla.designsystem.previews.PIXEL_33_NIGHT
 import io.loperilla.domain.model.commerce.Commerce
+import io.loperilla.testing.tag.COMMERCE_EMPTY_LIST
+import io.loperilla.testing.tag.COMMERCE_FAB
+import io.loperilla.testing.tag.COMMERCE_LOADING
+import io.loperilla.testing.tag.COMMERCE_ROOT_SCREEN
+import io.loperilla.testing.tag.COMMERCE_SCREEN
+import io.loperilla.testing.tag.COMMERCE_TOPBAR
+import io.loperilla.testing.tag.NEW_COMMERCE_INPUT
+import io.loperilla.testing.tag.COMMERCE_LIST
 
 /*****
  * Project: HomeShopping
@@ -51,7 +60,9 @@ fun CommerceScreen(
                     navIcon = Icons.AutoMirrored.Filled.ArrowBack,
                     navActionClick = {
                         onEvent(CommerceEvent.GoBack)
-                    }
+                    },
+                    modifier = Modifier
+                        .testTag(COMMERCE_TOPBAR)
                 )
             }
         },
@@ -60,7 +71,9 @@ fun CommerceScreen(
                 FloatingActionButton(
                     onClick = {
                         onEvent(CommerceEvent.AddNewCommerce)
-                    }
+                    },
+                    modifier = Modifier
+                        .testTag(COMMERCE_FAB)
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,
@@ -70,11 +83,18 @@ fun CommerceScreen(
             }
         },
         modifier = modifier
+            .testTag(COMMERCE_ROOT_SCREEN)
     ) {
-        AnimatedFullScreenLoading(state.isLoading, Modifier.padding(it))
+        AnimatedFullScreenLoading(
+            isLoading = state.isLoading,
+            Modifier
+                .padding(it)
+                .testTag(COMMERCE_LOADING)
+        )
         Column(
             modifier = Modifier
                 .padding(it)
+                .testTag(COMMERCE_SCREEN)
                 .fillMaxSize(),
         ) {
             AnimatedVisibility(state.showNewCommerceInput) {
@@ -91,6 +111,7 @@ fun CommerceScreen(
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
                         .padding(top = 8.dp)
+                        .testTag(NEW_COMMERCE_INPUT)
                 )
             }
             CommerceListScreen(state, onEvent)
@@ -109,6 +130,7 @@ private fun CommerceListScreen(
         LazyColumn(
             modifier = modifier
                 .fillMaxSize()
+                .testTag(COMMERCE_LIST)
                 .padding(16.dp),
         ) {
             items(state.commerceList.size) { index ->
@@ -161,6 +183,7 @@ private fun EmptyCommerceListScreen(
         HomeShoppingCard(
             modifier = modifier
                 .fillMaxWidth()
+                .testTag(COMMERCE_EMPTY_LIST)
                 .wrapContentHeight()
                 .clickable {
                     onEvent(CommerceEvent.AddNewCommerce)

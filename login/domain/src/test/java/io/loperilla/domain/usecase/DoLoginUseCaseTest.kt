@@ -13,6 +13,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.test.KoinTest
 import org.koin.test.verify.verify
 import kotlin.test.assertEquals
@@ -24,7 +25,8 @@ import kotlin.test.assertEquals
  * All rights reserved 2025
  */
 
-class LoginUseCaseTest : KoinTest {
+@OptIn(KoinExperimentalAPI::class)
+class DoLoginUseCaseTest : KoinTest {
 
     private val authRepository: AuthRepository = mockk()
     private val localDataRepository: LocalDataRepository = mockk()
