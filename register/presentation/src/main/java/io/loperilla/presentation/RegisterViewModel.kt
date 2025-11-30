@@ -13,6 +13,7 @@ import io.loperilla.ui.snackbar.SnackbarEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -30,15 +31,7 @@ class RegisterViewModel(
     private val snackbarController: SnackbarController
 ) : ViewModel() {
     private var _stateFlow: MutableStateFlow<RegisterState> = MutableStateFlow(RegisterState())
-    val stateFlow: StateFlow<RegisterState> = _stateFlow
-        .onStart {
-
-        }
-        .stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5_000),
-            RegisterState()
-        )
+    val stateFlow: StateFlow<RegisterState> = _stateFlow.asStateFlow()
 
     fun onEvent(event: RegisterEvent) = viewModelScope.launch {
         when (event) {
