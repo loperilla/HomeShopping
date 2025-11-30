@@ -28,7 +28,7 @@ class CommerceViewModel(
     private val navigator: Navigator,
     private val getCommercesUseCase: GetCommercesUseCase,
     private val newCommerceUseCase: NewCommerceUseCase,
-    private val deleteCommerceUseCase: RemoveCommerceUseCase,
+    private val removeCommerceUseCase: RemoveCommerceUseCase,
     private val snackbarController: SnackbarController
 ): ViewModel() {
     private var _stateFlow: MutableStateFlow<CommerceState> = MutableStateFlow(CommerceState())
@@ -77,7 +77,7 @@ class CommerceViewModel(
                     )
                 }
 
-                deleteCommerceUseCase(newEvent.id).fold(
+                removeCommerceUseCase(newEvent.id).fold(
                     onSuccess = {
                         getCommerceList()
                     },
