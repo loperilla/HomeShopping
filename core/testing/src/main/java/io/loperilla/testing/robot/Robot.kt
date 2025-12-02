@@ -1,9 +1,12 @@
 package io.loperilla.testing.robot
 
 import androidx.activity.ComponentActivity
+import androidx.compose.ui.test.assertContentDescriptionEquals
+import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
@@ -69,3 +72,24 @@ fun <T : Robot> T.performTextInputImeActionToTag(tag: Tag): T {
     return this
 }
 
+fun <T : Robot> T.assertTagContentDescriptionEquals(tag: Tag, expectedDescription: String): T {
+    composeTestRule
+        .onNodeWithTag(tag.name)
+        .assertExists("${tag.name} no encontrado")
+        .assertContentDescriptionEquals(expectedDescription)
+    return this
+}
+
+fun <T: Robot> T.assertTagIsClickable(tag: Tag): T {
+    composeTestRule
+        .onNodeWithTag(tag.name)
+        .assertHasClickAction()
+    return this
+}
+
+fun <T: Robot> T.assertTagText(tag: Tag, expectedText: String): T {
+    composeTestRule
+        .onNodeWithTag(tag.name)
+        .assertTextEquals(expectedText)
+    return this
+}

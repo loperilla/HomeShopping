@@ -20,6 +20,8 @@ import io.loperilla.designsystem.composables.button.SimpleButton
 import io.loperilla.designsystem.composables.spacers.FullWeightSpacer
 import io.loperilla.designsystem.previews.PIXEL_33_NIGHT
 import io.loperilla.presentation.designsystem.R
+import io.loperilla.testing.robot.testTag
+import io.loperilla.testing.tag.WelcomeTags
 
 /*****
  * Project: HomeShopping
@@ -39,6 +41,7 @@ fun WelcomeScreen(
         modifier = modifier
             .fillMaxSize()
             .padding(8.dp)
+            .testTag(WelcomeTags.WelcomeRoot)
             .semantics {
                 contentDescription = "Welcome Screen"
             }
@@ -50,6 +53,7 @@ fun WelcomeScreen(
             modifier = modifier
                 .wrapContentSize()
                 .clip(CircleShape)
+                .testTag(WelcomeTags.Logo)
         )
         FullWeightSpacer()
         SimpleButton(
@@ -57,7 +61,9 @@ fun WelcomeScreen(
             onClickButton = {
                 onEvent(WelcomeEvent.NavigateToLogin)
             },
-            enableButton = true
+            enableButton = true,
+            modifier = Modifier
+                .testTag(WelcomeTags.LoginButton)
         )
 
         SimpleButton(
@@ -65,7 +71,9 @@ fun WelcomeScreen(
             onClickButton = {
                 onEvent(WelcomeEvent.NavigateToRegister)
             },
-            enableButton = true
+            enableButton = true,
+            modifier = Modifier
+                .testTag(WelcomeTags.RegisterButton)
         )
         FullWeightSpacer()
     }

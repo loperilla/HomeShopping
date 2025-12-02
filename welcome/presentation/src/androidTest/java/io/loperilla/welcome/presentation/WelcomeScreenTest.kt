@@ -12,7 +12,15 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import io.loperilla.splash.presentation.WelcomeEvent
 import io.loperilla.splash.presentation.WelcomeScreen
+import io.loperilla.testing.robot.assertTagContentDescriptionEquals
+import io.loperilla.testing.robot.assertTagIsClickable
+import io.loperilla.testing.robot.assertTagIsDisplayed
+import io.loperilla.testing.robot.assertTagIsEnabled
+import io.loperilla.testing.robot.assertTagText
+import io.loperilla.testing.robot.performClickOnTag
+import io.loperilla.testing.tag.WelcomeTags
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -20,107 +28,69 @@ class WelcomeScreenTest {
 
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
+    lateinit var welcomeRobot: WelcomeScreenRobot
+
+    @Before
+    fun setUp() {
+        welcomeRobot = WelcomeScreenRobot(composeTestRule)
+    }
 
     @Test
     fun verifyUIStructureAndComponentsPresence() {
-        composeTestRule.setContent {
-            WelcomeScreen(onEvent = {})
-        }
-
-        composeTestRule
-            .onNodeWithContentDescription("Application logo")
-            .assertIsDisplayed()
-
-        composeTestRule
-            .onNodeWithText("Iniciar Sesión")
-            .assertIsDisplayed()
-
-        composeTestRule
-            .onNodeWithText("Registrarse")
-            .assertIsDisplayed()
+        welcomeRobot
+            .setUpRobot()
+            .assertTagIsDisplayed(WelcomeTags.Logo)
+            .assertTagIsDisplayed(WelcomeTags.LoginButton)
+            .assertTagIsDisplayed(WelcomeTags.RegisterButton)
     }
 
     @Test
     fun verifyLoginButtonText() {
-        composeTestRule.setContent {
-            WelcomeScreen(onEvent = {})
-        }
-
-        composeTestRule
-            .onNodeWithText("Iniciar Sesión")
-            .assertTextEquals("Iniciar Sesión")
+        welcomeRobot
+            .setUpRobot()
+            .assertTagText(WelcomeTags.LoginButton, "Iniciar Sesión")
     }
 
     @Test
     fun verifyRegisterButtonText() {
-        composeTestRule.setContent {
-            WelcomeScreen(onEvent = {})
-        }
-
-        composeTestRule
-            .onNodeWithText("Registrarse")
-            .assertTextEquals("Registrarse")
+        welcomeRobot
+            .setUpRobot()
+            .assertTagText(WelcomeTags.RegisterButton, "Registrarse")
     }
 
     @Test
     fun verifyImageContentDescription() {
-        composeTestRule.setContent {
-            WelcomeScreen(onEvent = {})
-        }
-
-        composeTestRule
-            .onNodeWithContentDescription("Application logo")
-            .assertContentDescriptionEquals("Application logo")
+        welcomeRobot
+            .setUpRobot()
+            .assertTagContentDescriptionEquals(
+                tag = WelcomeTags.Logo,
+                expectedDescription = "Application logo"
+            )
     }
 
     @Test
     fun navigateToLoginEventTrigger() {
-        var capturedEvent: WelcomeEvent? = null
-
-        composeTestRule.setContent {
-            WelcomeScreen(onEvent = { event ->
-                capturedEvent = event
-            })
-        }
-
-        composeTestRule
-            .onNodeWithText("Iniciar Sesión")
-            .performClick()
-
-        assertEquals(WelcomeEvent.NavigateToLogin, capturedEvent)
+        welcomeRobot
+            .setUpRobot()
+            .performClickOnTag(WelcomeTags.LoginButton)
+            .assertExpectedEvent(WelcomeEvent.NavigateToLogin)
     }
 
     @Test
     fun navigateToRegisterEventTrigger() {
-        var capturedEvent: WelcomeEvent? = null
-
-        composeTestRule.setContent {
-            WelcomeScreen(onEvent = { event ->
-                capturedEvent = event
-            })
-        }
-
-        composeTestRule
-            .onNodeWithText("Registrarse")
-            .performClick()
-
-        assertEquals(WelcomeEvent.NavigateToRegister, capturedEvent)
+        welcomeRobot
+            .setUpRobot()
+            .performClickOnTag(WelcomeTags.RegisterButton)
+            .assertExpectedEvent(WelcomeEvent.NavigateToRegister)
     }
 
     @Test
-    fun buttonsAreEnabled() {
-        composeTestRule.setContent {
-            WelcomeScreen(onEvent = {})
-        }
-
-        composeTestRule
-            .onNodeWithText("Iniciar Sesión")
-            .assertHasClickAction()
-            .assertIsEnabled()
-
-        composeTestRule
-            .onNodeWithText("Registrarse")
-            .assertHasClickAction()
-            .assertIsEnabled()
+    fun buttonsAreEnabledAndClickable() {
+        welcomeRobot
+            .setUpRobot()
+            .assertTagIsClickable(WelcomeTags.LoginButton)
+            .assertTagIsEnabled(WelcomeTags.LoginButton)
+            .assertTagIsClickable(WelcomeTags.RegisterButton)
+            .assertTagIsEnabled(WelcomeTags.RegisterButton)
     }
 }
