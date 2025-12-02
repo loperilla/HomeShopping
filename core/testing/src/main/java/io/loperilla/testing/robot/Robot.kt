@@ -5,10 +5,12 @@ import androidx.compose.ui.test.assertContentDescriptionEquals
 import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performImeAction
 import androidx.compose.ui.test.performTextInput
@@ -91,5 +93,19 @@ fun <T: Robot> T.assertTagText(tag: Tag, expectedText: String): T {
     composeTestRule
         .onNodeWithTag(tag.name)
         .assertTextEquals(expectedText)
+    return this
+}
+
+fun <T: Robot> T.assertTextHasFocus(text: String): T {
+    composeTestRule
+        .onNodeWithText(text)
+        .assertIsFocused()
+    return this
+}
+
+fun <T: Robot> T.assertTextExists(text: String): T {
+    composeTestRule
+        .onNodeWithText(text)
+        .assertExists()
     return this
 }
