@@ -41,6 +41,9 @@ import io.loperilla.designsystem.composables.text.TextTitle
 import io.loperilla.designsystem.composables.topbar.CommonTopBar
 import io.loperilla.designsystem.previews.PIXEL_33_NIGHT
 import io.loperilla.presentation.designsystem.R.mipmap
+import io.loperilla.testing.robot.testTag
+import io.loperilla.testing.tag.RegisterTag
+import io.loperilla.testing.tag.RegisterTag.RegisterRootTag
 
 
 /*****
@@ -63,7 +66,8 @@ fun RegisterScreen(
         onEvent(RegisterEvent.OnBackPressed)
     }
     TransparentScaffold(
-        modifier = modifier,
+        modifier = modifier
+            .testTag(RegisterRootTag),
         topBar = {
             CommonTopBar(
                 topBarText = "",
@@ -71,7 +75,9 @@ fun RegisterScreen(
                 navActionClick = {
                     keyboardController?.hide()
                     onEvent(RegisterEvent.OnBackPressed)
-                }
+                },
+                modifier = Modifier
+                    .testTag(RegisterTag.RegisterTopBar)
             )
         }
     ) { paddingValues ->
@@ -79,6 +85,7 @@ fun RegisterScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
             modifier = Modifier
+                .testTag(RegisterTag.RegisterScreen)
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
@@ -86,6 +93,7 @@ fun RegisterScreen(
                 painter = painterResource(mipmap.brand),
                 contentDescription = "Application logo",
                 modifier = modifier
+                    .testTag(RegisterTag.RegisterIcon)
                     .size(100.dp)
                     .clip(CircleShape)
             )
@@ -110,6 +118,7 @@ fun RegisterScreen(
                     onEvent(RegisterEvent.EmailValueChange(newValue))
                 },
                 modifier = Modifier
+                    .testTag(RegisterTag.RegisterEmailInput)
                     .focusRequester(focusRequester)
                     .fillMaxWidth()
             )
@@ -124,6 +133,7 @@ fun RegisterScreen(
                     onEvent(RegisterEvent.PasswordValueChange(it))
                 },
                 modifier = Modifier
+                    .testTag(RegisterTag.RegisterPasswordInput)
                     .focusRequester(focusRequester)
                     .fillMaxWidth()
             )
@@ -141,13 +151,15 @@ fun RegisterScreen(
                     onEvent(RegisterEvent.RepeatPasswordValueChange(it))
                 },
                 modifier = Modifier
+                    .testTag(RegisterTag.RegisterRepeatPasswordInput)
                     .focusRequester(focusRequester)
                     .fillMaxWidth()
             )
             FullWeightSpacer()
             SimpleButton(
                 textButton = "Registro",
-                modifier = Modifier,
+                modifier = Modifier
+                    .testTag(RegisterTag.RegisterButton),
                 onClickButton = {
                     keyboardController?.hide()
                     onEvent(RegisterEvent.DoRegister)
@@ -155,11 +167,13 @@ fun RegisterScreen(
                 enableButton = state.isFormValid
             )
 
-            CustomButton (
+            CustomButton(
                 onClickButton = {
                     keyboardController?.hide()
                     onEvent(RegisterEvent.DoGoogleRegister)
                 },
+                modifier = Modifier
+                    .testTag(RegisterTag.RegisterGoogleButton),
                 contentButton = {
                     Icon(
                         imageVector = Icons.Default.Mail,
