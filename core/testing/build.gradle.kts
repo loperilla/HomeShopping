@@ -12,4 +12,7 @@ dependencies {
     api(libs.mockk)
     api(libs.kotlinx.coroutines.test)
     api(libs.turbine)
+    implementation(libs.androidx.compose.ui.test.junit4)
+
+
 }

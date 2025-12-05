@@ -7,11 +7,13 @@ package io.loperilla.testing.tag
  * All rights reserved 2025
  */
 
-const val COMMERCE_ROOT_SCREEN = "commerce_root"
-const val COMMERCE_TOPBAR = "commerce_topbar"
-const val COMMERCE_FAB = "commerce_fab"
-const val COMMERCE_LOADING = "commerce_loading"
-const val COMMERCE_SCREEN = "commerce_screen"
-const val NEW_COMMERCE_INPUT = "commerce_input"
-const val COMMERCE_LIST = "commerce_list"
-const val COMMERCE_EMPTY_LIST = "commerce_empty_list"
+sealed class CommerceTags(override val name: String) : Tag {
+    data object RootScreen : CommerceTags("commerce_root")
+    data object TopBar : CommerceTags("commerce_topbar")
+    data object Fab : CommerceTags("commerce_fab")
+    data object Loading : CommerceTags("commerce_loading")
+    data object Screen : CommerceTags("commerce_screen")
+    data object NewInput : CommerceTags("commerce_input")
+    data object List : CommerceTags("commerce_list")
+    data object EmptyList : CommerceTags("commerce_empty_list")
+}

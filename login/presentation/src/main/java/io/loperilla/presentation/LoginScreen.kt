@@ -18,12 +18,10 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import io.loperilla.designsystem.composables.Screen
-import io.loperilla.designsystem.composables.button.ShoppingButton
 import io.loperilla.designsystem.composables.button.SimpleButton
 import io.loperilla.designsystem.composables.input.EmailInput
 import io.loperilla.designsystem.composables.input.PasswordInput
@@ -31,12 +29,8 @@ import io.loperilla.designsystem.composables.spacers.FullWeightSpacer
 import io.loperilla.designsystem.composables.spacers.MediumSpacer
 import io.loperilla.designsystem.previews.PIXEL_33_NIGHT
 import io.loperilla.presentation.designsystem.R.mipmap
-import io.loperilla.testing.tag.LOGIN_BUTTON_TAG
-import io.loperilla.testing.tag.LOGIN_EMAIL_INPUT
-import io.loperilla.testing.tag.LOGIN_ICON_TAG
-import io.loperilla.testing.tag.LOGIN_PASSWORD_INPUT
-import io.loperilla.testing.tag.LOGIN_ROOT_SCREEN_TAG
-import io.loperilla.testing.tag.REGISTER_BUTTON_TAG
+import io.loperilla.testing.robot.testTag
+import io.loperilla.testing.tag.LoginTags
 
 
 /*****
@@ -61,7 +55,7 @@ fun LoginScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .fillMaxSize()
-            .testTag(LOGIN_ROOT_SCREEN_TAG)
+            .testTag(LoginTags.RootScreen)
             .padding(8.dp)
     ) {
         MediumSpacer()
@@ -69,7 +63,7 @@ fun LoginScreen(
             painter = painterResource(mipmap.brand),
             contentDescription = "Application logo",
             modifier = modifier
-                .testTag(LOGIN_ICON_TAG)
+                .testTag(LoginTags.Icon)
                 .size(100.dp)
                 .clip(CircleShape)
         )
@@ -85,7 +79,7 @@ fun LoginScreen(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .testTag(LOGIN_EMAIL_INPUT)
+                .testTag(LoginTags.EmailInput)
                 .padding(horizontal = 8.dp)
                 .focusRequester(focusRequester)
         )
@@ -104,7 +98,7 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp)
-                .testTag(LOGIN_PASSWORD_INPUT)
+                .testTag(LoginTags.PasswordInput)
                 .focusRequester(focusRequester)
         )
         FullWeightSpacer()
@@ -116,7 +110,7 @@ fun LoginScreen(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .testTag(LOGIN_BUTTON_TAG)
+                .testTag(LoginTags.LoginButton)
                 .padding(8.dp)
         )
 
@@ -128,7 +122,7 @@ fun LoginScreen(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .testTag(REGISTER_BUTTON_TAG)
+                .testTag(LoginTags.RegisterButton)
                 .padding(8.dp)
         )
     }

@@ -7,9 +7,11 @@ package io.loperilla.testing.tag
  * All rights reserved 2025
  */
 
-const val LOGIN_ROOT_SCREEN_TAG = "login_root_screen"
-const val LOGIN_ICON_TAG = "login_icon"
-const val LOGIN_EMAIL_INPUT = "login_email_input"
-const val LOGIN_PASSWORD_INPUT = "login_password_input"
-const val LOGIN_BUTTON_TAG = "login_button"
-const val REGISTER_BUTTON_TAG = "register_button"
+sealed class LoginTags(override val name: String) : Tag {
+    data object RootScreen : LoginTags("login_root_screen")
+    data object Icon : LoginTags("login_icon")
+    data object EmailInput : LoginTags("login_email_input")
+    data object PasswordInput : LoginTags("login_password_input")
+    data object LoginButton : LoginTags("login_button")
+    data object RegisterButton : LoginTags("register_button")
+}
