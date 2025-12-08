@@ -33,7 +33,7 @@ androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview
 # Gradle
 build-gradle = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
-compose-bom = "androidx.compose:compose-bom:2025.11.01"
+compose-bom = "androidx.compose:compose-bom:2025.12.00"
 compose-material3 = "androidx.compose.material3:material3:1.4.0"
 compose-material_icons_extends = "androidx.compose.material:material-icons-extended:1.7.8"
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "nav-version" }
