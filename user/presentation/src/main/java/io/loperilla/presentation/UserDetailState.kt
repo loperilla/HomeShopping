@@ -1,7 +1,5 @@
 package io.loperilla.presentation
 
-import android.net.Uri
-import androidx.core.net.toUri
 import io.loperilla.domain.model.auth.User
 
 /*****
@@ -17,6 +15,4 @@ data class UserDetailState(
 ) {
     val validForm: Boolean
         get() = newUserName.isNotBlank() && user?.name != newUserName
-
-    var userImageUrlUri: Uri? = user?.photoUrl?.toUri()
 }

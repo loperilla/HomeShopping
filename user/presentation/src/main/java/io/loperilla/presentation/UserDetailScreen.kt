@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import io.loperilla.designsystem.composables.Screen
 import io.loperilla.designsystem.composables.TransparentScaffold
 import io.loperilla.designsystem.composables.button.SimpleButton
@@ -73,7 +74,7 @@ fun UserDetailScreen(
             ) {
                 state.user?.let { user ->
                     UriImage(
-                        uriImage = state.userImageUrlUri,
+                        uriImage = user.photoUrl.toUri(),
                         imageName = "user_image",
                         modifier = Modifier
                             .size(100.dp)
