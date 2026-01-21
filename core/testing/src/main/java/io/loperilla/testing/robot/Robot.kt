@@ -33,7 +33,14 @@ fun <T : Robot> T.assertTagIsDisplayed(tag: Tag): T {
         .onNodeWithTag(tag.name)
         .assertExists("${tag.name} no encontrado")
         .assertIsDisplayed()
-    return this // 'this' aquí es T, sin cast inseguros.
+    return this
+}
+
+fun <T : Robot> T.assertTagIsNotDisplayed(tag: Tag): T {
+    composeTestRule
+        .onNodeWithTag(tag.name)
+        .assertDoesNotExist()
+    return this
 }
 
 fun <T : Robot> T.assertTagIsEnabled(tag: Tag): T {

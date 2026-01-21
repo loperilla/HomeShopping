@@ -28,6 +28,8 @@ import io.loperilla.designsystem.composables.spacers.LowSpacer
 import io.loperilla.designsystem.composables.topbar.CommonTopBar
 import io.loperilla.designsystem.previews.PIXEL_33_NIGHT
 import io.loperilla.domain.model.dummy.dummyUser
+import io.loperilla.testing.robot.testTag
+import io.loperilla.testing.tag.UserDetailTag
 
 /*****
  * Project: HomeShopping
@@ -46,18 +48,21 @@ fun UserDetailScreen(
         topBar = {
             if (!state.isLoading) {
                 CommonTopBar(
+                    modifier = Modifier.testTag(UserDetailTag.UserDetailTopBar),
                     topBarText = "Usuario",
                     navIcon = Icons.AutoMirrored.Filled.ArrowBack,
                     navActionClick = {
                         onEvent(UserDetailEvent.OnBackPressed)
-                    }
+                    },
                 )
             }
         }
     ) { paddingValues ->
         AnimatedVisibility(state.isLoading) {
             Box(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .testTag(UserDetailTag.UserDetailLoading),
                 contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator()
@@ -67,10 +72,11 @@ fun UserDetailScreen(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
                     .padding(horizontal = 16.dp)
+                    .testTag(UserDetailTag.UserDetailRootTag)
             ) {
                 state.user?.let { user ->
                     UriImage(
@@ -82,6 +88,7 @@ fun UserDetailScreen(
                                 shape = CircleShape,
                                 color = MaterialTheme.colorScheme.primary
                             )
+                            .testTag(UserDetailTag.UserDetailImage)
                     )
 
                     TextInput(
@@ -89,7 +96,8 @@ fun UserDetailScreen(
                         labelText = "Nombre",
                         onTextChange = { newName ->
                             onEvent(UserDetailEvent.OnNameChanged(newName))
-                        }
+                        },
+                        modifier = Modifier.testTag(UserDetailTag.UserDetailNameInput)
                     )
 
                     FullWeightSpacer()
@@ -99,7 +107,8 @@ fun UserDetailScreen(
                         enableButton = state.validForm,
                         onClickButton = {
                             onEvent(UserDetailEvent.SaveButtonClick)
-                        }
+                        },
+                        modifier = Modifier.testTag(UserDetailTag.UserDetailSaveButton)
                     )
                     LowSpacer()
                 }
