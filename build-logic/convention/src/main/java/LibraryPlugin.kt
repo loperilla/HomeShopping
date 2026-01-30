@@ -22,7 +22,6 @@ class LibraryPlugin : Plugin<Project> {
         target.run {
             pluginManager.run {
                 apply("com.android.library")
-                apply("org.jetbrains.kotlin.android")
                 apply("com.google.devtools.ksp")
                 apply("org.jetbrains.kotlin.plugin.serialization")
             }
