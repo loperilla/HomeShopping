@@ -1,8 +1,10 @@
+import com.android.build.api.dsl.BuildType
 import com.android.build.api.dsl.LibraryExtension
-import io.loperilla.convention.utils.ExtensionType
-import io.loperilla.convention.utils.configureBuildTypes
-import io.loperilla.convention.utils.configureKotlinAndroid
+import io.loperilla.convention.utils.configCompileSdkVersion
+import io.loperilla.convention.utils.configMinSdkVersion
+import io.loperilla.convention.utils.configureKotlin
 import io.loperilla.convention.utils.libs
+import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -20,17 +22,15 @@ class LibraryPlugin : Plugin<Project> {
         target.run {
             pluginManager.run {
                 apply("com.android.library")
-                apply("org.jetbrains.kotlin.android")
                 apply("com.google.devtools.ksp")
                 apply("org.jetbrains.kotlin.plugin.serialization")
             }
 
             extensions.configure<LibraryExtension> {
-                configureKotlinAndroid(this)
+                configureLibraryKotlin(this)
 
-                configureBuildTypes(
-                    commonExtension = this,
-                    extensionType = ExtensionType.LIBRARY
+                configureLibraryBuildType(
+                    this
                 )
 
                 defaultConfig {
@@ -42,6 +42,53 @@ class LibraryPlugin : Plugin<Project> {
             dependencies {
                 "implementation"(target.libs.findBundle("koin").get())
             }
+        }
+    }
+}
+
+internal fun Project.configureLibraryBuildType(
+    libraryExtension: LibraryExtension
+) {
+    libraryExtension.run {
+        buildFeatures {
+            buildConfig = true
+        }
+        buildTypes {
+            debug {
+            }
+            release {
+                configureLibraryReleaseBuildType(libraryExtension)
+            }
+        }
+    }
+}
+
+internal fun BuildType.configureLibraryReleaseBuildType(
+    libraryExtension: LibraryExtension
+) {
+    isMinifyEnabled = true
+    proguardFiles(
+        libraryExtension.getDefaultProguardFile("proguard-android-optimize.txt"),
+        "proguard-rules.pro"
+    )
+}
+
+internal fun Project.configureLibraryKotlin(
+    libraryExtension: LibraryExtension
+) {
+    libraryExtension.run {
+        compileSdk = configCompileSdkVersion
+
+        defaultConfig.minSdk = configMinSdkVersion
+
+        compileOptions {
+            sourceCompatibility = JavaVersion.VERSION_17
+            targetCompatibility = JavaVersion.VERSION_17
+        }
+
+        configureKotlin()
+
+        dependencies {
         }
     }
 }
