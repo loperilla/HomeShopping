@@ -1,12 +1,9 @@
 import com.android.build.api.dsl.ApplicationExtension
-import io.loperilla.convention.utils.ExtensionType
 import io.loperilla.convention.utils.configCompileSdkVersion
 import io.loperilla.convention.utils.configMinSdkVersion
 import io.loperilla.convention.utils.configTargetSdkVersion
 import io.loperilla.convention.utils.configVersionCode
 import io.loperilla.convention.utils.configVersionName
-import io.loperilla.convention.utils.configureBuildTypes
-import io.loperilla.convention.utils.configureKotlinAndroid
 import io.loperilla.convention.utils.myApplicationIdConfig
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -40,11 +37,10 @@ class AndroidApplicationPlugin : Plugin<Project> {
                     versionName = configVersionName
                 }
 
-                configureKotlinAndroid(this)
+                configureApplicationKotlinAndroid(this)
 
-                configureBuildTypes(
-                    commonExtension = this,
-                    extensionType = ExtensionType.APPLICATION
+                configureApplicationBuildType(
+                    applicationExtension = this,
                 )
             }
         }
