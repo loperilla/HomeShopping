@@ -51,7 +51,7 @@ class LoginViewModel(
                 loginButtonClicked()
             }
 
-            LoginEvent.RegisterButtonClicked -> navigator.navigate(
+            LoginEvent.RegisterButtonClicked -> navigator.navigateTo(
                 Destination.Register
             )
         }
@@ -84,7 +84,7 @@ class LoginViewModel(
     }
 
     private fun navigateToHome() = viewModelScope.launch {
-        navigator.navigate(
+        navigator.navigateToAndClearStack(
             Destination.Home
         )
     }

@@ -100,7 +100,7 @@ class RegisterViewModelTest {
         advanceUntilIdle()
 
         // Verificamos la navegación
-        coVerify { navigator.navigate(Destination.Home) }
+        coVerify { navigator.navigateToAndClearStack(Destination.Home) }
     }
 
     @Test
@@ -124,7 +124,7 @@ class RegisterViewModelTest {
         advanceUntilIdle()
 
         // Verificamos que NO navega y SI muestra snackbar
-        coVerify(exactly = 0) { navigator.navigate(any()) }
+        coVerify(exactly = 0) { navigator.navigateTo(any()) }
         coVerify {
             snackbarController.sendEvent(
                 match { it.message == errorMessage }
@@ -142,7 +142,7 @@ class RegisterViewModelTest {
         viewModel.onEvent(RegisterEvent.DoGoogleRegister)
         advanceUntilIdle()
 
-        coVerify { navigator.navigate(Destination.Home) }
+        coVerify { navigator.navigateToAndClearStack(Destination.Home) }
     }
 
     @Test
@@ -157,7 +157,7 @@ class RegisterViewModelTest {
         viewModel.onEvent(RegisterEvent.DoGoogleRegister)
         advanceUntilIdle()
 
-        coVerify(exactly = 0) { navigator.navigate(any()) }
+        coVerify(exactly = 0) { navigator.navigateTo(any()) }
         coVerify {
             snackbarController.sendEvent(
                 match { it.message == errorMessage }

@@ -1,5 +1,6 @@
 package io.loperilla.ui.navigator.routes
 
+import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 /*****
@@ -9,7 +10,7 @@ import kotlinx.serialization.Serializable
  * All rights reserved 2025
  */
 
-sealed interface Destination {
+sealed interface Destination: NavKey {
     @Serializable
     data object AuthGraph : Destination
     @Serializable

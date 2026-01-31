@@ -50,7 +50,7 @@ class WelcomeViewModelTest {
         // THEN
         // Verificamos que la función navigate del navigator haya sido llamada
         // con el argumento exacto Destination.Login
-        coVerify { navigator.navigate(Destination.Login) }
+        coVerify { navigator.navigateTo(Destination.Login) }
     }
 
     @Test
@@ -62,6 +62,6 @@ class WelcomeViewModelTest {
         viewModel.onEvent(event)
 
         // THEN
-        coVerify { navigator.navigate(Destination.Register) }
+        coVerify { navigator.navigateTo(Destination.Register) }
     }
 }

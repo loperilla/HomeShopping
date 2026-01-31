@@ -74,7 +74,7 @@ class LoginViewModelTest {
         viewModel.onEvent(LoginEvent.RegisterButtonClicked)
 
         // Then
-        coVerify { navigator.navigate(Destination.Register) }
+        coVerify { navigator.navigateTo(Destination.Register) }
     }
 
     @Test
@@ -95,7 +95,7 @@ class LoginViewModelTest {
         advanceUntilIdle()
 
         // Then
-        coVerify { navigator.navigate(Destination.Home) }
+        coVerify { navigator.navigateToAndClearStack(Destination.Home) }
     }
 
     @Test

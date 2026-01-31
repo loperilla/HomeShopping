@@ -4,8 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.loperilla.domain.model.isSuccess
 import io.loperilla.domain.usecase.auth.RefreshUserUseCase
-import io.loperilla.ui.navigator.Navigator
-import io.loperilla.ui.navigator.routes.Destination
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -21,7 +19,6 @@ import kotlinx.coroutines.launch
  * All rights reserved 2025
  */
 class MainActivityViewModel(
-    private val navigator: Navigator,
     private val refreshUserUseCase: RefreshUserUseCase
 ): ViewModel() {
     private var _stateFlow: MutableStateFlow<MainActivityUiState> =
@@ -38,9 +35,6 @@ class MainActivityViewModel(
 
     private fun checkIfUserIsLogged() = viewModelScope.launch {
         val useCaseResult = refreshUserUseCase.invoke()
-        if (useCaseResult.isSuccess) {
-            navigator.setUpStartDestination(Destination.Home)
-        }
         _stateFlow.update {
             MainActivityUiState.Success(
                 goToWelcome = useCaseResult.isSuccess

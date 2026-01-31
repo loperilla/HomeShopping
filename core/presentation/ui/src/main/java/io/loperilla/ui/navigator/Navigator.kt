@@ -1,6 +1,5 @@
 package io.loperilla.ui.navigator
 
-import androidx.navigation.NavOptionsBuilder
 import io.loperilla.ui.navigator.routes.Destination
 import io.loperilla.ui.navigator.routes.NavigationAction
 import kotlinx.coroutines.channels.Channel
@@ -14,43 +13,43 @@ import kotlinx.coroutines.flow.receiveAsFlow
  * All rights reserved 2025
  */
 interface Navigator {
-    var startDestination: Destination
     val navigationActions: Flow<NavigationAction>
 
-    fun setUpStartDestination(
-        startDestination: Destination
-    )
-
-    suspend fun navigate(
+    suspend fun navigateTo(
         destination: Destination,
-        navOptions: NavOptionsBuilder.() -> Unit = {}
     )
 
     suspend fun navigateUp()
+    suspend fun navigateUpTo(
+        destination: Destination
+    )
+    suspend fun navigateToAndClearStack(route: Destination)
 }
 
 class DefaultNavigator : Navigator {
-    override var startDestination: Destination = Destination.AuthGraph
     private val _navigationActions = Channel<NavigationAction>()
     override val navigationActions = _navigationActions.receiveAsFlow()
 
-    override fun setUpStartDestination(startDestination: Destination) {
-        this.startDestination = startDestination
-    }
-
-    override suspend fun navigate(
+    override suspend fun navigateTo(
         destination: Destination,
-        navOptions: NavOptionsBuilder.() -> Unit
-    ) {
-        _navigationActions.send(
-            NavigationAction.Navigate(
-                route = destination,
-                navOptions = navOptions
-            )
+    ) = _navigationActions.send(
+        NavigationAction.Navigate(
+            route = destination,
         )
-    }
+    )
 
-    override suspend fun navigateUp() {
+    override suspend fun navigateUp() =
         _navigationActions.send(NavigationAction.NavigateUp)
-    }
+
+    override suspend fun navigateUpTo(destination: Destination) = _navigationActions.send(
+        NavigationAction.NavigateUpTo(
+            route = destination
+        )
+    )
+
+    override suspend fun navigateToAndClearStack(destination: Destination) = _navigationActions.send(
+        NavigationAction.NavigateAndClearStack(
+            destination = destination
+        )
+    )
 }
