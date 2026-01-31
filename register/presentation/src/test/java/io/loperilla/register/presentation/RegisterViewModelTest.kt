@@ -100,7 +100,7 @@ class RegisterViewModelTest {
         advanceUntilIdle()
 
         // Verificamos la navegación
-        coVerify { navigator.navigateTo(Destination.Home) }
+        coVerify { navigator.navigateToAndClearStack(Destination.Home) }
     }
 
     @Test
@@ -142,7 +142,7 @@ class RegisterViewModelTest {
         viewModel.onEvent(RegisterEvent.DoGoogleRegister)
         advanceUntilIdle()
 
-        coVerify { navigator.navigateTo(Destination.Home) }
+        coVerify { navigator.navigateToAndClearStack(Destination.Home) }
     }
 
     @Test

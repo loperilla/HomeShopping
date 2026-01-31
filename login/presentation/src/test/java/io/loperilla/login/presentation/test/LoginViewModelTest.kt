@@ -95,7 +95,7 @@ class LoginViewModelTest {
         advanceUntilIdle()
 
         // Then
-        coVerify { navigator.navigateTo(Destination.Home) }
+        coVerify { navigator.navigateToAndClearStack(Destination.Home) }
     }
 
     @Test
