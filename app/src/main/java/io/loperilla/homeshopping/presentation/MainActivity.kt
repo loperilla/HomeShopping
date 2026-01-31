@@ -6,14 +6,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.loperilla.designsystem.composables.Screen
 import io.loperilla.homeshopping.AppNavigation
 import io.loperilla.ui.navigator.Navigator
 import io.loperilla.ui.snackbar.SnackbarController
-import org.koin.android.ext.android.inject
-import org.koin.androidx.compose.koinViewModel
+import org.koin.android.ext.android.get
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /*****
  * Project: HomeShopping
@@ -23,8 +24,11 @@ import org.koin.androidx.compose.koinViewModel
  */
 
 class MainActivity : ComponentActivity() {
+    private val viewModel: MainActivityViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
-        val splashScreen = installSplashScreen()
+        installSplashScreen().setKeepOnScreenCondition {
+            viewModel.stateFlow.value == MainActivityUiState.Loading
+        }
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.auto(
                 Color.TRANSPARENT,
@@ -36,17 +40,19 @@ class MainActivity : ComponentActivity() {
         )
         super.onCreate(savedInstanceState)
         setContent {
-            val navigator : Navigator by inject()
-            val snackbarController : SnackbarController by inject()
-            val viewModel = koinViewModel<MainActivityViewModel>()
-            val state = viewModel.stateFlow.collectAsStateWithLifecycle()
-            splashScreen.setKeepOnScreenCondition { state.value is MainActivityUiState.Loading }
-            if (state.value is MainActivityUiState.Success) {
-                Screen {
-                    AppNavigation(
-                        navigator,
-                        snackbarController,
-                    )
+            val snackbarController = get<SnackbarController>()
+            val navigator = get<Navigator>()
+            val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+            when(val currentState = state) {
+                MainActivityUiState.Loading -> Unit
+                is MainActivityUiState.Success -> {
+                    Screen {
+                        AppNavigation(
+                            navigator,
+                            snackbarController,
+                            currentState.goToWelcome
+                        )
+                    }
                 }
             }
         }

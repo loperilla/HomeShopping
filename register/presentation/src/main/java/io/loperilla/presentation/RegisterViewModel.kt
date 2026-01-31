@@ -76,7 +76,7 @@ class RegisterViewModel(
     }
 
     private fun navigateToHome() = viewModelScope.launch {
-        navigator.navigateTo(
+        navigator.navigateToAndClearStack(
             Destination.Home
         )
     }

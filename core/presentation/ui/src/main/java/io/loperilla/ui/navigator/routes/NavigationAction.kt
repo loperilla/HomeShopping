@@ -15,4 +15,6 @@ sealed interface NavigationAction {
     data class NavigateUpTo(
         val route: Destination,
     ): NavigationAction
+
+    data class NavigateAndClearStack(val destination: Destination) : NavigationAction
 }

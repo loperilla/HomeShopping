@@ -23,6 +23,7 @@ interface Navigator {
     suspend fun navigateUpTo(
         destination: Destination
     )
+    suspend fun navigateToAndClearStack(route: Destination)
 }
 
 class DefaultNavigator : Navigator {
@@ -43,6 +44,12 @@ class DefaultNavigator : Navigator {
     override suspend fun navigateUpTo(destination: Destination) = _navigationActions.send(
         NavigationAction.NavigateUpTo(
             route = destination
+        )
+    )
+
+    override suspend fun navigateToAndClearStack(destination: Destination) = _navigationActions.send(
+        NavigationAction.NavigateAndClearStack(
+            destination = destination
         )
     )
 }

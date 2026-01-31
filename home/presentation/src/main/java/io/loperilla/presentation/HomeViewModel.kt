@@ -65,8 +65,8 @@ class HomeViewModel(
 
     private fun onLogOutClicked() = viewModelScope.launch(Dispatchers.IO) {
         logOutUseCase().also {
-            navigator.navigateUpTo(
-                Destination.AuthGraph,
+            navigator.navigateToAndClearStack(
+                Destination.AuthGraph
             )
         }
     }

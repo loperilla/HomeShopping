@@ -1,5 +1,9 @@
 package io.loperilla.homeshopping
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -51,9 +55,12 @@ import org.koin.androidx.compose.koinViewModel
 fun AppNavigation(
     navigator: Navigator,
     snackbarController: SnackbarController,
+    isUserLogged: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    val backStack = rememberNavBackStack(Destination.AuthGraph)
+    val startDestination = if (isUserLogged) Destination.Home else Destination.AuthGraph
+
+    val backStack = rememberNavBackStack(startDestination)
     navigatorManager(navigator, backStack)
     val snackbarHost = remember { SnackbarHostState() }
     val coroutine = rememberCoroutineScope()
@@ -153,6 +160,33 @@ fun AppNavigation(
                         onEvent = viewModel::onEvent
                     )
                 }
+            },
+            transitionSpec = {
+                slideInHorizontally(
+                    initialOffsetX = { it },
+                    animationSpec = tween(250)
+                ) togetherWith slideOutHorizontally(
+                    targetOffsetX = { -it },
+                    animationSpec = tween(250)
+                )
+            },
+            popTransitionSpec = {
+                slideInHorizontally(
+                    initialOffsetX = { -it },
+                    animationSpec = tween(250)
+                ) togetherWith slideOutHorizontally(
+                    targetOffsetX = { it },
+                    animationSpec = tween(250)
+                )
+            },
+            predictivePopTransitionSpec = {
+                slideInHorizontally(
+                    initialOffsetX = { -it },
+                    animationSpec = tween(250)
+                ) togetherWith slideOutHorizontally(
+                    targetOffsetX = { it },
+                    animationSpec = tween(250)
+                )
             }
         )
     }
@@ -168,6 +202,7 @@ private fun navigatorManager(
             is NavigationAction.Navigate -> backStack.navigateTo(action.route)
             NavigationAction.NavigateUp -> backStack.back()
             is NavigationAction.NavigateUpTo -> backStack.backTo(action.route)
+            is NavigationAction.NavigateAndClearStack -> backStack.set(action.destination)
         }
     }
 }
@@ -177,8 +212,13 @@ fun NavBackStack<NavKey>.navigateTo(screen: NavKey) {
 }
 
 fun NavBackStack<NavKey>.back() {
-    if (isEmpty()) return
+    if (size <= 1) return
     removeLastOrNull()
+}
+
+fun NavBackStack<NavKey>.set(screen: NavKey) {
+    clear()
+    add(screen)
 }
 
 fun NavBackStack<NavKey>.backTo(targetScreen: NavKey) {
