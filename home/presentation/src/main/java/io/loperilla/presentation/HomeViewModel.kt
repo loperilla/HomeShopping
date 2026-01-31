@@ -44,10 +44,10 @@ class HomeViewModel(
     fun onEvent(event: HomeEvent) = viewModelScope.launch {
         when (event) {
             HomeEvent.LogOut -> onLogOutClicked()
-            HomeEvent.OnClickShoppingListDetail -> navigator.navigate(Destination.Products)
-            HomeEvent.OnUserInfoClicked -> navigator.navigate(Destination.UserDetail)
-            HomeEvent.NavigateToCommerce -> navigator.navigate(Destination.Commerce)
-            HomeEvent.NavigateToProducts -> navigator.navigate(Destination.Products)
+            HomeEvent.OnClickShoppingListDetail -> navigator.navigateTo(Destination.Products)
+            HomeEvent.OnUserInfoClicked -> navigator.navigateTo(Destination.UserDetail)
+            HomeEvent.NavigateToCommerce -> navigator.navigateTo(Destination.Commerce)
+            HomeEvent.NavigateToProducts -> navigator.navigateTo(Destination.Products)
         }
     }
 
@@ -65,13 +65,8 @@ class HomeViewModel(
 
     private fun onLogOutClicked() = viewModelScope.launch(Dispatchers.IO) {
         logOutUseCase().also {
-            navigator.navigate(
+            navigator.navigateUpTo(
                 Destination.AuthGraph,
-                navOptions = {
-                    popUpTo(Destination.Home) {
-                        inclusive = true
-                    }
-                }
             )
         }
     }

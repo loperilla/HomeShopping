@@ -1,6 +1,5 @@
 package io.loperilla.homeshopping
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -11,11 +10,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navigation
+import androidx.navigation3.runtime.NavBackStack
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.ui.NavDisplay
 import io.loperilla.designsystem.composables.TransparentScaffold
 import io.loperilla.presentation.AddProductScreen
 import io.loperilla.presentation.AddProductViewModel
@@ -53,9 +52,9 @@ fun AppNavigation(
     navigator: Navigator,
     snackbarController: SnackbarController,
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController()
 ) {
-    navigatorManager(navigator, navController)
+    val backStack = rememberNavBackStack(Destination.AuthGraph)
+    navigatorManager(navigator, backStack)
     val snackbarHost = remember { SnackbarHostState() }
     val coroutine = rememberCoroutineScope()
 
@@ -81,22 +80,24 @@ fun AppNavigation(
             )
         }
     ) {
-        NavHost(
-            navController = navController,
-            startDestination = navigator.startDestination,
-            modifier = Modifier
-                .padding(it)
-        ) {
-            navigation<Destination.AuthGraph>(
-                startDestination = Destination.Welcome,
-            ) {
-                composable<Destination.Welcome> {
+        NavDisplay(
+            backStack = backStack,
+            onBack = { backStack.back() },
+            entryProvider = entryProvider {
+                entry<Destination.AuthGraph> {
+                    // AuthGraph no tiene UI, delega en sus hijos.
+                    // Para un efecto similar a navigation-compose, navega al startDestination.
+                    if (backStack.size == 1 && backStack.last() == Destination.AuthGraph) {
+                        backStack.navigateTo(Destination.Welcome)
+                    }
+                }
+                entry<Destination.Welcome> {
                     val viewModel = koinViewModel<WelcomeViewModel>()
                     WelcomeScreen(
                         onEvent = viewModel::onEvent
                     )
                 }
-                composable<Destination.Login> {
+                entry<Destination.Login> {
                     val viewModel = koinViewModel<LoginViewModel>()
                     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
                     LoginScreen(
@@ -104,7 +105,7 @@ fun AppNavigation(
                         onEvent = viewModel::onEvent
                     )
                 }
-                composable<Destination.Register> {
+                entry<Destination.Register> {
                     val viewModel = koinViewModel<RegisterViewModel>()
                     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
                     RegisterScreen(
@@ -112,70 +113,80 @@ fun AppNavigation(
                         onEvent = viewModel::onEvent
                     )
                 }
+                entry<Destination.Home> {
+                    val viewModel = koinViewModel<HomeViewModel>()
+                    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+                    HomeScreen(
+                        state = state,
+                        onEvent = viewModel::onEvent
+                    )
+                }
+                entry<Destination.UserDetail> {
+                    val viewModel = koinViewModel<UserDetailViewModel>()
+                    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+                    UserDetailScreen(
+                        state = state,
+                        onEvent = viewModel::onEvent
+                    )
+                }
+                entry<Destination.Commerce> {
+                    val viewModel = koinViewModel<CommerceViewModel>()
+                    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+                    CommerceScreen(
+                        state = state,
+                        onEvent = viewModel::onEvent
+                    )
+                }
+                entry<Destination.Products> {
+                    val viewModel = koinViewModel<ProductsViewModel>()
+                    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+                    ProductsScreen(
+                        state = state,
+                        onEvent = viewModel::onEvent
+                    )
+                }
+                entry<Destination.AddProducts> {
+                    val viewModel = koinViewModel<AddProductViewModel>()
+                    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+                    AddProductScreen(
+                        state = state,
+                        onEvent = viewModel::onEvent
+                    )
+                }
             }
-
-            composable<Destination.Home> {
-                val viewModel = koinViewModel<HomeViewModel>()
-                val state by viewModel.stateFlow.collectAsStateWithLifecycle()
-                HomeScreen(
-                    state = state,
-                    onEvent = viewModel::onEvent
-                )
-            }
-
-            composable<Destination.UserDetail> {
-                val viewModel = koinViewModel<UserDetailViewModel>()
-                val state by viewModel.stateFlow.collectAsStateWithLifecycle()
-                UserDetailScreen(
-                    state = state,
-                    onEvent = viewModel::onEvent
-                )
-            }
-
-            composable<Destination.Commerce> {
-                val viewModel = koinViewModel<CommerceViewModel>()
-                val state by viewModel.stateFlow.collectAsStateWithLifecycle()
-                CommerceScreen(
-                    state = state,
-                    onEvent = viewModel::onEvent
-                )
-            }
-
-            composable<Destination.Products> {
-                val viewModel = koinViewModel<ProductsViewModel>()
-                val state by viewModel.stateFlow.collectAsStateWithLifecycle()
-                ProductsScreen(
-                    state = state,
-                    onEvent = viewModel::onEvent
-                )
-            }
-
-            composable<Destination.AddProducts> {
-                val viewModel = koinViewModel<AddProductViewModel>()
-                val state by viewModel.stateFlow.collectAsStateWithLifecycle()
-                AddProductScreen(
-                    state = state,
-                    onEvent = viewModel::onEvent
-                )
-            }
-        }
+        )
     }
 }
 
 @Composable
 private fun navigatorManager(
     navigator: Navigator,
-    navController: NavHostController
+    backStack: NavBackStack<NavKey>
 ) {
     ObserveAsEvents(flow = navigator.navigationActions) { action: NavigationAction ->
         when (action) {
-            is NavigationAction.Navigate -> navController.navigate(
-                action.route
-            ) {
-                action.navOptions(this)
-            }
-
-            NavigationAction.NavigateUp -> navController.navigateUp()
+            is NavigationAction.Navigate -> backStack.navigateTo(action.route)
+            NavigationAction.NavigateUp -> backStack.back()
+            is NavigationAction.NavigateUpTo -> backStack.backTo(action.route)
         }
     }
+}
+
+fun NavBackStack<NavKey>.navigateTo(screen: NavKey) {
+    add(screen)
+}
+
+fun NavBackStack<NavKey>.back() {
+    if (isEmpty()) return
+    removeLastOrNull()
+}
+
+fun NavBackStack<NavKey>.backTo(targetScreen: NavKey) {
+    if (isEmpty()) return
+    if (targetScreen !in this) return
+
+    while (isNotEmpty() && last() != targetScreen) {
+        removeLastOrNull()
+    }
+
 }

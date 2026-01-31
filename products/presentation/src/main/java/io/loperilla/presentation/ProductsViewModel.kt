@@ -49,7 +49,7 @@ class ProductsViewModel(
     fun onEvent(action: ProductsEvent) = viewModelScope.launch {
         when (action) {
             ProductsEvent.GoBack -> navigator.navigateUp()
-            ProductsEvent.AddNewProduct -> navigator.navigate(Destination.AddProducts)
+            ProductsEvent.AddNewProduct -> navigator.navigateTo(Destination.AddProducts)
             is ProductsEvent.RemoveProduct -> removeProduct(action.id)
         }
     }

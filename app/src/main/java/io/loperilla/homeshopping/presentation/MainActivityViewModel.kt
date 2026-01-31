@@ -39,7 +39,7 @@ class MainActivityViewModel(
     private fun checkIfUserIsLogged() = viewModelScope.launch {
         val useCaseResult = refreshUserUseCase.invoke()
         if (useCaseResult.isSuccess) {
-            navigator.setUpStartDestination(Destination.Home)
+            navigator.navigateTo(Destination.Home)
         }
         _stateFlow.update {
             MainActivityUiState.Success(

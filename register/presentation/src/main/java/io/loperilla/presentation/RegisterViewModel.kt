@@ -11,11 +11,8 @@ import io.loperilla.ui.navigator.routes.Destination
 import io.loperilla.ui.snackbar.SnackbarController
 import io.loperilla.ui.snackbar.SnackbarEvent
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -79,7 +76,7 @@ class RegisterViewModel(
     }
 
     private fun navigateToHome() = viewModelScope.launch {
-        navigator.navigate(
+        navigator.navigateTo(
             Destination.Home
         )
     }

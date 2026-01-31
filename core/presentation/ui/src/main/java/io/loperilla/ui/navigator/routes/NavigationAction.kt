@@ -1,7 +1,5 @@
 package io.loperilla.ui.navigator.routes
 
-import androidx.navigation.NavOptionsBuilder
-
 /*****
  * Project: HomeShopping
  * From: io.loperilla.ui.navigator.routes
@@ -12,6 +10,9 @@ sealed interface NavigationAction {
     data object NavigateUp : NavigationAction
     data class Navigate(
         val route: Destination,
-        val navOptions: NavOptionsBuilder.() -> Unit = {}
     ) : NavigationAction
+
+    data class NavigateUpTo(
+        val route: Destination,
+    ): NavigationAction
 }

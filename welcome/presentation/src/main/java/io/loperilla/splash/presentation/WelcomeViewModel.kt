@@ -2,10 +2,8 @@ package io.loperilla.splash.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.loperilla.domain.usecase.auth.RefreshUserUseCase
 import io.loperilla.ui.navigator.Navigator
 import io.loperilla.ui.navigator.routes.Destination
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 /*****
@@ -19,8 +17,8 @@ class WelcomeViewModel(
 ) : ViewModel() {
     fun onEvent(newEvent: WelcomeEvent) = viewModelScope.launch {
         when (newEvent) {
-            WelcomeEvent.NavigateToLogin -> navigator.navigate(Destination.Login)
-            WelcomeEvent.NavigateToRegister -> navigator.navigate(Destination.Register)
+            WelcomeEvent.NavigateToLogin -> navigator.navigateTo(Destination.Login)
+            WelcomeEvent.NavigateToRegister -> navigator.navigateTo(Destination.Register)
         }
     }
 }
