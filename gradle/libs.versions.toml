@@ -133,4 +133,4 @@ loperilla-feature-ui = { id = "homeshopping.feature.ui" }
 loperilla-jvm-library = { id = "homeshopping.jvm.library" }
 loperilla-library = { id = "homeshopping.android.library" }
 loperilla-library-compose = { id = "homeshopping.library.compose" }
-version-catalog-update = "nl.littlerobots.version-catalog-update:1.0.1"
+version-catalog-update = "nl.littlerobots.version-catalog-update:1.1.0"
