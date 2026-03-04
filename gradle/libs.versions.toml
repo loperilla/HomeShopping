@@ -52,7 +52,7 @@ firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 firebase-database = { module = "com.google.firebase:firebase-database" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
 firebase-storage = { module = "com.google.firebase:firebase-storage" }
-google-auth = "com.google.android.gms:play-services-auth:21.5.0"
+google-auth = "com.google.android.gms:play-services-auth:21.5.1"
 google-identity = "com.google.android.libraries.identity.googleid:googleid:1.2.0"
 google-services = "com.google.gms:google-services:4.4.4"
 junit = "junit:junit:4.13.2"
