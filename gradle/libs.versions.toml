@@ -1,6 +1,6 @@
 [versions]
 agp = "9.2.0"
-androidTools = "32.1.1"
+androidTools = "32.2.0"
 androidx-activity = "1.13.0"
 androidx-lifecycle = "2.10.0"
 androidx-test-espresso = "3.7.0"
