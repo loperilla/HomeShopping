@@ -13,11 +13,11 @@ koin = "4.2.1"
 kotlin = "2.3.21"
 kotlinxSerializationJsonVersion = "1.11.0"
 ksp = "2.3.7"
-mockk = "1.14.9"
-nav-version = "1.1.1"
+mockk = "1.14.11"
+nav-version = "1.1.2"
 room-version = "2.8.4"
 turbine = "1.2.1"
-uiTestJunit4 = "1.11.1"
+uiTestJunit4 = "1.11.2"
 
 [libraries]
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
@@ -36,7 +36,7 @@ androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview
 # Gradle
 build-gradle = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
-compose-bom = "androidx.compose:compose-bom:2026.04.01"
+compose-bom = "androidx.compose:compose-bom:2026.05.01"
 compose-material3 = "androidx.compose.material3:material3:1.4.0"
 compose-material_icons_extends = "androidx.compose.material:material-icons-extended:1.7.8"
 compose-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
@@ -47,12 +47,12 @@ compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 crashlytics-gradle = "com.google.firebase:firebase-crashlytics-gradle:3.0.7"
 firebase-auth = { module = "com.google.firebase:firebase-auth" }
-firebase-bom = "com.google.firebase:firebase-bom:34.12.0"
+firebase-bom = "com.google.firebase:firebase-bom:34.14.0"
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 firebase-database = { module = "com.google.firebase:firebase-database" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
 firebase-storage = { module = "com.google.firebase:firebase-storage" }
-google-auth = "com.google.android.gms:play-services-auth:21.5.1"
+google-auth = "com.google.android.gms:play-services-auth:21.6.0"
 google-identity = "com.google.android.libraries.identity.googleid:googleid:1.2.0"
 google-services = "com.google.gms:google-services:4.4.4"
 junit = "junit:junit:4.13.2"
