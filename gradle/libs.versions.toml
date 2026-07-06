@@ -54,7 +54,7 @@ firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
 firebase-storage = { module = "com.google.firebase:firebase-storage" }
 google-auth = "com.google.android.gms:play-services-auth:21.6.0"
 google-identity = "com.google.android.libraries.identity.googleid:googleid:1.2.0"
-google-services = "com.google.gms:google-services:4.4.4"
+google-services = "com.google.gms:google-services:4.5.0"
 junit = "junit:junit:4.13.2"
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
