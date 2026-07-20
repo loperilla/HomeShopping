@@ -1,5 +1,5 @@
 [versions]
-agp = "9.2.1"
+agp = "9.3.0"
 androidTools = "32.2.1"
 androidx-activity = "1.13.0"
 androidx-lifecycle = "2.10.0"
