@@ -8,8 +8,8 @@ package io.loperilla.convention.utils
  */
 
 const val rootPackage = "io.loperilla"
-const val configCompileSdkVersion = 36
-const val configTargetSdkVersion = 36
+const val configCompileSdkVersion = 37
+const val configTargetSdkVersion = 37
 const val configMinSdkVersion = 26
 const val myApplicationIdConfig = "io.loperilla.homeshopping"
 const val configVersionCode = 1
